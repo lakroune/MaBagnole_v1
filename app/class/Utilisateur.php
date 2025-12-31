@@ -1,12 +1,12 @@
 <?php
 class Utilisateur
 {
-    public int $idUtilisateur;
-    public string $nomUtilisateur;
-    public string $prenomUtilisateur;
-    public string $email;
-    public string $paword;
-    public string $role;
+    protected int $idUtilisateur;
+    protected string $nomUtilisateur;
+    protected string $prenomUtilisateur;
+    protected string $email;
+    protected string $paword;
+    protected string $role;
     // constructeur
     public function __construct() {}
     // getters
@@ -28,5 +28,5 @@ class Utilisateur
     public function seconnecter() {}
     //sdeconnecter
     public function sdeconnecter() {}
-    
+
 }
