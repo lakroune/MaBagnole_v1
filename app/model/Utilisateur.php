@@ -25,8 +25,10 @@ class Utilisateur
         return "idUtilisateur=$this->idUtilisateur, nomUtilisateur=$this->nomUtilisateur, prenomUtilisateur=$this->prenomUtilisateur, email=$this->email, role=$this->role";
     }
     //seconnecter
-    public function seconnecter() {}
+    public function seconnecter() {
+        
+    }
     //sdeconnecter
-    public function sdeconnecter() {}
+    public function sedeconnecter() {}
 
 }

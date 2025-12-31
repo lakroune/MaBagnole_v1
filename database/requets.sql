@@ -1,20 +1,18 @@
 -- Active: 1765826464238@@127.0.0.1@3306@mabagnole
 drop DATABASE IF EXISTS MaBagnole;
-
 CREATE DATABASE MaBagnole;
-
 USE MaBagnole;
 
 CREATE Table Utilisateurs (
     idUtilisateur int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     nomUtilisateur varchar(255) NOT NULL,
     prenomUtilisateur varchar(255) NOT NULL,
-    telephone varchar(255) NOT NULL,
-    ville varchar(255) NOT NULL,
+    telephone varchar(255),
+    ville varchar(255),
     email varchar(255) NOT NULL,
     paword varchar(255) NOT NULL,
-    role ENUM('admin', 'client'),
-    statusUtilisateur ENUM(0, 1) DEFAULT 1,
+    role ENUM('admin', 'client') DEFAULT 'client',
+    statusUtilisateur ENUM('0', '1') DEFAULT 1,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -43,8 +41,6 @@ CREATE table Vehicules (
     FOREIGN KEY (idCategorie) REFERENCES Categories (idCategorie)
 );
 
-DROP TABLE IF EXISTS Reservations;
-
 CREATE table Reservations (
     idReservation int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     dateDebutReservation date NOT NULL,
@@ -69,10 +65,10 @@ CREATE table Option (
 );
 
 CREATE Table optionReservation (
-    idOptionReservation int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     idReservation int(11) NOT NULL,
     idOption int(11) NOT NULL,
-    FOREIGN KEY (idReservation) REFERENCES Reservation (idReservation),
+    PRIMARY KEY (idReservation, idOption),
+    FOREIGN KEY (idReservation) REFERENCES Reservations (idReservation),
     FOREIGN KEY (idOption) REFERENCES Option (idOption)
 );
 
@@ -80,26 +76,27 @@ CREATE table Avis (
     idAvis int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     commmentaireAvis varchar(255) NOT NULL,
     noteAvis int(11) NOT NULL,
-    datePublicationAvis date CURRENT_TIMESTAMP,
+    datePublicationAvis TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     idReservation int(11) NOT NULL,
-    statusAvis ENUM(0, 1) DEFAULT 1,
+    statusAvis ENUM("0", "1") DEFAULT 1,
     idClient int(11) NOT NULL,
-    FOREIGN KEY (idReservation) REFERENCES Reservation (idReservation),
-    FOREIGN KEY (idClient) REFERENCES Utilisateur (idUtilisateur)
+    FOREIGN KEY (idReservation) REFERENCES Reservations (idReservation),
+    FOREIGN KEY (idClient) REFERENCES Utilisateurs (idUtilisateur)
 );
 
 CREATE Table Favoris (
-    idFavoris int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     idClient int(11) NOT NULL,
     idVehicule int(11) NOT NULL,
-    FOREIGN KEY (idClient) REFERENCES Utilisateur (idUtilisateur),
-    FOREIGN KEY (idVehicule) REFERENCES Vehicule (idVehicule)
+    PRIMARY KEY (idClient, idVehicule),
+    FOREIGN KEY (idClient) REFERENCES Utilisateurs (idUtilisateur),
+    FOREIGN KEY (idVehicule) REFERENCES Vehicules (idVehicule)
 );
 
 CREATE Table reagirAvis (
-    idReagirAvis int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     idAvis int(11) NOT NULL,
     idClient int(11) NOT NULL,
+    statusReagirAvis ENUM("0", "1") DEFAULT 1,
+    PRIMARY KEY (idAvis, idClient),
     FOREIGN KEY (idAvis) REFERENCES Avis (idAvis),
-    FOREIGN KEY (idClient) REFERENCES Utilisateur (idUtilisateur)
+    FOREIGN KEY (idClient) REFERENCES Utilisateurs (idUtilisateur)
 );
