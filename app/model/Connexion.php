@@ -16,7 +16,7 @@ class Connexion
         try {
             $pdo = new PDO("mysql:dbname=$this->nomDB;host=$this->hostDB", $this->userDB, $this->passDB);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            return $pdo;
+            $this->pdo = $pdo;
         } catch (PDOException $e) {
             error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
             return null;
@@ -34,5 +34,3 @@ class Connexion
         return $this->pdo;
     }
 }
-
-

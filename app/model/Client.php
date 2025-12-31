@@ -1,5 +1,6 @@
 <?php
 require_once "Connexion.php";
+require_once "Utilisateur.php";
 class Client extends Utilisateur
 {
     private int $statusClient;
@@ -30,20 +31,26 @@ class Client extends Utilisateur
     //inscrire
     public function inscrire(): bool
     {
-
-        $sql = "insert into utilisateur  (nomUtilisateur,prenomUtilisateur ,telephone , ville ,email ,paword ,role)
-         values (:nomUtilisateur,:prenomUtilisateur,:telephone,:ville,:email,:paword,'client')";
-        $stmt = (Connexion::connect()->getConnexion())->prepare($sql);
-        $stmt->bindParam(":nomUtilisateur", $this->nomUtilisateur);
-        $stmt->bindParam(":prenomUtilisateur", $this->prenomUtilisateur);
-        $stmt->bindParam(":telephone", $this->telephone);
-        $stmt->bindParam(":nomUtilisateur", $this->nomUtilisateur);
-        $stmt->bindParam(":ville", $this->ville);
-        $stmt->bindParam(":email", $this->email);
-        $stmt->bindParam(":paword", $this->paword);
-        $stmt->bindParam(":role", $this->role);
-        if ($stmt->exicute())
-            return true;
-        else return false;
+        try {
+            $sql = "insert into utilisateur  (nomUtilisateur,prenomUtilisateur ,telephone , ville ,email ,paword ,role)
+             values (:nomUtilisateur,:prenomUtilisateur,:telephone,:ville,:email,:paword,'client')";
+            $stmt = (Connexion::connect()->getConnexion())->prepare($sql);
+            $stmt->bindParam(":nomUtilisateur", $this->nomUtilisateur);
+            $stmt->bindParam(":prenomUtilisateur", $this->prenomUtilisateur);
+            $stmt->bindParam(":telephone", $this->telephone);
+            $stmt->bindParam(":nomUtilisateur", $this->nomUtilisateur);
+            $stmt->bindParam(":ville", $this->ville);
+            $stmt->bindParam(":email", $this->email);
+            $stmt->bindParam(":paword", $this->paword);
+            $stmt->bindParam(":role", $this->role);
+            if ($stmt->exicute())
+                return true;
+            else
+                return false;
+        } catch (Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return false;
+        }
     }
 }
+
