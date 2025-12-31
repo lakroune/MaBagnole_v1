@@ -95,3 +95,11 @@ CREATE Table Favoris (
     FOREIGN KEY (idClient) REFERENCES Utilisateur (idUtilisateur),
     FOREIGN KEY (idVehicule) REFERENCES Vehicule (idVehicule)
 );
+
+CREATE Table reagirAvis (
+    idReagirAvis int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    idAvis int(11) NOT NULL,
+    idClient int(11) NOT NULL,
+    FOREIGN KEY (idAvis) REFERENCES Avis (idAvis),
+    FOREIGN KEY (idClient) REFERENCES Utilisateur (idUtilisateur)
+);
