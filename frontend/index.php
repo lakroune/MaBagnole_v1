@@ -14,7 +14,7 @@
         <div class="flex gap-6 items-center">
             <a href="#stats" class="text-sm font-bold text-slate-600 hover:text-blue-600">Pourquoi nous?</a>
             <a href="login.php" class="text-sm font-bold text-slate-800">Connexion</a>
-            <a href="register.php" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-200">S'inscrire</a>
+            <a href="register" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-200">S'inscrire</a>
         </div>
     </nav>
 
@@ -24,7 +24,7 @@
             <h1 class="text-6xl font-black leading-tight">Roulez avec <br><span class="text-blue-600">Style et Confort</span></h1>
             <p class="text-slate-500 text-lg leading-relaxed max-w-md">Découvrez notre flotte exclusive de véhicules pour vos voyages d'affaires ou vos escapades en famille.</p>
             <div class="flex gap-4">
-                <a href="register.php" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold hover:bg-blue-600 transition flex items-center gap-2">
+                <a href="catalogue.php" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold hover:bg-blue-600 transition flex items-center gap-2">
                     Explorer la flotte <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
