@@ -129,7 +129,7 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admi
                             <td>
                                 <div class="flex gap-2">
                                     <button onclick="openEditModal({id:<?= $vehicule->idVehicule ?>, marque:'<?= $vehicule->marqueVehicule ?>', modele:'<?= $vehicule->modeleVehicule ?>', annee:'<?= $vehicule->anneeVehicule ?>', couleur:'<?= $vehicule->couleurVehicule ?>', boite:'<?= $vehicule->typeBoiteVehicule ?>', carburant:'<?= $vehicule->typeCarburantVehicule ?>', prix:'<?= $vehicule->prixVehicule ?>', cat:'<?= $vehicule->idCategorie ?>', img:'<?= $vehicule->imageVehicule ?>'})" class="w-8 h-8 rounded-lg bg-slate-100 text-blue-600 hover:bg-blue-600 hover:text-white transition"><i class="fas fa-edit text-xs"></i></button>
-                                    <button onclick="openDeleteModal(1)" class="w-8 h-8 rounded-lg bg-slate-100 text-red-500 hover:bg-red-600 hover:text-white transition"><i class="fas fa-trash text-xs"></i></button>
+                                    <button onclick="openDeleteModal({id:<?= (int)$vehicule->idVehicule ?>})" class="w-8 h-8 rounded-lg bg-slate-100 text-red-500 hover:bg-red-600 hover:text-white transition"><i class="fas fa-trash text-xs"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -206,8 +206,10 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admi
             <div class="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl"><i class="fas fa-trash-alt"></i></div>
             <h3 class="text-xl font-bold text-slate-800 mb-2">Are you sure?</h3>
             <p class="text-slate-400 text-sm mb-6">This action cannot be undone.</p>
-            <form action="process.php?action=delete" method="POST" class="flex gap-3">
-                <input type="hidden" name="idVehicule" id="delete_id">
+            <form action="../controler/AdminControler.php" method="POST" class="flex gap-3">
+                <input type="hidden" name="idVehicule" id="delete_id" required>
+                <input type="hidden" name="page" value="admin_fleet">
+                <input type="hidden" name="action" value="delete">
                 <button type="button" onclick="toggleModal('deleteModal')" class="flex-1 py-3 font-bold text-slate-400 bg-slate-50 rounded-xl">No, Cancel</button>
                 <button type="submit" class="flex-1 py-3 bg-red-500 text-white rounded-xl font-bold shadow-lg shadow-red-100">Yes, Delete</button>
             </form>

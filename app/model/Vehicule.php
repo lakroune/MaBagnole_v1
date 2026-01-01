@@ -92,11 +92,13 @@ class Vehicule
     //supprimer Vehicule 
     public function supprimerVehicule(int $idVehicule): bool
     {
+        if ($idVehicule <= 0)
+            return false;
         try {
             $db = Connexion::connect()->getConnexion();
             $sql = "delete from vehicules where idVehicule=:idVehicule";
             $stmt = $db->prepare($sql);
-            $stmt->bindParam(":idVehicule", $idVehicule);
+            $stmt->bindParam(":idVehicule", $idVehicule, \PDO::PARAM_INT);
             if ($stmt->execute())
                 return true;
             else

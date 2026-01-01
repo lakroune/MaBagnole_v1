@@ -5,7 +5,6 @@ namespace app\controler;
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 use app\model\Client;
-use app\model\Reservation;
 use app\model\Vehicule;
 use app\model\Categorie;
 
@@ -44,25 +43,30 @@ class AdminControler
 
     public function gererVehicule()
     {
-        $vehicule = new Vehicule();
-        $vehicule->idVehicule = $_POST["idVehicule"] ?? "";
-        $vehicule->marqueVehicule = $_POST["marqueVehicule"] ?? "";
-        $vehicule->modeleVehicule = $_POST["modeleVehicule"] ?? "";
-        $vehicule->anneeVehicule = $_POST["anneeVehicule"] ?? "";
-        $vehicule->couleurVehicule = $_POST["couleurVehicule"] ?? "";
-        $vehicule->prixVehicule = $_POST["prixVehicule"] ?? "";
-        $vehicule->typeBoiteVehicule = $_POST["typeBoiteVehicule"] ?? "";
-        $vehicule->typeCarburantVehicule = $_POST["typeCarburantVehicule"] ?? "";
-        $vehicule->imageVehicule = $_POST["imageVehicule"] ?? "";
-        $vehicule->idCategorie = $_POST["idCategorie"] ?? "";
-        if (isset($_POST["action"]) && $_POST["action"] == "add" && $vehicule->ajouterVehicule())
-            return "seccess";
-        elseif (isset($_POST["action"]) && $_POST["action"] == "update" && $vehicule->modifierVehicule())
-            return "seccess";
-        elseif (isset($_POST["action"]) && $_POST["action"] == "delete" && $vehicule->supprimerVehicule())
-            return "seccess";
-        else
+        try {
+            $vehicule = new Vehicule();
+            $vehicule->idVehicule = intval($_POST["idVehicule"]) ?? "";
+            $vehicule->marqueVehicule = $_POST["marqueVehicule"] ?? "";
+            $vehicule->modeleVehicule = $_POST["modeleVehicule"] ?? "";
+            $vehicule->anneeVehicule = $_POST["anneeVehicule"] ?? "";
+            $vehicule->couleurVehicule = $_POST["couleurVehicule"] ?? "";
+            $vehicule->prixVehicule = $_POST["prixVehicule"] ?? "";
+            $vehicule->typeBoiteVehicule = $_POST["typeBoiteVehicule"] ?? "";
+            $vehicule->typeCarburantVehicule = $_POST["typeCarburantVehicule"] ?? "";
+            $vehicule->imageVehicule = $_POST["imageVehicule"] ?? "";
+            $vehicule->idCategorie = intval($_POST["idCategorie"]) ?? "";
+            if (isset($_POST["action"]) && $_POST["action"] == "add" && $vehicule->ajouterVehicule())
+                return "seccess";
+            elseif (isset($_POST["action"]) && $_POST["action"] == "update" && $vehicule->modifierVehicule())
+                return "seccess";
+            elseif (isset($_POST["action"]) && $_POST["action"] == "delete" && $vehicule->supprimerVehicule($vehicule->idVehicule??2))
+                return "seccess";
+            else
+                return "failed";
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
             return "failed";
+        }
     }
 
     public function gererCategories(): string
