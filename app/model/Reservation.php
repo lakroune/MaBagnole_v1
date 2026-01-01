@@ -165,9 +165,91 @@ class Reservation
 
     public function getNbReservationActive()
     {
-        
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $sql = "select count(*) as total from reservations where statusReservation='confirmer' and dateFinReservation > now() and dateDebutReservation < now()";
+            $stmt = $db->prepare($sql);
+            if ($stmt->execute()) {
+                $reservation = $stmt->fetch(\PDO::FETCH_OBJ);
+                return $reservation->total;
+            } else {
+                return 0;
+            }
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return 0;
+        }
+    }
+
+    public function getNbReservationAnnuler()
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $sql = "select count(*) as total from reservations where statusReservation='annuler'";
+            $stmt = $db->prepare($sql);
+            if ($stmt->execute()) {
+                $reservation = $stmt->fetch(\PDO::FETCH_OBJ);
+                return $reservation->total;
+            } else {
+                return 0;
+            }
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return 0;
+        }
+    }
+    public function getNbReservationConfirmer()
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $sql = "select count(*) as total from reservations where statusReservation='confirmer'";
+            $stmt = $db->prepare($sql);
+            if ($stmt->execute()) {
+                $reservation = $stmt->fetch(\PDO::FETCH_OBJ);
+                return $reservation->total;
+            } else {
+                return 0;
+            }
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return 0;
+        }
+    }
+    public function getNbReservationEnCours()
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $sql = "select count(*) as total from reservations where statusReservation='en cours'";
+            $stmt = $db->prepare($sql);
+            if ($stmt->execute()) {
+                $reservation = $stmt->fetch(\PDO::FETCH_OBJ);
+                return $reservation->total;
+            } else {
+                return 0;
+            }
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return 0;
+        }
+    }
+
+    public function getRevenueReservation()
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $sql = "select sum(v.prixVehicule) as total from reservations r inner join vehicules v on r.idVehicule=v.idVehicule where r.statusReservation='confirmer' ";
+            $stmt = $db->prepare($sql);
+            if ($stmt->execute()) {
+                $reservation = $stmt->fetch(\PDO::FETCH_OBJ);
+                return $reservation->total;
+            } else {
+                return 0;
+            }
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return 0;
+        }
     }
 }
 
-$reservation = new Reservation();
-echo $reservation->getNbReservationToDay();
+ 

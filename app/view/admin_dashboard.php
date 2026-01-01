@@ -2,11 +2,8 @@
 
 namespace app\view;
 
-require_once __DIR__ . '/../model/Utilisateur.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
-use app\model\Utilisateur;
-use app\model\Connexion;
-use app\model\Admin;
 use app\model\Client;
 use app\model\Vehicule;
 use app\model\Categorie;
@@ -19,11 +16,24 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admi
     header('Location: login.php');
     exit();
 } else {
+    $client = new Client();
+    $reservation = new Reservation();
+    $vehicule = new Vehicule();
+    $categorie = new Categorie();
+
     $statistiques = [
-        'total_clients' => Client::counterClients(),
-        'total_vehicules' => Vehicule::counterVehicules(),
-        'total_categories' => Categorie::counterCategorie(),
-        'total_reservations' => Reservation::counterReservations(),
+        'totalClients' => $client->counterClients(),
+        'totalVehicules' => $vehicule->counterVehicules(),
+        'totalCategories' => $categorie->counterCategorie(),
+        'totalReservations' => $reservation->counterReservations(),
+        'ClientsNouveaux' => $client->getNbClientsCreateToDay(),
+        'RerservationsCreatesToday' => $reservation->getNbReservationToDay(),
+        'RerservationsActive' => $reservation->getNbReservationActive(),
+        'RerservationsConfirmer' => $reservation->getNbReservationConfirmer(),
+        'RerservationsEnCours' => $reservation->getNbReservationEnCours(),
+        'RerservationsAnnuler' => $reservation->getNbReservationAnnuler(),
+        'RevenueReservation' => $reservation->getRevenueReservation(),
+        'VehiculesDisponibles' => $vehicule->getNbVehiculeDisponible()
     ];
 }
 
@@ -90,26 +100,26 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admi
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
             <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100">
                 <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2">Revenue</p>
-                <h3 class="text-3xl font-black text-slate-800">$12,850</h3>
+                <h3 class="text-3xl font-black text-slate-800">$<?php echo $statistiques['RevenueReservation']; ?></h3>
                 <p class="text-green-500 text-xs font-bold mt-2">+12.5% vs last month</p>
             </div>
 
             <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100">
                 <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2">Total Bookings</p>
-                <h3 class="text-3xl font-black text-slate-800">142</h3>
-                <p class="text-blue-500 text-xs font-bold mt-2">Active reservations: <?php echo $stats['total_clients']; ?></p>
+                <h3 class="text-3xl font-black text-slate-800"><?php echo $statistiques['totalReservations']; ?></h3>
+                <p class="text-blue-500 text-xs font-bold mt-2">Active reservations: <?php echo $statistiques['RerservationsActive']; ?></p>
             </div>
 
             <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100">
                 <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2">Fleet Size</p>
-                <h3 class="text-3xl font-black text-slate-800">45</h3>
-                <p class="text-slate-400 text-xs font-bold mt-2">Available for rent: 27</p>
+                <h3 class="text-3xl font-black text-slate-800"><?php echo $statistiques['totalVehicules']; ?></h3>
+                <p class="text-slate-400 text-xs font-bold mt-2">Available for rent: <?php echo $statistiques['VehiculesDisponibles']; ?></p>
             </div>
 
             <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100">
                 <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2">Active Users</p>
-                <h3 class="text-3xl font-black text-slate-800">892</h3>
-                <p class="text-purple-500 text-xs font-bold mt-2">New users today: +4</p>
+                <h3 class="text-3xl font-black text-slate-800"><?php echo $statistiques['totalClients']; ?></h3>
+                <p class="text-purple-500 text-xs font-bold mt-2">New users today: +<?php echo $statistiques['ClientsNouveaux']; ?></p>
             </div>
         </div>
 
@@ -122,15 +132,15 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admi
                 <div class="space-y-4">
                     <div class="flex items-center justify-between p-4 bg-slate-50 rounded-2xl">
                         <span class="text-sm font-bold text-slate-600">Confirmed & Paid</span>
-                        <span class="font-black text-blue-600 text-lg">84</span>
+                        <span class="font-black text-blue-600 text-lg"><?php echo $statistiques['RerservationsActive']; ?></span>
                     </div>
                     <div class="flex items-center justify-between p-4 bg-slate-50 rounded-2xl">
                         <span class="text-sm font-bold text-slate-600">Pending Approval</span>
-                        <span class="font-black text-orange-500 text-lg">12</span>
+                        <span class="font-black text-orange-500 text-lg"><?php echo $statistiques['RerservationsEnCours']; ?></span>
                     </div>
                     <div class="flex items-center justify-between p-4 bg-slate-50 rounded-2xl">
                         <span class="text-sm font-bold text-slate-600">Canceled</span>
-                        <span class="font-black text-red-500 text-lg">14</span>
+                        <span class="font-black text-red-500 text-lg"><?php echo $statistiques['RerservationsAnnuler']; ?></span>
                     </div>
                 </div>
             </div>

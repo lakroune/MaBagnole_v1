@@ -2,6 +2,10 @@
 
 namespace app\model;
 
+require __DIR__ . '/../../vendor/autoload.php';
+
+use app\model\Connexion;
+
 class Vehicule
 {
     private int $idVehicule;
@@ -13,6 +17,7 @@ class Vehicule
     private string $typeCarburantVehicule;
     private string $couleurVehicule;
     private string $prixVehicule;
+    private int $statusVehicule;
     private int $idCategorie;
 
     //constructeur par default
@@ -31,7 +36,7 @@ class Vehicule
     //tostring
     public function __toString()
     {
-        return "Vehicule [idVehicule=$this->idVehicule, marqueVehicule=$this->marqueVehicule, modeleVehicule=$this->modeleVehicule, anneeVehicule=$this->anneeVehicule, imageVehicule=$this->imageVehicule, typeBoiteVehicule=$this->typeBoiteVehicule, typeCarburantVehicule=$this->typeCarburantVehicule, couleurVehicule=$this->couleurVehicule, prixVehicule=$this->prixVehicule, idCategorie=$this->idCategorie]";
+        return "Vehicule [idVehicule=$this->idVehicule, marqueVehicule=$this->marqueVehicule, modeleVehicule=$this->modeleVehicule, anneeVehicule=$this->anneeVehicule,statusVehicule=$this->statusVehicule, imageVehicule=$this->imageVehicule, typeBoiteVehicule=$this->typeBoiteVehicule, typeCarburantVehicule=$this->typeCarburantVehicule, couleurVehicule=$this->couleurVehicule, prixVehicule=$this->prixVehicule, idCategorie=$this->idCategorie]";
     }
     //ajouter Vehicule
     public function ajouterVehicule()
@@ -163,6 +168,20 @@ class Vehicule
         try {
             $db = Connexion::connect()->getConnexion();
             $sql = "select count(*) as total from vehicules";
+            $stmt = $db->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(\PDO::FETCH_OBJ);
+            return (int)$result->total;
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return 0;
+        }
+    }
+    public function getNbVehiculeDisponible(): int
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $sql = "select count(*) as total from vehicules where idVehicule not in (select idVehicule from reservations where statusReservation='confirmer' and dateFinReservation >= now())";
             $stmt = $db->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetch(\PDO::FETCH_OBJ);

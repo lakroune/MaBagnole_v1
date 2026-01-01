@@ -37,6 +37,7 @@ CREATE table Vehicules (
         'electrique',
         'hybride'
     ),
+    statusVehicule ENUM('0', '1') DEFAULT 1,
     couleurVehicule varchar(255) NOT NULL,
     prixVehicule DECIMAL(10, 2) NOT NULL,
     idCategorie int(11) NOT NULL,
@@ -108,20 +109,26 @@ CREATE Table reagirAvis (
 --insert admin 
 insert into Utilisateurs (nomUtilisateur, prenomUtilisateur, email, password, role) values ('admin', 'admin', 'admin@admin.com', '$2y$10$NjdjKf8cL4qvDtjE4ApGF.lq742z0QDrdJyWxn5.fRJaVFGWJgtYS', 'admin');
 
---inser client
-insert into Utilisateurs (nomUtilisateur, prenomUtilisateur, email, password) values ('client', 'client', 'client@client.com', '$2y$10$NjdjKf8cL4qvDtjE4ApGF.lq742z0QDrdJyWxn5.fRJaVFGWJgtYS');
+--inser client 3
+INSERT INTO utilisateurs (nomUtilisateur, prenomUtilisateur, email, password) VALUES ('client', 'client', 'client@client.com', '$2y$10$NjdjKf8cL4qvDtjE4ApGF.lq742z0QDrdJyWxn5.fRJaVFGWJgtYS'); 
+INSERT  INTO    utilisateurs (nomUtilisateur, prenomUtilisateur, email, password) VALUES ('client', 'client', 'client1@client.com', '$2y$10$NjdjKf8cL4qvDtjE4ApGF.lq742z0QDrdJyWxn5.fRJaVFGWJgtYS'); 
+insert into Utilisateurs (nomUtilisateur, prenomUtilisateur, email, password) values ('client', 'client', 'client2@client.com', '$2y$10$NjdjKf8cL4qvDtjE4ApGF.lq742z0QDrdJyWxn5.fRJaVFGWJgtYS');
 --insert categorie
 insert into Categories (titreCategorie, descriptionCategorie) values ('Voiture', 'Voiture de tourisme');
 insert into Categories (titreCategorie, descriptionCategorie) values ('Moto', 'Moto de tourisme');
 insert into Categories (titreCategorie, descriptionCategorie) values ('Camion', 'Camion de tourisme');
 
---insert int vehicule
+--insert int vehicule 4
+
 insert INTO vehicules   (idCategorie, marqueVehicule, modeleVehicule, anneeVehicule, imageVehicule, typeBoiteVehicule, typeCarburantVehicule, couleurVehicule, prixVehicule) VALUES (1, 'Mercedes', 'C63', 2019, 'https://static-cdn.vehicule.fr/vehicules/mercedes-c63-2019-1.jpg', 'Moteur 6 cylindres', 'Essence', 'Noir', 100000);
 
 --insert reservation
 insert into Reservations (dateDebutReservation, dateFinReservation, lieuChange, idVehicule, idClient) values (now(), now(), 'Lieu', 1, 2);
-INSERT  INTO `reservations` (`dateDebutReservation`, `dateFinReservation`, `lieuChange`, `idVehicule`, `idClient`) VALUES ('2023-03-24 10:00:00', '2023-03-24 12:00:00', 'Lieu', 1, 1);
+INSERT  INTO `reservations` (`dateDebutReservation`, `dateFinReservation`, `lieuChange`, `idVehicule`, `idClient`) VALUES ('2026-01-01 10:00:00', '2026-01-05 12:00:00', 'Lieu', 1, 1);
+-- inser reservation confirmed
+insert into Reservations (dateDebutReservation, dateFinReservation, lieuChange, idVehicule, idClient, statusReservation) values (now(), '2026-01-05 12:00:00', 'Lieu', 1, 2, 'confirmer');
 --insert option
+
 insert into Option (titreOption, descriptionOption, prixOption) values ('Option 1', 'Description option 1', 1000);
 insert into Option (titreOption, descriptionOption, prixOption) values ('Option 2', 'Description option 2', 2000);
 insert into Option (titreOption, descriptionOption, prixOption) values ('Option 3', 'Description option 3', 3000);

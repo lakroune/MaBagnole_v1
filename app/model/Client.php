@@ -83,7 +83,7 @@ class Client extends Utilisateur
             return false;
         }
     }
-    public function getClientById(int $idClient):?Client
+    public function getClientById(int $idClient): ?Client
     {
         try {
             $db = Connexion::connect()->getConnexion();
@@ -102,7 +102,7 @@ class Client extends Utilisateur
             return null;
         }
     }
-    public function getClientByEmail(string $email):?Client
+    public function getClientByEmail(string $email): ?Client
     {
         try {
             $db = Connexion::connect()->getConnexion();
@@ -137,13 +137,29 @@ class Client extends Utilisateur
         }
     }
 
-     
+
     public static function counterClients(): int
     {
         try {
             $db = Connexion::connect()->getConnexion();
             $sql = "select count(*) as total from utilisateurs where role='client'";
             $stmt = $db->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(\PDO::FETCH_OBJ);
+            return (int)$result->total;
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return 0;
+        }
+    }
+    public function getNbClientsCreateToDay(): int
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $toDay = date('Y-m-d');
+            $sql = "select count(*) as total from utilisateurs where createdAt like :dateCreation and role='client'";
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(":dateCreation", $toDay . "%");
             $stmt->execute();
             $result = $stmt->fetch(\PDO::FETCH_OBJ);
             return (int)$result->total;
