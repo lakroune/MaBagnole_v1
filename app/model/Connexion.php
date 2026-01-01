@@ -1,6 +1,6 @@
 <?php
 
-// namespace app\model;
+namespace app\model;
 
 class Connexion
 {
@@ -8,18 +8,18 @@ class Connexion
     private string $userDB = "root";
     private string $passDB  = "";
     private string $hostDB = "localhost";
-    private PDO $pdo;
+    private  $pdo;
     private static $instance = null;
     // constructeur private pour eviter l'instanciation de la class
     private function __construct()
     {
         try {
-            $pdo = new PDO("mysql:dbname=$this->nomDB;host=$this->hostDB", $this->userDB, $this->passDB);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+           $pdo = new \PDO("mysql:host=$this->hostDB;dbname=$this->nomDB;charset=utf8", $this->userDB, $this->passDB);
+            $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             $this->pdo = $pdo;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
-            return null;
+            $this->pdo = null;
         }
     }
     public static function connect()

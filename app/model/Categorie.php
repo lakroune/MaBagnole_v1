@@ -1,15 +1,7 @@
-<!-- CREATe Table Categories (
-    idCategorie int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    titreCategorie varchar(255) NOT NULL,
-    descriptionCategorie varchar(255) NOT NULL
-); -->
-
-
-
 <?php
+namespace app\model;
 
-
-class Categotier
+class Categorie
 {
     private int $idCategorie;
     private string $titreCategorie;

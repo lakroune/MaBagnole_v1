@@ -1,5 +1,9 @@
 <?php
 
+namespace app\model;
+
+use app\model\Utilisateur;
+
 class Admin extends Utilisateur
 
 {
@@ -11,6 +15,6 @@ class Admin extends Utilisateur
     //tostring
     public function __toString()
     {
-        return parent::__toString() ;
+        return parent::__toString();
     }
 }

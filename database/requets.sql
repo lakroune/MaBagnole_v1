@@ -1,16 +1,18 @@
 -- Active: 1765826464238@@127.0.0.1@3306@mabagnole
 drop DATABASE IF EXISTS MaBagnole;
+
 CREATE DATABASE MaBagnole;
+
 USE MaBagnole;
 
 CREATE Table Utilisateurs (
     idUtilisateur int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     nomUtilisateur varchar(255) NOT NULL,
     prenomUtilisateur varchar(255) NOT NULL,
-    telephone varchar(255),
+    telephone varchar(255) UNIQUE,
     ville varchar(255),
-    email varchar(255) NOT NULL,
-    paword varchar(255) NOT NULL,
+    email varchar(255) NOT NULL UNIQUE,
+    password varchar(255) NOT NULL,
     role ENUM('admin', 'client') DEFAULT 'client',
     statusUtilisateur ENUM('0', '1') DEFAULT 1,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -36,15 +38,15 @@ CREATE table Vehicules (
         'hybride'
     ),
     couleurVehicule varchar(255) NOT NULL,
-    prixVehicule varchar(255) NOT NULL,
+    prixVehicule DECIMAL(10, 2) NOT NULL,
     idCategorie int(11) NOT NULL,
     FOREIGN KEY (idCategorie) REFERENCES Categories (idCategorie)
 );
 
 CREATE table Reservations (
     idReservation int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    dateDebutReservation date NOT NULL,
-    dateFinReservation date NOT NULL,
+    dateDebutReservation DATETIME NOT NULL,
+    dateFinReservation DATETIME NOT NULL,
     lieuChange varchar(255) NOT NULL,
     idVehicule int(11) NOT NULL,
     statusReservation ENUM(
@@ -75,11 +77,12 @@ CREATE Table optionReservation (
 CREATE table Avis (
     idAvis int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     commmentaireAvis varchar(255) NOT NULL,
-    noteAvis int(11) NOT NULL,
+    noteAvis int(1) NOT NULL,
     datePublicationAvis TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     idReservation int(11) NOT NULL,
     statusAvis ENUM("0", "1") DEFAULT 1,
     idClient int(11) NOT NULL,
+    constraint check_noteAvis check (noteAvis between 1 and 5),
     FOREIGN KEY (idReservation) REFERENCES Reservations (idReservation),
     FOREIGN KEY (idClient) REFERENCES Utilisateurs (idUtilisateur)
 );
@@ -100,3 +103,7 @@ CREATE Table reagirAvis (
     FOREIGN KEY (idAvis) REFERENCES Avis (idAvis),
     FOREIGN KEY (idClient) REFERENCES Utilisateurs (idUtilisateur)
 );
+
+
+-- select utilisateur
+select * from Utilisateurs;

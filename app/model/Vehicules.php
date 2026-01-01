@@ -1,5 +1,7 @@
-
 <?php
+
+namespace app\model;
+
 class Vehicules
 {
     private int $idVehicule;
@@ -14,39 +16,32 @@ class Vehicules
     private int $idCategorie;
 
     //constructeur par default
-    public function __construct()
-    {
-        
-    }
+    public function __construct() {}
     //getters
-    public function __get($aturibut)
+    public function __get($attribute)
     {
-        return $this->$aturibut;
+        return $this->$attribute;
     }
     //setters
-    public function __set($aturibut, $value)
+    public function __set($attribute, $value)
     {
-        $this->$aturibut = $value;
+        $this->$attribute = $value;
     }
 
     //tostring
-   public function __toString()
-   {
-    
-   }
-   //ajouter Vehicule
-   public function ajouterVehicule() {}
-   //modifier Vehicule
-   public function modifierVehicule() {}
-   //supprimer Vehicule
-   public function supprimerVehicule() {}
-   //getVehicule
-   public function getVehicule() {}
-   //getAllVehicules
-   public function getAllVehicules() {}
-   //getVehiculesByCategorie
-   public function getVehiculesByCategorie() {}
-   //getVehiculesByMarque
-   public function getVehiculesByMarque() {}
-   
+    public function __toString() {}
+    //ajouter Vehicule
+    public function ajouterVehicule() {}
+    //modifier Vehicule
+    public function modifierVehicule() {}
+    //supprimer Vehicule
+    public function supprimerVehicule() {}
+    //getVehicule
+    public function getVehicule() {}
+    //getAllVehicules
+    public function getAllVehicules() {}
+    //getVehiculesByCategorie
+    public function getVehiculesByCategorie() {}
+    //getVehiculesByMarque
+    public function getVehiculesByMarque() {}
 }

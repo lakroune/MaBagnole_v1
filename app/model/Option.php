@@ -1,5 +1,5 @@
 <?php
-
+namespace app\model;
 class Option
 {
     private int $idOptionReservation;
@@ -9,11 +9,11 @@ class Option
     // constructeur
     public function __construct() {}
     // getters
-    public function __get($aturibut) {}
+    public function __get($attribute) {}
     // setters
-    public function __set($aturibut, $value)
+    public function __set($attribute, $value)
     {
-        $this->$aturibut = $value;
+        $this->$attribute = $value;
     }
     // tostring
     public function __toString() {}
