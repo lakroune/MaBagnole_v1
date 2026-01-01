@@ -1,3 +1,23 @@
+<?php
+
+namespace app\view;
+
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+use app\model\Reservation;
+use DateTime;
+
+session_start();
+
+if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admin') {
+    header('Location: login.php');
+    exit();
+} else {
+
+    $reservation = new Reservation();
+    $reservations = $reservation->getAllReservations();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -81,33 +101,36 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
-                    <tr class="hover:bg-slate-50/50 transition">
-                        <td class="px-4 py-4">
-                            <p class="font-bold text-slate-800">#RES-2025-01</p>
-                            <p class="text-xs text-slate-400">Client ID: #88</p>
-                        </td>
-                        <td class="px-4 py-4">
-                            <p class="font-medium text-slate-700">Ferrari F8 Tributo</p>
-                        </td>
-                        <td class="px-4 py-4">
-                            <div class="text-xs">
-                                <p class="font-bold">30/12/2025 → 02/01/2026</p>
-                                <p class="text-blue-500">3 Days</p>
-                            </div>
-                        </td>
-                        <td class="px-4 py-4 text-xs font-medium text-slate-600">
-                            <i class="fas fa-map-marker-alt mr-1"></i> Casablanca Airport
-                        </td>
-                        <td class="px-4 py-4">
-                            <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-blue-50 text-blue-600">En cours</span>
-                        </td>
-                        <td class="px-4 py-4">
-                            <div class="flex gap-2">
-                                <button onclick="openDetailsModal({id:1, options:['GPS', 'Multimedia'], total:'$1350'})" class="p-2 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200"><i class="fas fa-eye text-xs"></i></button>
-                                <button onclick="openStatusModal(1, 'en cours')" class="p-2 bg-slate-100 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition"><i class="fas fa-sync text-xs"></i></button>
-                            </div>
-                        </td>
-                    </tr>
+                    <?php if ($reservations)   ?>
+                    <?php foreach ($reservations as $reservation) : ?>
+                        <tr class="hover:bg-slate-50/50 transition">
+                            <td class="px-4 py-4">
+                                <p class="font-bold text-slate-800">#RES-2025-01</p>
+                                <p class="text-xs text-slate-400">Client ID: #<?= $reservation->idClient ?></p>
+                            </td>
+                            <td class="px-4 py-4">
+                                <p class="font-medium text-slate-700">Ferrari F8 Tributo</p>
+                            </td>
+                            <td class="px-4 py-4">
+                                <div class="text-xs">
+                                    <p class="font-bold"><?= (new \DateTime($reservation->dateDebutReservation))->format('d/m/Y') ?> → <?= (new \DateTime($reservation->dateFinReservation))->format('d/m/Y') ?></p>
+                                    <p class="text-blue-500"><?= floor((strtotime($reservation->dateFinReservation) - strtotime($reservation->dateDebutReservation)) / (60 * 60 * 24)) ?> jours</p>
+                                </div>
+                            </td>
+                            <td class="px-4 py-4 text-xs font-medium text-slate-600">
+                                <i class="fas fa-map-marker-alt mr-1"></i><?= $reservation->lieuChange ?>
+                            </td>
+                            <td class="px-4 py-4">
+                                <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-blue-50 text-blue-600"><?= $reservation->statusReservation ?></span>
+                            </td>
+                            <td class="px-4 py-4">
+                                <div class="flex gap-2">
+                                    <button onclick="openDetailsModal({id:1, options:['GPS', 'Multimedia'], total:'$1350'})" class="p-2 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200"><i class="fas fa-eye text-xs"></i></button>
+                                    <button onclick="openStatusModal(1, 'en cours')" class="p-2 bg-slate-100 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition"><i class="fas fa-sync text-xs"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
