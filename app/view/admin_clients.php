@@ -1,5 +1,28 @@
+<?php
+
+namespace app\view;
+
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+use app\model\Categorie;
+use app\model\Client;
+
+
+
+session_start();
+
+if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admin') {
+    header('Location: login.php');
+    exit();
+} else {
+
+    $client = new Client();
+    $clients = $client->getAllClients();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,20 +32,27 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <style>
         .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-            background: #2563eb !important; color: white !important; border-radius: 8px; border: none;
+            background: #2563eb !important;
+            color: white !important;
+            border-radius: 8px;
+            border: none;
         }
-        table.dataTable.no-footer { border-bottom: 1px solid #e2e8f0; }
+
+        table.dataTable.no-footer {
+            border-bottom: 1px solid #e2e8f0;
+        }
     </style>
 </head>
+
 <body class="bg-slate-50 min-h-screen flex">
 
-      <aside class="w-64 bg-slate-900 min-h-screen text-white flex flex-col sticky top-0 hidden md:flex">
+    <aside class="w-64 bg-slate-900 min-h-screen text-white flex flex-col sticky top-0 hidden md:flex">
         <div class="p-6 flex-1">
             <div class="mb-10">
                 <span class="text-2xl font-black text-blue-500">Ma<span class="text-white">Bagnole</span></span>
                 <p class="text-[10px] text-slate-400 tracking-widest uppercase mt-1">Admin Panel</p>
             </div>
-            
+
             <nav class="space-y-4">
                 <a href="admin_dashboard.php" class="flex items-center gap-3 text-blue-500 font-bold bg-blue-500/10 p-3 rounded-xl">
                     <i class="fas fa-chart-line"></i> Dashboard
@@ -68,54 +98,62 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
-                    <tr class="hover:bg-slate-50/50 transition">
-                        <td class="px-4 py-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600">AH</div>
-                                <div>
-                                    <p class="font-bold text-slate-800">Ahmed Hassan</p>
-                                    <p class="text-[10px] text-slate-400 uppercase">ID: #992</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-4 py-4">
-                            <p class="text-sm font-medium text-slate-600">ahmed@example.com</p>
-                            <p class="text-[10px] text-slate-400">+212 600-112233</p>
-                        </td>
-                        <td class="px-4 py-4">
-                            <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-green-50 text-green-600 border border-green-100">Active</span>
-                        </td>
-                        <td class="px-4 py-4">
-                            <button onclick="confirmStatusChange(992, 'Ahmed Hassan', 'suspend')" 
-                                    class="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition text-xs font-bold">
-                                <i class="fas fa-user-slash"></i> Suspend
-                            </button>
-                        </td>
-                    </tr>
+                    <?php if ($clients) ?>
+                    <?php foreach ($clients as $client) : ?>
+                        <?php if ($client->statusClient == 1) : ?>
+                            <tr class="hover:bg-slate-50/50 transition">
+                                <td class="px-4 py-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600">AH</div>
+                                        <div>
+                                            <p class="font-bold text-slate-800"><?= $client->nomUtilisateur . " " . $client->prenomUtilisateur ?></p>
+                                            <p class="text-[10px] text-slate-400 uppercase">ID: #<?= $client->idUtilisateur ?></p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-4">
+                                    <p class="text-sm font-medium text-slate-600"><?= $client->email ?></p>
+                                    <p class="text-[10px] text-slate-400"><?= $client->telephone ?></p>
+                                </td>
+                                <td class="px-4 py-4">
+                                    <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-green-50 text-green-600 border border-green-100">Active</span>
+                                </td>
+                                <td class="px-4 py-4">
+                                    <button onclick="confirmStatusChange(<?= $client->idUtilisateur ?>,' <?= $client->nomUtilisateur ?>','<?= $client->statusClient ?>' )"
+                                        class="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition text-xs font-bold">
+                                        <i class="fas fa-user-slash"></i> Suspend
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php elseif ($client->statusClient == 0) : ?>
+                            <tr class="hover:bg-slate-50/50 transition">
+                                <td class="px-4 py-4 opacity-60">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-400">KO</div>
+                                        <div>
+                                            <p class="font-bold text-slate-800"><?= $client->nomUtilisateur . " " . $client->prenomUtilisateur ?></p>
+                                            <p class="text-[10px] text-slate-400 uppercase">ID: #<?= $client->idUtilisateur ?></p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-4 opacity-60">
+                                    <p class="text-sm font-medium text-slate-600"><?= $client->email ?>
+                                    </p>
+                                    <p class="text-[10px] text-slate-400"><?= $client->telephone ?> </p>
+                                </td>
+                                <td class="px-4 py-4">
+                                    <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-red-50 text-red-600 border border-red-100">Suspended</span>
+                                </td>
+                                <td class="px-4 py-4">
+                                    <button onclick="confirmStatusChange(<?= $client->idUtilisateur ?>, '<?= $client->nomUtilisateur ?>', '<?= $client->statusClient ?>')"
+                                        class="flex items-center gap-2 px-4 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-600 hover:text-white transition text-xs font-bold">
+                                        <i class="fas fa-user-check"></i> Activate
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
 
-                    <tr class="hover:bg-slate-50/50 transition">
-                        <td class="px-4 py-4 opacity-60">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-400">KO</div>
-                                <div>
-                                    <p class="font-bold text-slate-800">Karim Omar</p>
-                                    <p class="text-[10px] text-slate-400 uppercase">ID: #450</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-4 py-4 opacity-60">
-                            <p class="text-sm font-medium text-slate-600">karim.o@mail.com</p>
-                        </td>
-                        <td class="px-4 py-4">
-                            <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-red-50 text-red-600 border border-red-100">Suspended</span>
-                        </td>
-                        <td class="px-4 py-4">
-                            <button onclick="confirmStatusChange(450, 'Karim Omar', 'activate')" 
-                                    class="flex items-center gap-2 px-4 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-600 hover:text-white transition text-xs font-bold">
-                                <i class="fas fa-user-check"></i> Activate
-                            </button>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>
@@ -126,16 +164,17 @@
             <div id="modalIconContainer" class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl">
                 <i id="modalIcon" class="fas"></i>
             </div>
-            
+
             <h3 id="modalTitle" class="text-xl font-bold text-slate-800 mb-2">Confirm Action</h3>
             <p class="text-slate-400 text-sm mb-8">
                 Are you sure you want to change the status of <span id="modalClientName" class="font-bold text-slate-700"></span>?
             </p>
-            
-            <form action="process_client.php" method="POST" class="flex gap-3">
-                <input type="hidden" name="idUtilisateur" id="modalUserId">
-                <input type="hidden" name="action_type" id="modalActionType">
-                
+
+            <form action="../controler/AdminControler.php" method="POST" class="flex gap-3">
+                <input type="hidden" name="idClient" id="modalUserId">
+                <input type="hidden" name="statusClient" id="modalActionType">
+                <input type="hidden" name="page" value="admin_clients">
+
                 <button type="button" onclick="closeStatusModal()" class="flex-1 px-6 py-3 font-bold text-slate-400 bg-slate-50 rounded-xl hover:bg-slate-100 transition">
                     Cancel
                 </button>
@@ -149,11 +188,23 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script>
-        $(document).ready(function() { 
-            $('#clientTable').DataTable({ 
-                pageLength: 10,
-                language: { search: "", searchPlaceholder: "Search clients..." }
-            }); 
+        $(document).ready(function() {
+            $('#clientTable').DataTable({
+                pageLength: 7,
+                // lengthMenu: [7, 10, 20, 50],
+                // responsive: true,
+                // autoWidth: false,
+                // scrollX: true,
+                // scrollCollapse: true,
+                // ordering: false,
+                // info: false,
+                // pagingType: "simple",
+                // dom: "tipr",
+                // language: {
+                // search: "",
+                // searchPlaceholder: "Search clients..."
+                // }
+            });
         });
 
         function confirmStatusChange(id, name, type) {
@@ -162,12 +213,17 @@
             const icon = document.getElementById('modalIcon');
             const title = document.getElementById('modalTitle');
             const submitBtn = document.getElementById('modalSubmitBtn');
-            
+            let actionType = "";
+            if (type == 1) {
+                actionType = "suspend";
+            } else {
+                actionType = "activate";
+            }
             document.getElementById('modalUserId').value = id;
-            document.getElementById('modalActionType').value = type;
+            document.getElementById('modalActionType').value = actionType;
             document.getElementById('modalClientName').innerText = name;
 
-            if (type === 'suspend') {
+            if (type == 1) {
                 iconContainer.className = "w-20 h-20 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl";
                 icon.className = "fas fa-user-lock";
                 title.innerText = "Suspend Account";
@@ -189,4 +245,5 @@
         }
     </script>
 </body>
+
 </html>

@@ -121,7 +121,7 @@ class Client extends Utilisateur
             return null;
         }
     }
-    public static function getAllClients(): array
+    public  function getAllClients(): array
     {
         $clients = [];
         try {
@@ -168,4 +168,37 @@ class Client extends Utilisateur
             return 0;
         }
     }
+    public function activateClient(int $idClient): bool
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $sql = "update utilisateurs set statusClient=1 where idUtilisateur=:idClient";
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(":idClient", $idClient);
+            if ($stmt->execute())
+                return true;
+            else
+                return false;
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return false;
+        }
+    }
+     public function suspendClient(int $idClient): bool
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $sql = "update utilisateurs set statusClient= '0' where idUtilisateur=:idClient";
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(":idClient", $idClient);
+            if ($stmt->execute())
+                return true;
+            else
+                return false;
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return false;
+        }
+    }
 }
+

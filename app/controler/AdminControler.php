@@ -18,17 +18,15 @@ class AdminControler
 
         switch ($page) {
             case "dashboard_admin":
-
-                $stats = [
-                    'total_clients'      => Client::counterClients(),
-                    'total_reservations' => Reservation::counterReservations()
-                ];
-
-                require_once __DIR__ . '/../view/admin_dashboard.php';
+                header("Location: ../view/admin_dashboard.php");
                 break;
             case "admin_categories":
                 $result = $this->gererCategories();
                 header("Location: ../view/admin_categories.php?$_POST[action]=$result");
+                break;
+            case "admin_clients":
+                $result = $this->gererClients();
+                header("Location: ../view/admin_clients.php?$_POST[statusClient]=$result");
                 break;
 
             default:
@@ -53,6 +51,17 @@ class AdminControler
         } else {
             return "failed";
         }
+    }
+    public function gererClients()
+    {
+        $idClient = intval($_POST["idClient"]);
+        $client = new Client();
+        if (isset($_POST["statusClient"]) && $_POST["statusClient"] == "suspend" && $client->suspendClient($idClient)) {
+            return "seccess";
+        } elseif (isset($_POST["statusClient"]) && $_POST["statusClient"] == "activate" && $client->activateClient($idClient)) {
+            return "seccess";
+        } else
+            return "failed";
     }
 }
 
