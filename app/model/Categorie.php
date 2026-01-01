@@ -80,7 +80,7 @@ class Categorie
             return false;
         }
     }
-    public function getCategorie(int $idCategorie): ?Categorie
+    public function getCategoriebyId(int $idCategorie) 
     {
         try {
             $db = Connexion::connect()->getConnexion();
@@ -110,7 +110,7 @@ class Categorie
             return [];
         }
     }
-    public static function conterCategorie(): int
+    public static function counterCategorie(): int
     {
         try {
             $db = Connexion::connect()->getConnexion();
