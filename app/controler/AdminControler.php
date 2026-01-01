@@ -7,6 +7,7 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 use app\model\Client;
 use app\model\Reservation;
 use app\model\Vehicule;
+use app\model\Categorie;
 
 class AdminControler
 {
@@ -25,21 +26,32 @@ class AdminControler
 
                 require_once __DIR__ . '/../view/admin_dashboard.php';
                 break;
-            case "fleet_admin":
-                require_once __DIR__ . '/../view/admin_fleet.php';
+            case "admin_categories":
+                $result = $this->gererCategories();
+                header("Location: ../view/admin_categories.php?$_POST[action]=$result");
                 break;
-            case "clients_admin":
-                require_once __DIR__ . '/../view/admin_clients.php';
-                break;
-            case "categories_admin":
-                require_once __DIR__ . '/../view/admin_categories.php';
-                break;
-            case "reservations_admin":
-                require_once __DIR__ . '/../view/admin_reservations.php';
-                break;
+
             default:
                 header("Location: ../view/index.php");
                 break;
+        }
+    }
+
+    public function gererCategories(): string
+    {
+        $categorie = new Categorie();
+        $categorie = new Categorie();
+        $categorie->titreCategorie = $_POST["nomCategorie"] ?? "";
+        $categorie->descriptionCategorie = ""; // $_POST["descriptionCategorie"];
+        $categorie->idCategorie = $_POST["idCategorie"] ?? "";
+        if (isset($_POST["action"]) && $_POST["action"] == "delete"  && $categorie->supprimerCategorie($categorie->idCategorie))
+            return "seccess";
+        elseif (isset($_POST["action"]) && $_POST["action"] == "update" && $categorie->modifierCategorie()) {
+            return "seccess";
+        } elseif (isset($_POST["action"]) && $_POST["action"] == "add" && $categorie->ajouterCategorie()) {
+            return "seccess";
+        } else {
+            return "failed";
         }
     }
 }
