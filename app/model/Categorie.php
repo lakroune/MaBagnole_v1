@@ -80,16 +80,19 @@ class Categorie
             return false;
         }
     }
-    public function getCategoriebyId(int $idCategorie) 
+    public function getCategoriebyId(int $idCategorie): ?Categorie
     {
         try {
             $db = Connexion::connect()->getConnexion();
             $sql = "select * from categories where idCategorie=:idCategorie";
             $stmt = $db->prepare($sql);
             $stmt->bindParam(":idCategorie", $idCategorie);
-            $stmt->execute();
-            $categorie = $stmt->fetch(\PDO::FETCH_OBJ);
-            return $categorie;
+            if ($stmt->execute()) {
+                $categorie = $stmt->fetch(\PDO::FETCH_OBJ);
+                return $categorie;
+            } else {
+                return null;
+            }
         } catch (\Exception $e) {
             error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
             return null;
@@ -102,9 +105,12 @@ class Categorie
             $db = Connexion::connect()->getConnexion();
             $sql = "select * from categories";
             $stmt = $db->prepare($sql);
-            $stmt->execute();
-            $categories = $stmt->fetchAll(\PDO::FETCH_OBJ);
-            return $categories;
+            if ($stmt->execute()) {
+                $categories = $stmt->fetchAll(\PDO::FETCH_OBJ);
+                return $categories;
+            } else {
+                return [];
+            }
         } catch (\Exception $e) {
             error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
             return [];

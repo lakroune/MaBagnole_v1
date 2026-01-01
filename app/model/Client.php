@@ -83,7 +83,7 @@ class Client extends Utilisateur
             return false;
         }
     }
-    public function getClientById(int $idClient)
+    public function getClientById(int $idClient):?Client
     {
         try {
             $db = Connexion::connect()->getConnexion();
@@ -99,10 +99,10 @@ class Client extends Utilisateur
             }
         } catch (\Exception $e) {
             error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
-            return false;
+            return null;
         }
     }
-    public function getClientByEmail(string $email)
+    public function getClientByEmail(string $email):?Client
     {
         try {
             $db = Connexion::connect()->getConnexion();
@@ -118,7 +118,7 @@ class Client extends Utilisateur
             }
         } catch (\Exception $e) {
             error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
-            return false;
+            return null;
         }
     }
     public static function getAllClients(): array

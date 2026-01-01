@@ -83,7 +83,7 @@ class Utilisateur
         return "idUtilisateur=$this->idUtilisateur, nomUtilisateur=$this->nomUtilisateur, prenomUtilisateur=$this->prenomUtilisateur, email=$this->email, role=$this->role";
     }
     //seconnecter
-    public function seConnecter(): bool|string
+    public function seConnecter():string
     {
         try {
             $db = Connexion::connect()->getConnexion();
@@ -98,11 +98,11 @@ class Utilisateur
                 return $user->role;
             } else {
 
-                return false;
+                return "error";
             }
         } catch (\Exception $e) {
             error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
-            return false;
+            return "error";
         }
     }
     //sdeconnecter

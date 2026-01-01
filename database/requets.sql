@@ -45,15 +45,16 @@ CREATE table Vehicules (
 
 CREATE table Reservations (
     idReservation int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    dateReservation DATETIME DEFAULT CURRENT_TIMESTAMP,
     dateDebutReservation DATETIME NOT NULL,
     dateFinReservation DATETIME NOT NULL,
     lieuChange varchar(255) NOT NULL,
     idVehicule int(11) NOT NULL,
     statusReservation ENUM(
+        'confirmer',
         'en cours',
-        'terminee',
         'annulee'
-    ),
+    ) DEFAULT 'en cours',
     idClient int(11) NOT NULL,
     FOREIGN KEY (idVehicule) REFERENCES Vehicules (idVehicule),
     FOREIGN KEY (idClient) REFERENCES Utilisateurs (idUtilisateur)
@@ -103,7 +104,6 @@ CREATE Table reagirAvis (
     FOREIGN KEY (idAvis) REFERENCES Avis (idAvis),
     FOREIGN KEY (idClient) REFERENCES Utilisateurs (idUtilisateur)
 );
-
 
 -- select utilisateur
 select * from Utilisateurs;

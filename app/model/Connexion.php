@@ -14,7 +14,7 @@ class Connexion
     private function __construct()
     {
         try {
-           $pdo = new \PDO("mysql:host=$this->hostDB;dbname=$this->nomDB;charset=utf8", $this->userDB, $this->passDB);
+            $pdo = new \PDO("mysql:host=$this->hostDB;dbname=$this->nomDB;charset=utf8", $this->userDB, $this->passDB);
             $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             $this->pdo = $pdo;
         } catch (\PDOException $e) {
@@ -22,14 +22,14 @@ class Connexion
             $this->pdo = null;
         }
     }
-    public static function connect()
+    public static function connect(): Connexion
     {
         if (self::$instance == null) {
             self::$instance = new Connexion();
         }
         return self::$instance;
     }
-    public function getConnexion()
+    public function getConnexion(): ?\PDO
     {
         return $this->pdo;
     }

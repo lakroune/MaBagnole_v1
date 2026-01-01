@@ -2,7 +2,7 @@
 
 namespace app\model;
 
-class Vehicules
+class Vehicule
 {
     private int $idVehicule;
     private string $marqueVehicule;
@@ -59,7 +59,7 @@ class Vehicules
         }
     }
     //modifier Vehicule
-    public function modifierVehicule()
+    public function modifierVehicule(): bool
     {
         try {
             $db = Connexion::connect()->getConnexion();
@@ -85,7 +85,7 @@ class Vehicules
         }
     }
     //supprimer Vehicule 
-    public function supprimerVehicule(int $idVehicule)
+    public function supprimerVehicule(int $idVehicule): bool
     {
         try {
             $db = Connexion::connect()->getConnexion();
@@ -102,7 +102,7 @@ class Vehicules
         }
     }
     //get vehicule by id
-    public function getVehiculeById(int $idVehicule)
+    public function getVehiculeById(int $idVehicule): ?Vehicule
     {
         try {
             $db = Connexion::connect()->getConnexion();
@@ -121,7 +121,7 @@ class Vehicules
         }
     }
     //return all vehicules
-    public function getAllVehicules()
+    public function getAllVehicules(): array
     {
         try {
             $db = Connexion::connect()->getConnexion();
@@ -131,7 +131,7 @@ class Vehicules
                 $vehicules = $stmt->fetchAll(\PDO::FETCH_OBJ);
                 return $vehicules;
             } else {
-                return false;
+                return [];
             }
         } catch (\Exception $e) {
             error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
@@ -139,7 +139,7 @@ class Vehicules
         }
     }
     //getVehiculesByCategorie
-    public function getVehiculesByCategorie(int $idCategorie)
+    public function getVehiculesByCategorie(int $idCategorie): array
     {
         try {
             $db = Connexion::connect()->getConnexion();
@@ -150,7 +150,7 @@ class Vehicules
                 $vehicules = $stmt->fetchAll(\PDO::FETCH_OBJ);
                 return $vehicules;
             } else {
-                return false;
+                return [];
             }
         } catch (\Exception $e) {
             error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
