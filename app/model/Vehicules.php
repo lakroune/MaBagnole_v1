@@ -157,6 +157,21 @@ class Vehicule
             return [];
         }
     }
+    // counter vehicules
+    public static function counterVehicules(): int
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $sql = "select count(*) as total from vehicules";
+            $stmt = $db->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(\PDO::FETCH_OBJ);
+            return (int)$result->total;
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return 0;
+        }
+    }
     //getVehiculesByMarque
     public function getVehiculesByMarque() {}
 }

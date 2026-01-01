@@ -26,6 +26,9 @@ class ClientControler
                     header("Location: ../view/register.php?register=failed");
                 }
                 break;
+            case "":
+                header("Location: ../view/index.php");
+                break;
 
             default:
                 header("Location: ../view/index.php");

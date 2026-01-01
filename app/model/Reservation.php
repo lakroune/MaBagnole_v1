@@ -2,6 +2,10 @@
 
 namespace app\model;
 
+require __DIR__ . '/../../vendor/autoload.php';
+
+use app\model\Connexion;
+
 class Reservation
 {
     private int $idReservation;
@@ -138,4 +142,32 @@ class Reservation
             return 0;
         }
     }
+
+    public function getNbReservationToDay()
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $toDay = date('Y-m-d');
+            $sql = "select count(*) as total from reservations where dateDebutReservation like :dateDebutReservation";
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(":dateDebutReservation", $toDay . "%");
+            if ($stmt->execute()) {
+                $reservation = $stmt->fetch(\PDO::FETCH_OBJ);
+                return $reservation->total;
+            } else {
+                return 0;
+            }
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return 0;
+        }
+    }
+
+    public function getNbReservationActive()
+    {
+        
+    }
 }
+
+$reservation = new Reservation();
+echo $reservation->getNbReservationToDay();
