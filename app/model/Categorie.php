@@ -26,14 +26,10 @@ class Categorie
         return "Categorie [idCategorie=$this->idCategorie, titreCategorie=$this->titreCategorie, descriptionCategorie=$this->descriptionCategorie]";
     }
 
-    public function getCatigorie(int $idCategorie) {}
 
-    public static function getAllCategories() {}
-    public static function cconterCategorie(): int
-    {
-        return 0;
-    }
-    public function AjouterCategorie(): bool
+
+
+    public function ajouterCategorie(): bool
     {
         try {
             $db = Connexion::connect()->getConnexion();
@@ -50,7 +46,7 @@ class Categorie
             return false;
         }
     }
-    public function ModifierCategorie(): bool
+    public function modifierCategorie(): bool
     {
         try {
             $db = Connexion::connect()->getConnexion();
@@ -68,7 +64,7 @@ class Categorie
             return false;
         }
     }
-    public function SupprimerCategorie(int $idCategorie): bool
+    public function supprimerCategorie(int $idCategorie): bool
     {
         try {
             $db = Connexion::connect()->getConnexion();
@@ -84,7 +80,7 @@ class Categorie
             return false;
         }
     }
-    public function RechercherCategorie(int $idCategorie): ?Categorie
+    public function getCategorie(int $idCategorie): ?Categorie
     {
         try {
             $db = Connexion::connect()->getConnexion();
@@ -99,5 +95,33 @@ class Categorie
             return null;
         }
     }
-    public function AfficherCategorie(int $idCategorie) {}
+
+    public static function getAllCategories(): array
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $sql = "select * from categories";
+            $stmt = $db->prepare($sql);
+            $stmt->execute();
+            $categories = $stmt->fetchAll(\PDO::FETCH_OBJ);
+            return $categories;
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return [];
+        }
+    }
+    public static function conterCategorie(): int
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $sql = "select count(*) as nombre from categories";
+            $stmt = $db->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+            return (int)$result['nombre'];
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return 0;
+        }
+    }
 }
