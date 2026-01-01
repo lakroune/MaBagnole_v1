@@ -1,3 +1,25 @@
+<?php
+
+namespace app\view;
+
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+use app\model\Vehicule;
+
+
+
+session_start();
+
+if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admin') {
+    header('Location: login.php');
+    exit();
+} else {
+
+    $vehicule = new Vehicule();
+    $vehicules = $vehicule->getAllVehicules();
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,13 +51,13 @@
 
 <body class="bg-slate-50 min-h-screen flex">
 
-   <aside class="w-64 bg-slate-900 min-h-screen text-white flex flex-col sticky top-0 hidden md:flex">
+    <aside class="w-64 bg-slate-900 min-h-screen text-white flex flex-col sticky top-0 hidden md:flex">
         <div class="p-6 flex-1">
             <div class="mb-10">
                 <span class="text-2xl font-black text-blue-500">Ma<span class="text-white">Bagnole</span></span>
                 <p class="text-[10px] text-slate-400 tracking-widest uppercase mt-1">Admin Panel</p>
             </div>
-            
+
             <nav class="space-y-4">
                 <a href="admin_dashboard.php" class="flex items-center gap-3 text-blue-500 font-bold bg-blue-500/10 p-3 rounded-xl">
                     <i class="fas fa-chart-line"></i> Dashboard
@@ -89,26 +111,29 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
-                    <tr class="hover:bg-slate-50/50 transition">
-                        <td class="px-4 py-4">
-                            <div class="flex items-center gap-4">
-                                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=100" class="w-14 h-9 object-cover rounded-lg">
-                                <div>
-                                    <p class="font-bold text-slate-800">Porsche 911</p>
-                                    <p class="text-[10px] text-slate-400 uppercase tracking-tighter">Black Metallic</p>
+                    <?php if ($vehicules)    ?>
+                    <?php foreach ($vehicules as $vehicule) : ?>
+                        <tr class="hover:bg-slate-50/50 transition">
+                            <td class="px-4 py-4">
+                                <div class="flex items-center gap-4">
+                                    <img src="<?= $vehicule->imageVehicule ?>" class="w-14 h-9 object-cover rounded-lg">
+                                    <div>
+                                        <p class="font-bold text-slate-800"><?= $vehicule->marqueVehicule ?></p>
+                                        <p class="text-[10px] text-slate-400 uppercase tracking-tighter"><?= $vehicule->modeleVehicule ?></p>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td><span class="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-[10px] font-black uppercase">Luxury</span></td>
-                        <td class="text-xs text-slate-600">Automatique • Essence</td>
-                        <td class="font-bold text-slate-800">$450</td>
-                        <td>
-                            <div class="flex gap-2">
-                                <button onclick="openEditModal({id:1, marque:'Porsche', modele:'911', annee:'2024', couleur:'Black', boite:'automatique', carburant:'essence', prix:'450', cat:1, img:''})" class="w-8 h-8 rounded-lg bg-slate-100 text-blue-600 hover:bg-blue-600 hover:text-white transition"><i class="fas fa-edit text-xs"></i></button>
-                                <button onclick="openDeleteModal(1)" class="w-8 h-8 rounded-lg bg-slate-100 text-red-500 hover:bg-red-600 hover:text-white transition"><i class="fas fa-trash text-xs"></i></button>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                            <td><span class="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-[10px] font-black uppercase"><?= $vehicule->idCategorie ?></span></td>
+                            <td class="text-xs text-slate-600"><?= $vehicule->typeBoiteVehicule ?> • <?= $vehicule->typeCarburantVehicule ?> </td>
+                            <td class="font-bold text-slate-800">$450</td>
+                            <td>
+                                <div class="flex gap-2">
+                                    <button onclick="openEditModal({id:<?= $vehicule->idVehicule ?>, marque:'<?= $vehicule->marqueVehicule ?>', modele:'<?= $vehicule->modeleVehicule ?>', annee:'<?= $vehicule->anneeVehicule ?>', couleur:'<?= $vehicule->couleurVehicule ?>', boite:'<?= $vehicule->typeBoiteVehicule ?>', carburant:'<?= $vehicule->typeCarburantVehicule ?>', prix:'<?= $vehicule->prixVehicule ?>', cat:'<?= $vehicule->idCategorie ?>', img:'<?= $vehicule->imageVehicule ?>'})" class="w-8 h-8 rounded-lg bg-slate-100 text-blue-600 hover:bg-blue-600 hover:text-white transition"><i class="fas fa-edit text-xs"></i></button>
+                                    <button onclick="openDeleteModal(1)" class="w-8 h-8 rounded-lg bg-slate-100 text-red-500 hover:bg-red-600 hover:text-white transition"><i class="fas fa-trash text-xs"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
@@ -117,7 +142,9 @@
     <div id="addVehicleModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
         <div class="bg-white w-full max-w-2xl rounded-3xl p-8 shadow-2xl max-h-[90vh] overflow-y-auto">
             <h3 class="text-2xl font-bold text-slate-800 mb-6">New Vehicle</h3>
-            <form action="process.php?action=add" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <form action="../controler/AdminControler.php" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <input type="hidden" name="page" value="admin_fleet">
+                <input type="hidden" name="action" value="add">
                 <div><label class="text-xs font-bold uppercase text-slate-400">Marque</label><input type="text" name="marqueVehicule" required class="w-full p-3 bg-slate-50 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500"></div>
                 <div><label class="text-xs font-bold uppercase text-slate-400">Modèle</label><input type="text" name="modeleVehicule" required class="w-full p-3 bg-slate-50 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500"></div>
                 <div><label class="text-xs font-bold uppercase text-slate-400">Année</label><input type="number" name="anneeVehicule" required class="w-full p-3 bg-slate-50 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500"></div>
@@ -146,8 +173,10 @@
     <div id="editVehicleModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
         <div class="bg-white w-full max-w-2xl rounded-3xl p-8 shadow-2xl max-h-[90vh] overflow-y-auto">
             <h3 class="text-2xl font-bold text-slate-800 mb-6">Update Vehicle</h3>
-            <form action="process.php?action=update" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <form action="../controler/AdminControler.php" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <input type="hidden" name="idVehicule" id="edit_id">
+                <input type="hidden" name="page" value="admin_fleet">
+                <input type="hidden" name="action" value="update">
                 <div><label class="text-xs font-bold uppercase text-slate-400">Marque</label><input type="text" name="marqueVehicule" id="edit_marque" required class="w-full p-3 bg-slate-50 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500"></div>
                 <div><label class="text-xs font-bold uppercase text-slate-400">Modèle</label><input type="text" name="modeleVehicule" id="edit_modele" required class="w-full p-3 bg-slate-50 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500"></div>
                 <div><label class="text-xs font-bold uppercase text-slate-400">Année</label><input type="number" name="anneeVehicule" id="edit_annee" required class="w-full p-3 bg-slate-50 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500"></div>
@@ -206,7 +235,9 @@
     <script>
         $(document).ready(function() {
             $('#fleetTable').DataTable({
-                pageLength: 5
+                pageLength: 5,
+                searching: false,
+                lengthChange: false
             });
         });
 
@@ -216,7 +247,7 @@
             modal.classList.toggle('flex');
         }
 
-     
+
 
         function toggleModal(id) {
             const modal = document.getElementById(id);

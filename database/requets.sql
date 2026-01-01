@@ -38,10 +38,13 @@ CREATE table Vehicules (
         'electrique',
         'hybride'
     ),
-    statusVehicule ENUM('0', '1') DEFAULT 1,
+    statusVehicule INT NOT NULL DEFAULT 1,
     couleurVehicule varchar(255) NOT NULL,
     prixVehicule DECIMAL(10, 2) NOT NULL,
     idCategorie int(11) NOT NULL,
+    Constraint check_statusVehicule check (
+        statusVehicule between 0 and 1
+    ),
     FOREIGN KEY (idCategorie) REFERENCES Categories (idCategorie)
 );
 
@@ -213,7 +216,7 @@ VALUES (
         'Mercedes',
         'C63',
         2019,
-        'https://static-cdn.vehicule.fr/vehicules/mercedes-c63-2019-1.jpg',
+        'https://images.unsplash.com/photo-1503376780353-7e6692767b70',
         'Moteur 6 cylindres',
         'Essence',
         'Noir',

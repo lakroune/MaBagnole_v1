@@ -190,16 +190,10 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admi
     <script>
         $(document).ready(function() {
             $('#clientTable').DataTable({
+                paging: true,
                 pageLength: 7,
-                // lengthMenu: [7, 10, 20, 50],
-                // responsive: true,
-                // autoWidth: false,
-                // scrollX: true,
-                // scrollCollapse: true,
-                // ordering: false,
-                // info: false,
-                // pagingType: "simple",
-                // dom: "tipr",
+                searching: false,
+                lengthChange: false
                 // language: {
                 // search: "",
                 // searchPlaceholder: "Search clients..."

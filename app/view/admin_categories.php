@@ -74,8 +74,8 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admi
         </div>
     </aside>
 
-    <main class="flex-1 p-4 md:p-10">
-        <div class="flex justify-between items-center mb-8">
+    <main class="flex-1 p-4 md:p-10 w-full">
+        <div class="flex justify-between items-center mb-8 w-full">
             <div>
                 <h2 class="text-3xl font-bold text-slate-800">Vehicle Categories</h2>
                 <p class="text-slate-500">Organize your fleet by types and classes.</p>
@@ -85,7 +85,7 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admi
             </button>
         </div>
 
-        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 max-w-4xl">
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 max-w-4xl w-full">
             <table id="catTable" class="w-full">
                 <thead class="bg-slate-50">
                     <tr class="text-left text-slate-400 uppercase text-[10px] font-black tracking-widest">

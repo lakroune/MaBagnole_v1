@@ -28,6 +28,12 @@ class AdminControler
                 $result = $this->gererClients();
                 header("Location: ../view/admin_clients.php?$_POST[statusClient]=$result");
                 break;
+            case "admin_fleet":
+                $result = $this->gererVehicule();
+                header("Location: ../view/admin_fleet.php?$_POST[action]=$result");
+                break;
+            case "admin_reservations":
+                break;
 
             default:
                 header("Location: ../view/index.php");
@@ -35,33 +41,67 @@ class AdminControler
         }
     }
 
+
+    public function gererVehicule()
+    {
+        $vehicule = new Vehicule();
+        $vehicule->idVehicule = $_POST["idVehicule"] ?? "";
+        $vehicule->marqueVehicule = $_POST["marqueVehicule"] ?? "";
+        $vehicule->modeleVehicule = $_POST["modeleVehicule"] ?? "";
+        $vehicule->anneeVehicule = $_POST["anneeVehicule"] ?? "";
+        $vehicule->couleurVehicule = $_POST["couleurVehicule"] ?? "";
+        $vehicule->prixVehicule = $_POST["prixVehicule"] ?? "";
+        $vehicule->typeBoiteVehicule = $_POST["typeBoiteVehicule"] ?? "";
+        $vehicule->typeCarburantVehicule = $_POST["typeCarburantVehicule"] ?? "";
+        $vehicule->imageVehicule = $_POST["imageVehicule"] ?? "";
+        $vehicule->idCategorie = $_POST["idCategorie"] ?? "";
+        if (isset($_POST["action"]) && $_POST["action"] == "add" && $vehicule->ajouterVehicule())
+            return "seccess";
+        elseif (isset($_POST["action"]) && $_POST["action"] == "update" && $vehicule->modifierVehicule())
+            return "seccess";
+        elseif (isset($_POST["action"]) && $_POST["action"] == "delete" && $vehicule->supprimerVehicule())
+            return "seccess";
+        else
+            return "failed";
+    }
+
     public function gererCategories(): string
     {
-        $categorie = new Categorie();
-        $categorie = new Categorie();
-        $categorie->titreCategorie = $_POST["nomCategorie"] ?? "";
-        $categorie->descriptionCategorie = ""; // $_POST["descriptionCategorie"];
-        $categorie->idCategorie = $_POST["idCategorie"] ?? "";
-        if (isset($_POST["action"]) && $_POST["action"] == "delete"  && $categorie->supprimerCategorie($categorie->idCategorie))
-            return "seccess";
-        elseif (isset($_POST["action"]) && $_POST["action"] == "update" && $categorie->modifierCategorie()) {
-            return "seccess";
-        } elseif (isset($_POST["action"]) && $_POST["action"] == "add" && $categorie->ajouterCategorie()) {
-            return "seccess";
-        } else {
+        try {
+            $categorie = new Categorie();
+            $categorie = new Categorie();
+            $categorie->titreCategorie = $_POST["nomCategorie"] ?? "";
+            $categorie->descriptionCategorie = ""; // $_POST["descriptionCategorie"];
+            $categorie->idCategorie = intval($_POST["idCategorie"]) ?? "";
+            if (isset($_POST["action"]) && $_POST["action"] == "delete"  && $categorie->supprimerCategorie($categorie->idCategorie))
+                return "seccess";
+            elseif (isset($_POST["action"]) && $_POST["action"] == "update" && $categorie->modifierCategorie()) {
+                return "seccess";
+            } elseif (isset($_POST["action"]) && $_POST["action"] == "add" && $categorie->ajouterCategorie()) {
+                return "seccess";
+            } else {
+                return "failed";
+            }
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
             return "failed";
         }
     }
     public function gererClients()
     {
-        $idClient = intval($_POST["idClient"]);
-        $client = new Client();
-        if (isset($_POST["statusClient"]) && $_POST["statusClient"] == "suspend" && $client->suspendClient($idClient)) {
-            return "seccess";
-        } elseif (isset($_POST["statusClient"]) && $_POST["statusClient"] == "activate" && $client->activateClient($idClient)) {
-            return "seccess";
-        } else
+        try {
+            $idClient = intval($_POST["idClient"]) ?? "";
+            $client = new Client();
+            if (isset($_POST["statusClient"]) && $_POST["statusClient"] == "suspend" && $client->suspendClient($idClient)) {
+                return "seccess";
+            } elseif (isset($_POST["statusClient"]) && $_POST["statusClient"] == "activate" && $client->activateClient($idClient)) {
+                return "seccess";
+            } else
+                return "failed";
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
             return "failed";
+        }
     }
 }
 
