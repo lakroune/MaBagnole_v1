@@ -29,11 +29,13 @@ class Vehicules
     }
 
     //tostring
-    public function __toString() {
+    public function __toString()
+    {
         return "Vehicule [idVehicule=$this->idVehicule, marqueVehicule=$this->marqueVehicule, modeleVehicule=$this->modeleVehicule, anneeVehicule=$this->anneeVehicule, imageVehicule=$this->imageVehicule, typeBoiteVehicule=$this->typeBoiteVehicule, typeCarburantVehicule=$this->typeCarburantVehicule, couleurVehicule=$this->couleurVehicule, prixVehicule=$this->prixVehicule, idCategorie=$this->idCategorie]";
     }
     //ajouter Vehicule
-    public function ajouterVehicule() {
+    public function ajouterVehicule()
+    {
         try {
             $db = Connexion::connect()->getConnexion();
             $sql = "insert into vehicules (marqueVehicule, modeleVehicule, anneeVehicule, imageVehicule, typeBoiteVehicule, typeCarburantVehicule, couleurVehicule, prixVehicule, idCategorie) values (:marqueVehicule, :modeleVehicule, :anneeVehicule, :imageVehicule, :typeBoiteVehicule, :typeCarburantVehicule, :couleurVehicule, :prixVehicule, :idCategorie)";
@@ -57,7 +59,8 @@ class Vehicules
         }
     }
     //modifier Vehicule
-    public function modifierVehicule() {
+    public function modifierVehicule()
+    {
         try {
             $db = Connexion::connect()->getConnexion();
             $sql = "update vehicules set marqueVehicule=:marqueVehicule, modeleVehicule=:modeleVehicule, anneeVehicule=:anneeVehicule, imageVehicule=:imageVehicule, typeBoiteVehicule=:typeBoiteVehicule, typeCarburantVehicule=:typeCarburantVehicule, couleurVehicule=:couleurVehicule, prixVehicule=:prixVehicule, idCategorie=:idCategorie where idVehicule=:idVehicule";
@@ -81,8 +84,9 @@ class Vehicules
             return false;
         }
     }
-    //supprimer Vehicule
-    public function supprimerVehicule(int $idVehicule) {
+    //supprimer Vehicule 
+    public function supprimerVehicule(int $idVehicule)
+    {
         try {
             $db = Connexion::connect()->getConnexion();
             $sql = "delete from vehicules where idVehicule=:idVehicule";
@@ -97,12 +101,62 @@ class Vehicules
             return false;
         }
     }
-    //getVehicule
-    public function getVehicule() {}
-    //getAllVehicules
-    public function getAllVehicules() {}
+    //get vehicule by id
+    public function getVehiculeById(int $idVehicule)
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $sql = "select * from vehicules where idVehicule=:idVehicule";
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(":idVehicule", $idVehicule);
+            if ($stmt->execute()) {
+                $vehicule = $stmt->fetch(\PDO::FETCH_OBJ);
+                return $vehicule;
+            } else {
+                return null;
+            }
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return null;
+        }
+    }
+    //return all vehicules
+    public function getAllVehicules()
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $sql = "select * from vehicules";
+            $stmt = $db->prepare($sql);
+            if ($stmt->execute()) {
+                $vehicules = $stmt->fetchAll(\PDO::FETCH_OBJ);
+                return $vehicules;
+            } else {
+                return false;
+            }
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return [];
+        }
+    }
     //getVehiculesByCategorie
-    public function getVehiculesByCategorie() {}
+    public function getVehiculesByCategorie(int $idCategorie)
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $sql = "select * from vehicules where idCategorie=:idCategorie";
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(":idCategorie", $idCategorie);
+            if ($stmt->execute()) {
+                $vehicules = $stmt->fetchAll(\PDO::FETCH_OBJ);
+                return $vehicules;
+            } else {
+                return false;
+            }
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return [];
+        }
+    }
     //getVehiculesByMarque
     public function getVehiculesByMarque() {}
 }
