@@ -16,19 +16,19 @@ class ClientControler
 
     public function  index()
     {
-        $page = $_POST["page"]; // Récupère la page actuelle
+        $page = $_POST["page"] ?? "";
 
         switch ($page) {
             case "register":
                 if ($this->inscrire()) {
-                    header("Location: ../view/register.php?success=1");
+                    header("Location: ../view/register.php?register=success");
                 } else {
-                    header("Location: ../view/register.php?error=1");
+                    header("Location: ../view/register.php?register=failed");
                 }
                 break;
-            case "login":
-                break;
+
             default:
+                header("Location: ../view/index.php");
                 break;
         }
     }

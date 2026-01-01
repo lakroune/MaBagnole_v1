@@ -7,6 +7,41 @@
     <title>MaBagnole | Create Account</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="assets/style.css" rel="stylesheet">
+    <style>
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fade-in 0.3s ease-out;
+        }
+
+        @keyframes bounce-short {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .animate-bounce-short {
+            animation: bounce-short 0.5s ease-out;
+        }
+    </style>
+
 </head>
 
 <body class="bg-slate-50 min-h-screen flex items-center justify-center p-4">
@@ -43,7 +78,7 @@
             </div>
 
             <form action="../controler/ClientControler.php" method="POST" class="space-y-5">
-                <input type="hidden" name="role" value="client">
+
                 <input type="hidden" name="page" value="register">
 
 
@@ -160,42 +195,6 @@
         </div>
     </div>
 
-    <style>
-        @keyframes fade-in {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .animate-fade-in {
-            animation: fade-in 0.3s ease-out;
-        }
-    </style>
-    <style>
-        @keyframes bounce-short {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        .animate-bounce-short {
-            animation: bounce-short 0.5s ease-out;
-        }
-    </style>
-
-
     <script>
         function showModal(id) {
             const modal = document.getElementById(id);
@@ -212,19 +211,18 @@
             const urlParams = new URLSearchParams(window.location.search);
 
             // Handle Success
-            if (urlParams.has('success')) {
+            if (urlParams.has('register') && urlParams.get('register') === "success") {
                 showModal('successModal');
             }
 
             // Handle Errors
-            if (urlParams.has('error')) {
-                const errorType = urlParams.get('error');
+            if (urlParams.has('register')) {
+                const errorType = urlParams.get('register');
                 const errorText = document.getElementById('errorMessage');
 
-                if (errorType === "1") {
+                if (errorType === "failed") {
                     errorText.innerText = "Please fill all fields correctly and try again .";
                 }
-
 
                 showModal('errorModal');
             }

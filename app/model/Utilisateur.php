@@ -2,6 +2,8 @@
 
 namespace app\model;
 
+use app\model\Connexion;
+
 class Utilisateur
 {
     protected int $idUtilisateur;
@@ -14,29 +16,9 @@ class Utilisateur
     public function __construct() {}
     // getters
 
-    public function getIdUtilisateur()
+    public function __get($attribute)
     {
-        return $this->idUtilisateur;
-    }
-    public function getNomUtilisateur()
-    {
-        return $this->nomUtilisateur;
-    }
-    public function getPrenomUtilisateur()
-    {
-        return $this->prenomUtilisateur;
-    }
-    public function getEmail()
-    {
-        return $this->email;
-    }
-    public function getPassword()
-    {
-        return $this->password;
-    }
-    public function getRole()
-    {
-        return $this->role;
+        return $this->attribute;
     }
     // setters
     public function setIdUtilisateur($idUtilisateur): bool
@@ -101,7 +83,34 @@ class Utilisateur
         return "idUtilisateur=$this->idUtilisateur, nomUtilisateur=$this->nomUtilisateur, prenomUtilisateur=$this->prenomUtilisateur, email=$this->email, role=$this->role";
     }
     //seconnecter
-    public function seconnecter() {}
+    public function seConnecter(): bool|string
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $sql = "SELECT * FROM utilisateurs WHERE email = :email";
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(':email', $this->email);
+            $stmt->execute();
+            $user = $stmt->fetch(\PDO::FETCH_OBJ);
+            if ($user && password_verify($this->password, $user->password)) {
+                session_start();
+                $_SESSION['Utilisateur'] = $user;
+                return $user->role;
+            } else {
+
+                return false;
+            }
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return false;
+        }
+    }
     //sdeconnecter
-    public function sedeconnecter() {}
+    public function seDeconnecter()
+    {
+        session_start();
+        session_unset();
+        session_destroy();
+        return true;
+    }
 }

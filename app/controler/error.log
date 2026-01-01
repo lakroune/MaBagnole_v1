@@ -1,92 +1,4 @@
-26-01-01 10:12:26 Connexion :error .PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in C:\xampp\htdocs\MaBagnole\app\model\Client.php:75
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Client.php(75): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(44): app\model\Client->inscrire()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(24): app\controler\ClientControler->inscrire()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(14): app\controler\ClientControler->index()
-#4 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(52): app\controler\ClientControler->__construct()
-#5 {main}
-26-01-01 10:15:21 Connexion :error .PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in C:\xampp\htdocs\MaBagnole\app\model\Client.php:75
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Client.php(75): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(44): app\model\Client->inscrire()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(24): app\controler\ClientControler->inscrire()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(14): app\controler\ClientControler->index()
-#4 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(52): app\controler\ClientControler->__construct()
-#5 {main}
-26-01-01 10:17:50 Connexion :error .PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in C:\xampp\htdocs\MaBagnole\app\model\Client.php:75
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Client.php(75): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(44): app\model\Client->inscrire()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(24): app\controler\ClientControler->inscrire()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(14): app\controler\ClientControler->index()
-#4 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(52): app\controler\ClientControler->__construct()
-#5 {main}
-26-01-01 10:18:15 Connexion :error .PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in C:\xampp\htdocs\MaBagnole\app\model\Client.php:75
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Client.php(75): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(44): app\model\Client->inscrire()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(24): app\controler\ClientControler->inscrire()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(14): app\controler\ClientControler->index()
-#4 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(52): app\controler\ClientControler->__construct()
-#5 {main}
-26-01-01 10:18:18 Connexion :error .PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in C:\xampp\htdocs\MaBagnole\app\model\Client.php:75
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Client.php(75): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(44): app\model\Client->inscrire()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(24): app\controler\ClientControler->inscrire()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(14): app\controler\ClientControler->index()
-#4 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(52): app\controler\ClientControler->__construct()
-#5 {main}
-26-01-01 10:18:54 Connexion :error .PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in C:\xampp\htdocs\MaBagnole\app\model\Client.php:75
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Client.php(75): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(44): app\model\Client->inscrire()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(24): app\controler\ClientControler->inscrire()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(14): app\controler\ClientControler->index()
-#4 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(52): app\controler\ClientControler->__construct()
-#5 {main}
-26-01-01 10:21:49 Connexion :error .PDOException: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in C:\xampp\htdocs\MaBagnole\app\model\Client.php:76
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Client.php(76): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(44): app\model\Client->inscrire()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(24): app\controler\ClientControler->inscrire()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(14): app\controler\ClientControler->index()
-#4 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(52): app\controler\ClientControler->__construct()
-#5 {main}
-26-01-01 10:22:01 Connexion :error .PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'mabagnole.utilisateur' doesn't exist in C:\xampp\htdocs\MaBagnole\app\model\Client.php:76
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Client.php(76): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(44): app\model\Client->inscrire()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(24): app\controler\ClientControler->inscrire()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(14): app\controler\ClientControler->index()
-#4 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(52): app\controler\ClientControler->__construct()
-#5 {main}
-26-01-01 10:22:21 Connexion :error .PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'mabagnole.utilisateur' doesn't exist in C:\xampp\htdocs\MaBagnole\app\model\Client.php:76
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Client.php(76): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(44): app\model\Client->inscrire()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(24): app\controler\ClientControler->inscrire()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(14): app\controler\ClientControler->index()
-#4 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(52): app\controler\ClientControler->__construct()
-#5 {main}
-26-01-01 10:22:24 Connexion :error .PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'mabagnole.utilisateur' doesn't exist in C:\xampp\htdocs\MaBagnole\app\model\Client.php:76
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Client.php(76): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(44): app\model\Client->inscrire()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(24): app\controler\ClientControler->inscrire()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(14): app\controler\ClientControler->index()
-#4 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(52): app\controler\ClientControler->__construct()
-#5 {main}
-26-01-01 10:24:28 Connexion :error .PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'mabagnole.utilisateur' doesn't exist in C:\xampp\htdocs\MaBagnole\app\model\Client.php:76
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Client.php(76): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(44): app\model\Client->inscrire()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(24): app\controler\ClientControler->inscrire()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(14): app\controler\ClientControler->index()
-#4 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(52): app\controler\ClientControler->__construct()
-#5 {main}
-26-01-01 10:48:35 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'hozaqum@gmail.com' for key 'email' in C:\xampp\htdocs\MaBagnole\app\model\Client.php:77
+26-01-01 12:45:22 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'fudoxuwite@gmail.com' for key 'email' in C:\xampp\htdocs\MaBagnole\app\model\Client.php:77
 Stack trace:
 #0 C:\xampp\htdocs\MaBagnole\app\model\Client.php(77): PDOStatement->execute()
 #1 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(48): app\model\Client->inscrire()
@@ -94,7 +6,7 @@ Stack trace:
 #3 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(14): app\controler\ClientControler->index()
 #4 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(56): app\controler\ClientControler->__construct()
 #5 {main}
-26-01-01 11:13:33 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'hizu@gmail.com' for key 'email' in C:\xampp\htdocs\MaBagnole\app\model\Client.php:77
+26-01-01 01:00:37 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'dimagykig@gmail.com' for key 'email' in C:\xampp\htdocs\MaBagnole\app\model\Client.php:77
 Stack trace:
 #0 C:\xampp\htdocs\MaBagnole\app\model\Client.php(77): PDOStatement->execute()
 #1 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(48): app\model\Client->inscrire()
