@@ -107,11 +107,11 @@ class Reservation
         }
     }
     //getAll Reservations
-    public static function getAllReservations(): array
+    public  function getAllReservations(): array
     {
         try {
             $db = Connexion::connect()->getConnexion();
-            $sql = "select * from reservations";
+            $sql = "select * from reservations r inner join vehicules v on r.idVehicule=v.idVehicule inner join utilisateurs u on r.idClient=u.idUtilisateur";
             $stmt = $db->prepare($sql);
             if ($stmt->execute()) {
                 $reservations = $stmt->fetchAll(\PDO::FETCH_OBJ);

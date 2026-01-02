@@ -105,11 +105,11 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admi
                     <?php foreach ($reservations as $reservation) : ?>
                         <tr class="hover:bg-slate-50/50 transition">
                             <td class="px-4 py-4">
-                                <p class="font-bold text-slate-800">#RES-2025-01</p>
+                                <p class="font-bold text-slate-800">#RES-<?= $reservation->idReservation ?></p>
                                 <p class="text-xs text-slate-400">Client ID: #<?= $reservation->idClient ?></p>
                             </td>
                             <td class="px-4 py-4">
-                                <p class="font-medium text-slate-700">Ferrari F8 Tributo</p>
+                                <p class="font-medium text-slate-700"><?= $reservation->marqueVehicule ?> <?= $reservation->modeleVehicule ?></p>
                             </td>
                             <td class="px-4 py-4">
                                 <div class="text-xs">
@@ -126,7 +126,7 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admi
                             <td class="px-4 py-4">
                                 <div class="flex gap-2">
                                     <button onclick="openDetailsModal({id:1, options:['GPS', 'Multimedia'], total:'$1350'})" class="p-2 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200"><i class="fas fa-eye text-xs"></i></button>
-                                    <button onclick="openStatusModal(1, 'en cours')" class="p-2 bg-slate-100 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition"><i class="fas fa-sync text-xs"></i></button>
+                                    <button onclick="openStatusModal(<?= $reservation->idReservation ?>, '<?= $reservation->statusReservation ?>')" class="p-2 bg-slate-100 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition"><i class="fas fa-sync text-xs"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -157,12 +157,13 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admi
     <div id="statusModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
         <div class="bg-white w-full max-w-sm rounded-3xl p-8 shadow-2xl">
             <h3 class="text-xl font-bold text-slate-800 mb-6 text-center">Update Status</h3>
-            <form action="update_status.php" method="POST" class="space-y-4">
+            <form action="../controler/AdminControler.php" method="POST" class="space-y-4">
                 <input type="hidden" name="idReservation" id="status_id">
-                <select name="statusReservation" id="status_select" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 font-bold">
+                <input type="hidden" name="page" value="admin_reservations">
+                <select name="action" id="status_select" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 font-bold">
                     <option value="en cours">En cours</option>
-                    <option value="terminee">Terminée</option>
-                    <option value="annulee">Annulée</option>
+                    <option value="confirmer">confirmer</option>
+                    <option value="annuler">annuler</option>
                 </select>
                 <div class="flex gap-3 mt-6">
                     <button type="button" onclick="toggleModal('statusModal')" class="flex-1 py-3 font-bold text-slate-400 bg-slate-100 rounded-xl">Cancel</button>
@@ -177,7 +178,7 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admi
     <script>
         $(document).ready(function() {
             $('#resTable').DataTable({
-                pageLength: 10
+                pageLength: 10,   
             });
         });
 

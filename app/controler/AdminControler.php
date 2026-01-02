@@ -7,6 +7,7 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 use app\model\Client;
 use app\model\Vehicule;
 use app\model\Categorie;
+use app\model\Reservation;
 
 class AdminControler
 {
@@ -32,6 +33,9 @@ class AdminControler
                 header("Location: ../view/admin_fleet.php?$_POST[action]=$result");
                 break;
             case "admin_reservations":
+                $result = $this->gestionReservation();
+                echo $_POST["action"];
+                header("Location: ../view/admin_reservations.php?$_POST[statusReservation]=$result");
                 break;
 
             default:
@@ -59,7 +63,7 @@ class AdminControler
                 return "seccess";
             elseif (isset($_POST["action"]) && $_POST["action"] == "update" && $vehicule->modifierVehicule())
                 return "seccess";
-            elseif (isset($_POST["action"]) && $_POST["action"] == "delete" && $vehicule->supprimerVehicule($vehicule->idVehicule??2))
+            elseif (isset($_POST["action"]) && $_POST["action"] == "delete" && $vehicule->supprimerVehicule($vehicule->idVehicule ?? 2))
                 return "seccess";
             else
                 return "failed";
@@ -106,6 +110,17 @@ class AdminControler
             error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
             return "failed";
         }
+    }
+    public function gestionReservation()
+    {
+        $reservation = new Reservation();
+        $reservation->idReservation = intval($_POST["idReservation"]) ?? "";
+        if (isset($_POST["action"]) && $_POST["action"] == "confirmer" && $reservation->confirmerReservation($reservation->idReservation))
+            return "seccess";
+        elseif (isset($_POST["action"]) && $_POST["action"] == "annuler" && $reservation->annulerReservation($reservation->idReservation))
+            return "seccess";
+        else
+            return "failed";
     }
 }
 

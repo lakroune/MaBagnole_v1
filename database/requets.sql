@@ -58,7 +58,7 @@ CREATE table Reservations (
     statusReservation ENUM(
         'confirmer',
         'en cours',
-        'annulee'
+        'annuler'
     ) DEFAULT 'en cours',
     idClient int(11) NOT NULL,
     FOREIGN KEY (idVehicule) REFERENCES Vehicules (idVehicule),

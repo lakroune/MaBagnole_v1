@@ -237,9 +237,10 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admi
     <script>
         $(document).ready(function() {
             $('#fleetTable').DataTable({
-                pageLength: 5,
+                pageLength: 8,
                 searching: false,
-                lengthChange: false
+                lengthChange: false,
+                
             });
         });
 
