@@ -15,6 +15,9 @@ if (!isset($_SESSION['Utilisateur']) or  $_SESSION['Utilisateur']->role !== 'cli
 $vehicule = new Vehicule();
 $vehicules = $vehicule->getAllVehicules();
 
+$categorie = new Categorie();
+$categories = $categorie->getAllCategories();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,7 +87,7 @@ $vehicules = $vehicule->getAllVehicules();
     <nav class="flex justify-between items-center px-8 py-4 bg-white border-b border-slate-200 sticky top-0 z-50">
         <div class="text-2xl font-black text-blue-600">Ma<span class="text-slate-800">Bagnole</span></div>
         <div class="hidden md:flex gap-8 items-center">
-            <?php if (isset($connect)) : ?>
+            <?php if ($connect) : ?>
                 <a href="accueil.php" class="text-sm font-bold text-blue-600 border-b-2 border-blue-600 pb-1">Browse Cars</a>
                 <a href="my_reservations.php" class="text-sm font-bold text-slate-500 hover:text-blue-600 transition">My Bookings</a>
                 <a href="favorites.php" class="text-sm font-bold text-slate-500 hover:text-blue-600 transition">Favorites</a>
@@ -112,16 +115,13 @@ $vehicules = $vehicule->getAllVehicules();
                         <i class="fas fa-th-large text-slate-400 mr-3"></i>
                         <select id="categoryFilter" class="w-full outline-none bg-transparent text-slate-700 appearance-none cursor-pointer">
                             <option value="">All Categories</option>
-                            <option value="Luxury">Luxury</option>
-                            <option value="SUV">SUV</option>
-                            <option value="Electric">Electric</option>
+                            <?php foreach ($categories as $categorie): ?>
+                                <option value="<?= $categorie->titreCategorie ?>"><?= $categorie->titreCategorie ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
 
-                    <div class="flex-1 w-full px-6 py-3 flex items-center">
-                        <i class="fas fa-calendar-alt text-slate-400 mr-3"></i>
-                        <input type="text" placeholder="Pickup Date" onfocus="(this.type='date')" class="w-full outline-none bg-transparent text-slate-700 cursor-pointer">
-                    </div>
+
                 </form>
             </div>
         </div>
@@ -150,6 +150,7 @@ $vehicules = $vehicule->getAllVehicules();
                                         <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-blue-600 shadow-sm"><?= $vehicule->marqueVehicule ?></span>
                                         <span class="bg-slate-900 text-white px-3 py-1 rounded-full text-[10px] font-bold"><?= $vehicule->anneeVehicule ?></span>
                                     </div>
+                                    <input type="hidden" name="categorie" value="<?= $vehicule->idVehicule ?>">
                                     <form id="favoriteForm" action="#" method="POST">
                                         <input type="hidden" name="idVehicule" value="<?= $vehicule->idVehicule ?>">
                                         <input type="hidden" name="page" value="accueil">
@@ -186,7 +187,7 @@ $vehicules = $vehicule->getAllVehicules();
 
                                     <div class="mt-auto pt-6 flex gap-3">
                                         <a href="details.php?id=<?= $vehicule->idVehicule ?>" class="flex-1 text-center py-3.5 px-4 rounded-xl font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition">Details</a>
-                                        <button <?php if (!($connect)) :  ?> onclick="toggleModal('rentPopup')" <?php endif; ?> class="flex-[1.5] text-center py-3.5 px-4 rounded-xl font-bold bg-blue-600 text-white hover:bg-blue-700 transition shadow-lg shadow-blue-100">Book Now</button>
+                                        <button <?php if (!($connect)) :  ?> onclick="toggleModal('rentPopup')" <?php else: ?> onclick="window.location.href='./details.php?id=<?= $vehicule->idVehicule ?> '" <?php endif; ?> class="flex-[1.5] text-center py-3.5 px-4 rounded-xl font-bold bg-blue-600 text-white hover:bg-blue-700 transition shadow-lg shadow-blue-100">Book Now</button>
                                     </div>
                                 </div>
                             </div>

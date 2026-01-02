@@ -9,9 +9,9 @@ use app\model\Connexion;
 class Reservation
 {
     private int $idReservation;
-    private \DateTime $dateReservation;
-    private \DateTime $dateDebutReservation;
-    private \DateTime $dateFinReservation;
+    private string $dateReservation;
+    private string $dateDebutReservation;
+    private string $dateFinReservation;
     private string $lieuChange;
     private int $idVehicule;
     private string $statusReservation;

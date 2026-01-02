@@ -43,8 +43,8 @@ $vehicle = $v->getVehiculeById($idVehicule);
 
     <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <a href="index.php" class="text-2xl font-black text-blue-600">Ma<span class="text-slate-800">Bagnole</span></a>
-            <a href="index.php" class="text-sm font-bold text-slate-500 hover:text-blue-600 transition">
+            <a href="accueil.php" class="text-2xl font-black text-blue-600">Ma<span class="text-slate-800">Bagnole</span></a>
+            <a href="accueil.php" class="text-sm font-bold text-slate-500 hover:text-blue-600 transition">
                 <i class="fas fa-arrow-left mr-2"></i> Back to Fleet
             </a>
         </div>
@@ -98,8 +98,10 @@ $vehicle = $v->getVehiculeById($idVehicule);
                                     </div>
                                 </div>
                                 <div class="flex gap-4">
-                                    <button onclick="toggleEdit(101)" class="text-xs font-bold text-blue-500 hover:text-blue-700 transition">Edit</button>
-                                    <button onclick="softDelete(101)" class="text-xs font-bold text-red-400 hover:text-red-600 transition">Delete</button>
+                                    <?php if ($connect and $_SESSION['Utilisateur']->role === 'client') : ?>
+                                        <button onclick="toggleEdit(101)" class="text-xs font-bold text-blue-500 hover:text-blue-700 transition">Edit</button>
+                                        <button onclick="softDelete(101)" class="text-xs font-bold text-red-400 hover:text-red-600 transition">Delete</button>
+                                    <?php endif ?>
                                 </div>
                             </div>
 
@@ -108,14 +110,14 @@ $vehicle = $v->getVehiculeById($idVehicule);
                             </p>
 
                             <div class="mt-4 flex items-center gap-6">
-                                <button onclick="handleReaction(101, 'like')" id="like-btn-101" class="flex items-center gap-2 text-slate-400 hover:text-blue-600 transition group">
+                                <button <?php if ($connect) : ?>onclick="handleReaction(101, 'like')" <?php endif ?> id="like-btn-101" class="flex items-center gap-2 text-slate-400 hover:text-blue-600 transition group">
                                     <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-blue-50">
                                         <i class="far fa-thumbs-up text-sm"></i>
                                     </div>
                                     <span id="like-count-101" class="text-xs font-bold">12</span>
                                 </button>
 
-                                <button onclick="handleReaction(101, 'dislike')" id="dislike-btn-101" class="flex items-center gap-2 text-slate-400 hover:text-red-500 transition group">
+                                <button <?php if ($connect) : ?>onclick="handleReaction(101, 'dislike')" <?php endif ?> id="dislike-btn-101" class="flex items-center gap-2 text-slate-400 hover:text-red-500 transition group">
                                     <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-red-50">
                                         <i class="far fa-thumbs-down text-sm"></i>
                                     </div>
@@ -126,19 +128,20 @@ $vehicle = $v->getVehiculeById($idVehicule);
 
 
                     </div>
-
-                    <div class="mt-12 pt-8 border-t border-slate-100">
-                        <h4 class="font-bold text-lg text-slate-800 mb-4">Leave an Evaluation</h4>
-                        <div class="flex gap-2 mb-4" id="star-selector">
-                            <i class="fas fa-star cursor-pointer text-slate-200 text-xl hover:text-yellow-400" data-value="1"></i>
-                            <i class="fas fa-star cursor-pointer text-slate-200 text-xl hover:text-yellow-400" data-value="2"></i>
-                            <i class="fas fa-star cursor-pointer text-slate-200 text-xl hover:text-yellow-400" data-value="3"></i>
-                            <i class="fas fa-star cursor-pointer text-slate-200 text-xl hover:text-yellow-400" data-value="4"></i>
-                            <i class="fas fa-star cursor-pointer text-slate-200 text-xl hover:text-yellow-400" data-value="5"></i>
+                    <?php if ($connect) : ?>
+                        <div class="mt-12 pt-8 border-t border-slate-100">
+                            <h4 class="font-bold text-lg text-slate-800 mb-4">Leave an Evaluation</h4>
+                            <div class="flex gap-2 mb-4" id="star-selector">
+                                <i class="fas fa-star cursor-pointer text-slate-200 text-xl hover:text-yellow-400" data-value="1"></i>
+                                <i class="fas fa-star cursor-pointer text-slate-200 text-xl hover:text-yellow-400" data-value="2"></i>
+                                <i class="fas fa-star cursor-pointer text-slate-200 text-xl hover:text-yellow-400" data-value="3"></i>
+                                <i class="fas fa-star cursor-pointer text-slate-200 text-xl hover:text-yellow-400" data-value="4"></i>
+                                <i class="fas fa-star cursor-pointer text-slate-200 text-xl hover:text-yellow-400" data-value="5"></i>
+                            </div>
+                            <textarea id="new-review-text" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none transition" rows="3" placeholder="Share your experience..."></textarea>
+                            <button onclick="submitReview()" class="mt-4 bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition">Post Review</button>
                         </div>
-                        <textarea id="new-review-text" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none transition" rows="3" placeholder="Share your experience..."></textarea>
-                        <button onclick="submitReview()" class="mt-4 bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition">Post Review</button>
-                    </div>
+                    <?php endif; ?>
                 </section>
             </div>
 
@@ -156,9 +159,10 @@ $vehicle = $v->getVehiculeById($idVehicule);
                         <span class="text-slate-400 font-medium">MAD/ total</span>
                     </div>
 
-                    <form action="booking_process.php" method="POST" class="space-y-4">
+                    <form action="../controler/ClientControler.php" method="POST" class="space-y-4">
                         <input type="hidden" name="idVehicule" value="<?php echo $vehicle->idVehicule; ?>">
                         <input type="hidden" id="dureeReservation" name="dureeReservation" value="1">
+                        <input type="hidden" name="page" value="details">
 
 
 
@@ -240,14 +244,85 @@ $vehicle = $v->getVehiculeById($idVehicule);
         </div>
     </div>
 
+    <div id="errorModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-[100] p-4">
+        <div class="bg-white w-full max-w-sm rounded-[2.5rem] p-8 shadow-2xl text-center relative animate-bounce-short">
+            <button onclick="closeError()" class="absolute top-6 right-6 text-slate-300 hover:text-slate-600">
+                <i class="fas fa-times"></i>
+            </button>
 
+            <div class="w-20 h-20 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+
+            <h3 class="text-2xl font-black text-slate-800 mb-2">Error</h3>
+            <p id="errorMessage" class="text-slate-500 text-sm mb-8 leading-relaxed">
+                yor reservation failed please try again .
+            </p>
+
+            <div class="flex flex-col gap-3">
+                <button onclick="closeError()" class="w-full bg-slate-50 text-slate-600 py-4 rounded-2xl font-bold hover:bg-slate-100 transition">try again</button>
+
+                <a href="accueil.php" class="text-sm font-bold text-blue-600 hover:underline">
+                     <i class="fas fa-arrow-left mr-2"></i>back to fleet</a>
+            </div>
+        </div>
+    </div>
+    <div id="successModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-[100] p-4">
+        <div class="bg-white w-full max-w-sm rounded-[2.5rem] p-8 shadow-2xl text-center relative animate-fade-in">
+
+            <div class="w-20 h-20 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl">
+                <i class="fas fa-check-circle"></i>
+            </div>
+
+            <h3 class="text-2xl font-black text-slate-800 mb-2">Success!</h3>
+            <p class="text-slate-500 text-sm mb-8 leading-relaxed">
+                your reservation has been made successfully
+            </p>
+
+            <div class="flex flex-col gap-3">
+
+                <a href="accueil.php" class=" feedback w-full bg-slate-900 text-white py-4 rounded-2xl font-black shadow-lg hover:bg-slate-800 transition">
+                    <i class="fas fa-arrow-left mr-2"></i> Back to Fleet
+                </a>
+            </div>
+        </div>
+    </div>
 
     <script>
-        /**
-         * Logic for Reactions (Like/Dislike)
-         * In a real PHP POO environment, you would send a Fetch API request
-         * to a 'ReactionController.php' to update the DB.
-         */
+        function showModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeError() {
+            document.getElementById('errorModal').classList.add('hidden');
+        }
+
+        // Auto-trigger based on URL Parameters
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            // Handle Success
+            if (urlParams.has('reservation') && urlParams.get('reservation') === "success") {
+                showModal('successModal');
+            }
+
+            // Handle Errors
+            if (urlParams.has('reservation') && urlParams.get('reservation') === "failed") {
+                const errorType = urlParams.get('reservation');
+                const errorText = document.getElementById('errorMessage');
+
+                if (errorType === "failed") {
+                    errorText.innerText = "Please fill all fields correctly and try again .";
+                }
+
+                showModal('errorModal');
+            }
+        };
+    </script>
+
+    <script>
         function handleReaction(reviewId, type) {
             const likeBtn = document.querySelector(`#like-btn-${reviewId} i`);
             const dislikeBtn = document.querySelector(`#dislike-btn-${reviewId} i`);

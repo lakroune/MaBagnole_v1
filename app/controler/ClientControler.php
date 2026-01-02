@@ -33,7 +33,13 @@ class ClientControler
             case "accueil":
                 if (isset($_POST['action']) && $_POST['action'] == 'favorite')
                     $this->gestionFavoris();
-                // echo json_encode(['success' => true, 'message' => 'Favori non ajouter']);
+
+                break;
+            case "details":
+                if ($this->gestionReservation())
+                    header("Location: ../view/details.php?reservation=success&id=" . $_POST['idVehicule']);
+                else
+                    header("Location: ../view/details.php?reservation=failed&id=" . $_POST['idVehicule']);
                 break;
 
             default:
@@ -78,6 +84,28 @@ class ClientControler
         } catch (\Exception $e) {
             error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
             echo json_encode(['success' => false, 'message' => 'Favori non ajouter']);
+        }
+    }
+
+    public function gestionReservation()
+    { //ajout
+
+        try {
+            $reservation = new Reservation();
+            session_start();
+            $reservation->idClient = $_SESSION['Utilisateur']->idUtilisateur;
+            $reservation->dateDebutReservation = ($_POST["dateDebutReservation"]);
+            $reservation->dateFinReservation = ($_POST["dateFinReservation"]);
+            $reservation->lieuChange = $_POST["lieuChange"];
+            $reservation->idVehicule = $_POST["idVehicule"];
+
+            if ($reservation->ajouterReservation())
+                return true;
+            else
+                return false;
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return false;
         }
     }
 }

@@ -80,7 +80,7 @@ class Categorie
             return false;
         }
     }
-    public function getCategoriebyId(int $idCategorie): ?Categorie
+    public function getCategoriebyId(int $idCategorie)
     {
         try {
             $db = Connexion::connect()->getConnexion();

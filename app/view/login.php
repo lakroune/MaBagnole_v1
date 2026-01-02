@@ -39,7 +39,7 @@
             <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-64 h-64 bg-blue-600/20 rounded-full blur-3xl"></div>
 
             <div class="relative z-10">
-                <span class="text-2xl font-black text-blue-500">Ma<span class="text-white">Bagnole</span></span>
+                <a href="index.php"> <span class="text-2xl font-black text-blue-500">Ma<span class="text-white">Bagnole</span></span></a>
             </div>
 
             <div class="relative z-10">
