@@ -195,4 +195,39 @@ class Vehicule
     }
     //getVehiculesByMarque
     public function getVehiculesByMarque() {}
+    // get nombre Favoris par client
+    public function getVehiculesFavorisByClient(int $idClient): array
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $sql = "select * from vehicules where idVehicule in (select idVehicule from favoris where idClient=:idClient)";
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(":idClient", $idClient);
+            if ($stmt->execute()) {
+                $vehicules = $stmt->fetchAll(\PDO::FETCH_OBJ);
+                return $vehicules;
+            }
+            return [];
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return [];
+        }
+    }
+    // pour pagination get 6 voitures
+    public  function getSixVehicules(int $page)
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $sql = "select * from vehicules limit 6 offset " . ($page - 1) * 6;
+            $stmt = $db->prepare($sql);
+            if ($stmt->execute()) {
+                $vehicules = $stmt->fetchAll(\PDO::FETCH_OBJ);
+                return $vehicules;
+            }
+            return [];
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return [];
+        }
+    }
 }

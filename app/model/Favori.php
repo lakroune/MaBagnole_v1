@@ -59,8 +59,7 @@ class Favori
             return false;
         }
     }
-    // get nombre Favoris par vehicule
-    public function getNBFavorisByVehicule(int $idVehicule) {}
+
     // si deja Favori
     public function getFavori(int $idClient, int $idVehicule)
     {

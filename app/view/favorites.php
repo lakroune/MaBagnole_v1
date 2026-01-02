@@ -17,8 +17,8 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'clie
 } else {
 
     $vehicule = new Vehicule();
-    
-    $vehicules = $vehicule->getAllVehicules();
+
+    $vehicules = $vehicule->getVehiculesFavorisByClient($_SESSION['Utilisateur']->idUtilisateur);
 }
 ?>
 
@@ -61,52 +61,53 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'clie
                 <p class="text-slate-500 mt-2">Your personal wishlist of premium rides.</p>
             </div>
             <div class="bg-blue-50 text-blue-600 px-4 py-2 rounded-2xl text-xs font-bold flex items-center gap-2">
-                <i class="fas fa-heart"></i> <span id="fav-count">2</span> Cars Saved
+                <i class="fas fa-heart"></i> <span id="fav-count"><?= count($vehicules) ?></span> Cars Saved
             </div>
         </div>
 
         <div id="favoritesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            <?php if (!empty($vehicules))  ?>
-            <?php foreach ($vehicules as $vehicule) : ?>
-                <div class="car-card bg-white rounded-[2rem] overflow-hidden shadow-sm border border-slate-100 flex flex-col transition-all duration-300 relative group">
-                    <div class="relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800" class="w-full h-60 object-cover">
-                        <form id="favoriteForm" action="#" method="POST">
-                            <input type="hidden" name="idVehicule" value="<?= $vehicule->idVehicule ?>">
-                            <input type="hidden" name="page" value="accueil">
-                            <input type="hidden" name="action" value="favorite">
-                            <button onclick="removeFavorite(this, 101)"  id="favoriteButton" type="button"
-                                class=" favorite-btn absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center text-red-500 shadow-lg hover:scale-110 transition active:scale-95">
-                                <i class="fas fa-heart text-lg"></i>
-                            </button>
+            <?php if (!empty($vehicules)):  ?>
+                <?php foreach ($vehicules as $vehicule) : ?>
+                    <div class="car-card bg-white rounded-[2rem] overflow-hidden shadow-sm border border-slate-100 flex flex-col transition-all duration-300 relative group">
+                        <div class="relative overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800" class="w-full h-60 object-cover">
+                            <form id="favoriteForm" action="#" method="POST">
+                                <input type="hidden" name="idVehicule" value="<?= $vehicule->idVehicule ?>">
+                                <input type="hidden" name="page" value="accueil">
+                                <input type="hidden" name="action" value="favorite">
+                                <button onclick="removeFavorite(this, 101)" id="favoriteButton" type="button"
+                                    class=" favorite-btn absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center text-red-500 shadow-lg hover:scale-110 transition active:scale-95">
+                                    <i class="fas fa-heart text-lg"></i>
+                                </button>
 
-                        </form>
+                            </form>
+                        </div>
+
+                        <div class="p-8 flex-1 flex flex-col">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-xl font-bold text-slate-800">Porsche 911 Carrera</h3>
+                                <p class="text-xl font-black text-blue-600">$299<span class="text-[10px] text-slate-400 font-bold uppercase ml-1">/Day</span></p>
+                            </div>
+
+                            <div class="flex gap-4 mb-6">
+                                <span class="text-xs font-bold text-slate-500 flex items-center gap-1"><i class="fas fa-cog text-blue-500"></i> Auto</span>
+                                <span class="text-xs font-bold text-slate-500 flex items-center gap-1"><i class="fas fa-gas-pump text-blue-500"></i> Essence</span>
+                            </div>
+
+                            <div class="mt-auto pt-6 border-t border-slate-50 flex gap-3">
+                                <button class="flex-1 py-3 px-4 rounded-xl font-bold bg-blue-600 text-white hover:bg-blue-700 transition shadow-lg shadow-blue-100">
+                                    Book Now
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="p-8 flex-1 flex flex-col">
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-xl font-bold text-slate-800">Porsche 911 Carrera</h3>
-                            <p class="text-xl font-black text-blue-600">$299<span class="text-[10px] text-slate-400 font-bold uppercase ml-1">/Day</span></p>
-                        </div>
 
-                        <div class="flex gap-4 mb-6">
-                            <span class="text-xs font-bold text-slate-500 flex items-center gap-1"><i class="fas fa-cog text-blue-500"></i> Auto</span>
-                            <span class="text-xs font-bold text-slate-500 flex items-center gap-1"><i class="fas fa-gas-pump text-blue-500"></i> Essence</span>
-                        </div>
-
-                        <div class="mt-auto pt-6 border-t border-slate-50 flex gap-3">
-                            <button class="flex-1 py-3 px-4 rounded-xl font-bold bg-blue-600 text-white hover:bg-blue-700 transition shadow-lg shadow-blue-100">
-                                Book Now
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-
-            <?php endforeach; ?>
+            <?php endforeach;
+            endif; ?>
         </div>
 
-        <div id="emptyState" class="hidden text-center py-20">
+        <div id="emptyState" class=" <?php if (count($vehicules) > 0) echo 'hidden'; ?> flex flex-col items-center justify-center w-full gap-4 hidden text-center py-20">
             <div class="w-24 h-24 bg-slate-100 text-slate-300 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl">
                 <i class="far fa-heart"></i>
             </div>
@@ -114,6 +115,7 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'clie
             <p class="text-slate-400 mt-2 mb-8">Start exploring and save cars you love!</p>
             <a href="accueil.php" class="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-100">Explore Fleet</a>
         </div>
+
     </main>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
