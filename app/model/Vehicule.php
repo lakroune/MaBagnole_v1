@@ -109,7 +109,7 @@ class Vehicule
         }
     }
     //get vehicule by id
-    public function getVehiculeById(int $idVehicule): ?Vehicule
+    public function getVehiculeById(int $idVehicule)
     {
         try {
             $db = Connexion::connect()->getConnexion();

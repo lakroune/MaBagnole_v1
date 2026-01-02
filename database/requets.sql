@@ -315,4 +315,4 @@ insert into
     )
 values ('super', 5, 1, 2);
 
-SELECT * from vehicules
+SELECT * from favoris
