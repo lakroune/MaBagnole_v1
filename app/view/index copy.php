@@ -24,7 +24,7 @@
             <h1 class="text-6xl font-black leading-tight">Roulez avec <br><span class="text-blue-600">Style et Confort</span></h1>
             <p class="text-slate-500 text-lg leading-relaxed max-w-md">Découvrez notre flotte exclusive de véhicules pour vos voyages d'affaires ou vos escapades en famille.</p>
             <div class="flex gap-4">
-                <a href="catalogue.php" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold hover:bg-blue-600 transition flex items-center gap-2">
+                <a href="./accueil.php" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold hover:bg-blue-600 transition flex items-center gap-2">
                     Explorer la flotte <i class="fas fa-arrow-right"></i>
                 </a>
             </div>

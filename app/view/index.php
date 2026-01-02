@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-white font-sans text-slate-900">
 
     <nav class="flex justify-between items-center px-8 py-6 fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
@@ -24,7 +26,7 @@
             <h1 class="text-6xl font-black leading-tight">Roulez avec <br><span class="text-blue-600">Style et Confort</span></h1>
             <p class="text-slate-500 text-lg leading-relaxed max-w-md">Découvrez notre flotte exclusive de véhicules pour vos voyages d'affaires ou vos escapades en famille.</p>
             <div class="flex gap-4">
-                <a href="catalogue.php" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold hover:bg-blue-600 transition flex items-center gap-2">
+                <a href="./accueil.php" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold hover:bg-blue-600 transition flex items-center gap-2">
                     Explorer la flotte <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
@@ -99,4 +101,5 @@
     </footer>
 
 </body>
+
 </html>

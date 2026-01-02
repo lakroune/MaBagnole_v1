@@ -8,14 +8,13 @@ use app\model\Categorie;
 use app\model\Vehicule;
 
 session_start();
-
-if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'client') {
-    header('Location: login.php');
-    exit();
-} else {
-    $vehicule = new Vehicule();
-    $vehicules = $vehicule->getAllVehicules();
+$connect = true;
+if (!isset($_SESSION['Utilisateur']) or  $_SESSION['Utilisateur']->role !== 'client') {
+    $connect =  false;
 }
+$vehicule = new Vehicule();
+$vehicules = $vehicule->getAllVehicules();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -85,9 +84,11 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'clie
     <nav class="flex justify-between items-center px-8 py-4 bg-white border-b border-slate-200 sticky top-0 z-50">
         <div class="text-2xl font-black text-blue-600">Ma<span class="text-slate-800">Bagnole</span></div>
         <div class="hidden md:flex gap-8 items-center">
-            <a href="accueil.php" class="text-sm font-bold text-blue-600 border-b-2 border-blue-600 pb-1">Browse Cars</a>
-            <a href="my_reservations.php" class="text-sm font-bold text-slate-500 hover:text-blue-600 transition">My Bookings</a>
-            <a href="favorites.php" class="text-sm font-bold text-slate-500 hover:text-blue-600 transition">Favorites</a>
+            <?php if (isset($connect)) : ?>
+                <a href="accueil.php" class="text-sm font-bold text-blue-600 border-b-2 border-blue-600 pb-1">Browse Cars</a>
+                <a href="my_reservations.php" class="text-sm font-bold text-slate-500 hover:text-blue-600 transition">My Bookings</a>
+                <a href="favorites.php" class="text-sm font-bold text-slate-500 hover:text-blue-600 transition">Favorites</a>
+            <?php endif; ?>
         </div>
         <?php include('infoClient.php'); ?>
     </nav>
@@ -154,7 +155,7 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'clie
                                         <input type="hidden" name="page" value="accueil">
                                         <input type="hidden" name="action" value="favorite">
                                         <!-- .favorite-btn ??? mtnsahch   -->
-                                        <button type="button" onclick="toggleFavorite(this)" class="  favorite-btn absolute top-4 right-4 w-10 h-10 bg-white/80 backdrop-blur rounded-full flex items-center justify-center text-slate-400 hover:text-red-500 transition shadow-lg">
+                                        <button type="button" <?php if (!($connect)) :  ?> onclick="toggleModal('rentPopup')" <?php else:; ?> onclick="toggleFavorite(this)" <?php endif; ?> class="  favorite-btn absolute top-4 right-4 w-10 h-10 bg-white/80 backdrop-blur rounded-full flex items-center justify-center text-slate-400 hover:text-red-500 transition shadow-lg">
                                             <i class="fas fa-heart"></i>
                                         </button>
                                     </form>
@@ -185,7 +186,7 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'clie
 
                                     <div class="mt-auto pt-6 flex gap-3">
                                         <a href="details.php?id=<?= $vehicule->idVehicule ?>" class="flex-1 text-center py-3.5 px-4 rounded-xl font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition">Details</a>
-                                        <button class="flex-[1.5] text-center py-3.5 px-4 rounded-xl font-bold bg-blue-600 text-white hover:bg-blue-700 transition shadow-lg shadow-blue-100">Book Now</button>
+                                        <button <?php if (!($connect)) :  ?> onclick="toggleModal('rentPopup')" <?php endif; ?> class="flex-[1.5] text-center py-3.5 px-4 rounded-xl font-bold bg-blue-600 text-white hover:bg-blue-700 transition shadow-lg shadow-blue-100">Book Now</button>
                                     </div>
                                 </div>
                             </div>
@@ -202,6 +203,38 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'clie
             <p class="text-slate-500 text-sm mt-8">© 2025 MaBagnole Management. All rights reserved.</p>
         </div>
     </footer>
+    <div id="rentPopup" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-[100] p-4">
+        <div class="bg-white w-full max-w-md rounded-[2.5rem] p-8 shadow-2xl text-center relative">
+            <button onclick="toggleModal('rentPopup')" class="absolute top-6 right-6 text-slate-300 hover:text-slate-600"><i class="fas fa-times"></i></button>
+
+            <div class="w-20 h-20 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl">
+                <i class="fas fa-lock"></i>
+            </div>
+            <h3 class="text-2xl font-black text-slate-800 mb-2">Login Required</h3>
+            <p class="text-slate-500 text-sm mb-8 leading-relaxed">You need to be logged in to book this vehicle and manage your reservations.</p>
+
+            <div class="flex flex-col gap-3">
+                <a href="login.php" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-black shadow-lg shadow-blue-100 hover:bg-blue-700 transition">Sign In Now</a>
+                <a href="register.php" class="w-full bg-slate-50 text-slate-600 py-4 rounded-2xl font-bold hover:bg-slate-100 transition">Create an Account</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.toggle('hidden');
+            modal.classList.toggle('flex');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('rentPopup');
+            if (event.target == modal) {
+                toggleModal('rentPopup');
+            }
+        }
+    </script>
 
     <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="./js/main.js"></script>
