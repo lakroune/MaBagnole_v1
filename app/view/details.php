@@ -6,7 +6,11 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 
 use app\model\Vehicule;
 
-
+session_start();
+$connect = true;
+if (!isset($_SESSION['Utilisateur']) or  $_SESSION['Utilisateur']->role !== 'client') {
+    $connect =  false;
+}
 $v = new Vehicule();
 $idVehicule = (int) $_GET['id'];
 $vehicle = $v->getVehiculeById($idVehicule);
@@ -120,60 +124,7 @@ $vehicle = $v->getVehiculeById($idVehicule);
                             </div>
                         </div>
 
-                        <script>
-                            /**
-                             * Logic for Reactions (Like/Dislike)
-                             * In a real PHP POO environment, you would send a Fetch API request
-                             * to a 'ReactionController.php' to update the DB.
-                             */
-                            function handleReaction(reviewId, type) {
-                                const likeBtn = document.querySelector(`#like-btn-${reviewId} i`);
-                                const dislikeBtn = document.querySelector(`#dislike-btn-${reviewId} i`);
-                                const likeCount = document.getElementById(`like-count-${reviewId}`);
-                                const dislikeCount = document.getElementById(`dislike-count-${reviewId}`);
 
-                                if (type === 'like') {
-                                    // Toggle Like
-                                    if (likeBtn.classList.contains('far')) {
-                                        likeBtn.classList.replace('far', 'fas');
-                                        likeBtn.parentElement.classList.add('bg-blue-100', 'text-blue-600');
-                                        likeCount.innerText = parseInt(likeCount.innerText) + 1;
-
-                                        // Remove dislike if active
-                                        if (dislikeBtn.classList.contains('fas')) {
-                                            dislikeBtn.classList.replace('fas', 'far');
-                                            dislikeBtn.parentElement.classList.remove('bg-red-100', 'text-red-500');
-                                            dislikeCount.innerText = parseInt(dislikeCount.innerText) - 1;
-                                        }
-                                    } else {
-                                        likeBtn.classList.replace('fas', 'far');
-                                        likeBtn.parentElement.classList.remove('bg-blue-100', 'text-blue-600');
-                                        likeCount.innerText = parseInt(likeCount.innerText) - 1;
-                                    }
-                                } else {
-                                    // Toggle Dislike
-                                    if (dislikeBtn.classList.contains('far')) {
-                                        dislikeBtn.classList.replace('far', 'fas');
-                                        dislikeBtn.parentElement.classList.add('bg-red-100', 'text-red-500');
-                                        dislikeCount.innerText = parseInt(dislikeCount.innerText) + 1;
-
-                                        // Remove like if active
-                                        if (likeBtn.classList.contains('fas')) {
-                                            likeBtn.classList.replace('fas', 'far');
-                                            likeBtn.parentElement.classList.remove('bg-blue-100', 'text-blue-600');
-                                            likeCount.innerText = parseInt(likeCount.innerText) - 1;
-                                        }
-                                    } else {
-                                        dislikeBtn.classList.replace('fas', 'far');
-                                        dislikeBtn.parentElement.classList.remove('bg-red-100', 'text-red-500');
-                                        dislikeCount.innerText = parseInt(dislikeCount.innerText) - 1;
-                                    }
-                                }
-
-                                // Console log for your PHP logic tracking
-                                console.log(`Review ${reviewId} reaction: ${type}`);
-                            }
-                        </script>
                     </div>
 
                     <div class="mt-12 pt-8 border-t border-slate-100">
@@ -195,31 +146,27 @@ $vehicle = $v->getVehiculeById($idVehicule);
                 <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-xl sticky top-24">
                     <div class="mb-6">
                         <span class="text-blue-600 font-bold text-xs uppercase tracking-widest">Premium Selection</span>
-                        <h2 class="text-3xl font-black text-slate-800 mt-1">Ferrari F8 Tributo</h2>
+                        <h2 class="text-3xl font-black text-slate-800 mt-1"><?= $vehicle->marqueVehicule . ' ' . $vehicle->modeleVehicule ?></h2>
                     </div>
 
-                    <input type="hidden" id="base-price" value="450">
+                    <input type="hidden" id="base-price" value="<?php echo $vehicle->prixVehicule; ?>">
 
                     <div class="flex items-baseline gap-1 mb-6">
-                        <span id="total-display" class="text-5xl font-black text-slate-900">$450</span>
-                        <span class="text-slate-400 font-medium">/ total</span>
+                        <span id="total-display" class="text-5xl font-black text-slate-900"><?= $vehicle->prixVehicule ?></span>
+                        <span class="text-slate-400 font-medium">MAD/ total</span>
                     </div>
 
                     <form action="booking_process.php" method="POST" class="space-y-4">
-                        <input type="hidden" name="idVehicule" value="1">
+                        <input type="hidden" name="idVehicule" value="<?php echo $vehicle->idVehicule; ?>">
                         <input type="hidden" id="dureeReservation" name="dureeReservation" value="1">
 
-                        <div>
-                            <label class="block text-[11px] font-black uppercase text-slate-400 mb-2">Jour de Réservation</label>
-                            <input type="text" value="<?php echo date('Y-m-d'); ?>" readonly
-                                class="w-full px-4 py-3 bg-gray-100 border border-slate-200 rounded-xl text-slate-500 cursor-not-allowed outline-none">
-                        </div>
+
 
                         <div>
                             <label class="block text-[11px] font-black uppercase text-slate-400 mb-2">Lieu de prise en charge (lieuChange)</label>
                             <div class="relative">
                                 <select name="lieuChange" required
-                                    class="w-full pl-4 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer">
+                                    class="w-full pl-4 pr-10 py-3 bg-slate-50 border <?php if (!$connect)  echo "cursor-not-allowed "; ?>  border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer">
                                     <option value="">Sélectionnez un lieu</option>
                                     <option value="Casablanca Airport">Aéroport Mohammed V (CMN)</option>
                                     <option value="Marrakech Airport">Aéroport Marrakech-Ménara (RAK)</option>
@@ -236,20 +183,20 @@ $vehicle = $v->getVehiculeById($idVehicule);
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-[11px] font-black uppercase text-slate-400 mb-2">Date Début</label>
-                                <input type="date" id="dateDebut" name="dateDebutReservation" required
-                                    class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500">
+                                <input type="date" id="dateDebut" name="dateDebutReservation" value="<?php echo date('Y-m-d'); ?>" <?php if (!$connect)  echo "readonly "; ?>required required
+                                    class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 <?php if (!$connect)  echo "cursor-not-allowed "; ?> ">
                             </div>
                             <div>
                                 <label class="block text-[11px] font-black uppercase text-slate-400 mb-2">Date Fin</label>
-                                <input type="date" id="dateFin" name="dateFinReservation" required
-                                    class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500">
+                                <input type="date" id="dateFin" name="dateFinReservation" value="<?php echo date('Y-m-d'); ?>" <?php if (!$connect)  echo "readonly "; ?>required
+                                    class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 <?php if (!$connect)  echo "cursor-not-allowed "; ?> ">
                             </div>
                         </div>
 
                         <div class="pt-4 border-t border-slate-100 mt-2">
                             <label class="block text-[11px] font-black uppercase text-slate-400 mb-2">Option Supplémentaire</label>
                             <div class="relative">
-                                <select id="optionSelect" name="idOption"
+                                <select id="optionSelect" name="idOption" <?php if (!$connect)  echo "desabled "; ?>
                                     class="w-full pl-4 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer">
                                     <option value="0" data-price="0">Aucune Option</option>
                                     <option value="1" data-price="15">GPS Navigation (+$15)</option>
@@ -262,46 +209,21 @@ $vehicle = $v->getVehiculeById($idVehicule);
                             </div>
                         </div>
 
-                        <button type="submit" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold text-lg hover:bg-blue-600 transition shadow-lg mt-6">
+                        <button type="submit" <?php if (!$connect)  echo "disabled "; ?> class="w-full <?php if (!$connect)  echo "cursor-not-allowed  "; ?>  bg-slate-900 text-white py-4 rounded-2xl font-bold text-lg hover:bg-blue-600 transition shadow-lg mt-6">
                             Confirmer la Réservation
                         </button>
+                        <?php if (!$connect): ?>
+                            <div class="bg-red-100 border border-red-100 text-red-400 px-4 py-3 rounded relative mt-6" role="alert">
+                                <span class="block sm:inline">You must be logged in to make a reservation.
+                                    <a href="login.php" class="absolute top-2 right-2 text-red-900">Sign In</a>
+                                </span>
+
+                            </div>
+                        <?php endif; ?>
                     </form>
                 </div>
 
-                <script>
-                    const basePrice = parseFloat(document.getElementById('base-price').value);
-                    const dateDebut = document.getElementById('dateDebut');
-                    const dateFin = document.getElementById('dateFin');
-                    const optionSelect = document.getElementById('optionSelect');
-                    const totalDisplay = document.getElementById('total-display');
-                    const dureeInput = document.getElementById('dureeReservation');
 
-                    function calculateTotal() {
-                        let days = 1;
-
-                        if (dateDebut.value && dateFin.value) {
-                            const start = new Date(dateDebut.value);
-                            const end = new Date(dateFin.value);
-                            const diffTime = end - start;
-                            days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                            if (days <= 0) days = 1;
-                        }
-
-                        dureeInput.value = days;
-
-                        const selectedOption = optionSelect.options[optionSelect.selectedIndex];
-                        const optionPrice = parseFloat(selectedOption.getAttribute('data-price')) || 0;
-
-                        // Total = (Base Price * Number of Days) + Fixed Option Price
-                        const finalTotal = (basePrice * days) + optionPrice;
-
-                        totalDisplay.innerText = `$${finalTotal}`;
-                    }
-
-                    dateDebut.addEventListener('change', calculateTotal);
-                    dateFin.addEventListener('change', calculateTotal);
-                    optionSelect.addEventListener('change', calculateTotal);
-                </script>
             </div>
         </div>
     </main>
@@ -318,6 +240,96 @@ $vehicle = $v->getVehiculeById($idVehicule);
         </div>
     </div>
 
+
+
+    <script>
+        /**
+         * Logic for Reactions (Like/Dislike)
+         * In a real PHP POO environment, you would send a Fetch API request
+         * to a 'ReactionController.php' to update the DB.
+         */
+        function handleReaction(reviewId, type) {
+            const likeBtn = document.querySelector(`#like-btn-${reviewId} i`);
+            const dislikeBtn = document.querySelector(`#dislike-btn-${reviewId} i`);
+            const likeCount = document.getElementById(`like-count-${reviewId}`);
+            const dislikeCount = document.getElementById(`dislike-count-${reviewId}`);
+
+            if (type === 'like') {
+                // Toggle Like
+                if (likeBtn.classList.contains('far')) {
+                    likeBtn.classList.replace('far', 'fas');
+                    likeBtn.parentElement.classList.add('bg-blue-100', 'text-blue-600');
+                    likeCount.innerText = parseInt(likeCount.innerText) + 1;
+
+                    // Remove dislike if active
+                    if (dislikeBtn.classList.contains('fas')) {
+                        dislikeBtn.classList.replace('fas', 'far');
+                        dislikeBtn.parentElement.classList.remove('bg-red-100', 'text-red-500');
+                        dislikeCount.innerText = parseInt(dislikeCount.innerText) - 1;
+                    }
+                } else {
+                    likeBtn.classList.replace('fas', 'far');
+                    likeBtn.parentElement.classList.remove('bg-blue-100', 'text-blue-600');
+                    likeCount.innerText = parseInt(likeCount.innerText) - 1;
+                }
+            } else {
+                // Toggle Dislike
+                if (dislikeBtn.classList.contains('far')) {
+                    dislikeBtn.classList.replace('far', 'fas');
+                    dislikeBtn.parentElement.classList.add('bg-red-100', 'text-red-500');
+                    dislikeCount.innerText = parseInt(dislikeCount.innerText) + 1;
+
+                    // Remove like if active
+                    if (likeBtn.classList.contains('fas')) {
+                        likeBtn.classList.replace('fas', 'far');
+                        likeBtn.parentElement.classList.remove('bg-blue-100', 'text-blue-600');
+                        likeCount.innerText = parseInt(likeCount.innerText) - 1;
+                    }
+                } else {
+                    dislikeBtn.classList.replace('fas', 'far');
+                    dislikeBtn.parentElement.classList.remove('bg-red-100', 'text-red-500');
+                    dislikeCount.innerText = parseInt(dislikeCount.innerText) - 1;
+                }
+            }
+
+            // Console log for your PHP logic tracking
+            console.log(`Review ${reviewId} reaction: ${type}`);
+        }
+    </script>
+    <script>
+        const basePrice = parseFloat(document.getElementById('base-price').value);
+        const dateDebut = document.getElementById('dateDebut');
+        const dateFin = document.getElementById('dateFin');
+        const optionSelect = document.getElementById('optionSelect');
+        const totalDisplay = document.getElementById('total-display');
+        const dureeInput = document.getElementById('dureeReservation');
+
+        function calculateTotal() {
+            let days = 1;
+
+            if (dateDebut.value && dateFin.value) {
+                const start = new Date(dateDebut.value);
+                const end = new Date(dateFin.value);
+                const diffTime = end - start;
+                days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                if (days <= 0) days = 1;
+            }
+
+            dureeInput.value = days;
+
+            const selectedOption = optionSelect.options[optionSelect.selectedIndex];
+            const optionPrice = parseFloat(selectedOption.getAttribute('data-price')) || 0;
+
+            // Total = (Base Price * Number of Days) + Fixed Option Price
+            const finalTotal = (basePrice * days) + optionPrice;
+
+            totalDisplay.innerText = `$${finalTotal}`;
+        }
+
+        dateDebut.addEventListener('change', calculateTotal);
+        dateFin.addEventListener('change', calculateTotal);
+        optionSelect.addEventListener('change', calculateTotal);
+    </script>
     <script>
         // --- Star Selection Logic ---
         const stars = document.querySelectorAll('#star-selector i');
