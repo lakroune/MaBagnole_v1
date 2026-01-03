@@ -2,6 +2,8 @@
 
 namespace app\model;
 
+use app\model\Connexion;
+
 class Favori
 {
     private int $idClient;
@@ -9,43 +11,43 @@ class Favori
     // constructeur
     public function __construct() {}
     // getters
-    public function getIdClient()
+    public function getIdClient(): int
     {
         return $this->idClient;
     }
 
-    public function getIdVehicule()
+    public function getIdVehicule(): int
     {
         return $this->idVehicule;
     }
 
 
     // setters
-    public function setIdClient($idClient)
+    public function setIdClient($idClient): void
     {
-        if ($idClient > 0) {
+        if ($idClient < 1) {
+            throw new \InvalidArgumentException("ID client invalide");
+        } else {
             $this->idClient = $idClient;
-            return true;
         }
-        return false;
     }
 
-
-    public function setIdVehicule($idVehicule)
+    public function setIdVehicule($idVehicule): void
     {
-        if ($idVehicule > 0) {
+        if ($idVehicule < 1) {
+            throw new \InvalidArgumentException("ID vehicule invalide");
+        } else {
             $this->idVehicule = $idVehicule;
-            return true;
         }
-        return false;
     }
+
     // tostring
     public function __toString()
     {
         return "idClient: " . $this->idClient . ", idVehicule: " . $this->idVehicule;
     }
     // ajouter Favori
-    public function ajouterFavori()
+    public function ajouterFavori(): bool
     {
         try {
             $db = Connexion::connect()->getConnexion();
@@ -63,7 +65,7 @@ class Favori
         }
     }
     // annuler Favori
-    public function annulerFavori()
+    public function annulerFavori(): bool
     {
         try {
             $db = Connexion::connect()->getConnexion();
@@ -82,7 +84,7 @@ class Favori
     }
 
     // si deja Favori
-    public function getFavori(int $idClient, int $idVehicule)
+    public function isFavori(int $idClient, int $idVehicule): bool
     {
         try {
             $db = Connexion::connect()->getConnexion();
@@ -96,6 +98,8 @@ class Favori
                 else
                     return false;
             }
+            else
+                return false;
         } catch (\Exception $e) {
             error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
             return false;

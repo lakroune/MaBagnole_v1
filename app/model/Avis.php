@@ -1,7 +1,6 @@
 <?php
-
 namespace app\model;
-
+use app\model\Connexion;
 class Avis
 {
     private int $idAvis;
@@ -43,7 +42,7 @@ class Avis
         return $this->idClient;
     }
     // setters 
-    public function setIdAvis($idAvis): void
+    public function setIdAvis(int $idAvis): void
     {
         if ($idAvis < 1)
             throw new \InvalidArgumentException("ID avis invalide");
@@ -52,7 +51,7 @@ class Avis
     }
 
 
-    public function setCommentaireAvis($commentaireAvis): void
+    public function setCommentaireAvis(string $commentaireAvis): void
     {
         if (empty($commentaireAvis))
             throw new \InvalidArgumentException("Commentaire avis invalide");
@@ -61,16 +60,16 @@ class Avis
     }
 
 
-    public function setNoteAvis($noteAvis): void
+    public function setNoteAvis(int $noteAvis): void
     {
-        if ($noteAvis < 1)
+        if ($noteAvis < 1 || $noteAvis > 5)
             throw new \InvalidArgumentException("Note avis invalide");
         else
             $this->noteAvis = $noteAvis;
     }
 
 
-    public function setDatePublicationAvis($datePublicationAvis): void
+    public function setDatePublicationAvis(string $datePublicationAvis): void
     {
         if (empty($datePublicationAvis))
             throw new \InvalidArgumentException("Date publication avis invalide");
@@ -79,7 +78,7 @@ class Avis
     }
 
 
-    public function setIdReservation($idReservation): void
+    public function setIdReservation(int $idReservation): void
     {
         if ($idReservation < 1)
             throw new \InvalidArgumentException("ID reservation invalide");
@@ -88,7 +87,7 @@ class Avis
     }
 
 
-    public function setStatusAvis($statusAvis): void
+    public function setStatusAvis(int $statusAvis): void
     {
         if ($statusAvis < 1)
             throw new \InvalidArgumentException("Status avis invalide");
@@ -97,7 +96,7 @@ class Avis
     }
 
 
-    public function setIdClient($idClient): void
+    public function setIdClient(int $idClient): void
     {
         if ($idClient < 1)
             throw new \InvalidArgumentException("ID client invalide");
@@ -106,12 +105,12 @@ class Avis
     }
 
     // tostring
-    public function __toString()
+    public function __toString(): string
     {
-        return "";
+        return "idAvis : $this->idAvis , ";
     }
     // ajouter Avis
-    public function ajouterAvis()
+    public function ajouterAvis(): bool
     {
         try {
 
@@ -128,7 +127,7 @@ class Avis
                 return false;
         } catch (\Exception $e) {
             error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
-            return null;
+            return false;
         }
     }
 
@@ -144,7 +143,7 @@ class Avis
     // conter Avis by vehicule
     public function conterAvisByVehicule(int $idVehicule) {}
     // getAll Avis by vehicule
-    public function getAllAvisByVehicule(int $idVehicule)
+    public function getAllAvisByVehicule(int $idVehicule): array
     {
         try {
             $db = Connexion::connect()->getConnexion();
@@ -152,18 +151,18 @@ class Avis
             $stmt = $db->prepare($sql);
             $stmt->bindParam(":idVehicule", $idVehicule);
             if ($stmt->execute()) {
-                $avis = $stmt->fetchAll(\PDO::FETCH_OBJ);
+                $avis = $stmt->fetchAll(\PDO::FETCH_CLASS, Avis::class);
                 return $avis;
             } else {
-                return null;
+                return [];
             }
         } catch (\Exception $e) {
             error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
-            return null;
+            return [];
         }
     }
     // check Avis
-    public function checkAvis(int $idClient, int $idReservation)
+    public function checkAvis(int $idClient, int $idReservation): bool
     {
         try {
             $db = Connexion::connect()->getConnexion();
@@ -172,17 +171,16 @@ class Avis
             $stmt->bindParam(":idClient", $idClient);
             $stmt->bindParam(":idReservation", $idReservation);
             if ($stmt->execute()) {
-                $avis = $stmt->fetch(\PDO::FETCH_OBJ);
-                if ($avis)
+                if ($stmt->rowCount() > 0)
                     return true;
                 else
                     return false;
-            } else {
-                return null;
             }
+            else
+                return false;
         } catch (\Exception $e) {
             error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
-            return null;
+            return false;
         }
     }
 }

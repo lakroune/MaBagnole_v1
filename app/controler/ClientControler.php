@@ -13,10 +13,7 @@ use app\model\Avis;
 class ClientControler
 {
 
-    public function __construct()
-    {
-        $this->index();
-    }
+    public function __construct() {}
 
     public function  index()
     {
@@ -77,7 +74,7 @@ class ClientControler
             $favori = new Favori();
             $favori->setIdClient((int) $_SESSION['Utilisateur']->idUtilisateur);
             $favori->setIdVehicule((int) $_POST['idVehicule']);
-            if ($favori->getFavori($favori->getIdClient(), $favori->getIdVehicule())) {
+            if ($favori->isFavori($favori->getIdClient(), $favori->getIdVehicule())) {
                 $favori->annulerFavori();
             } else {
                 $favori->ajouterFavori();
@@ -132,3 +129,4 @@ class ClientControler
 }
 
 $clientControler = new ClientControler();
+$clientControler->index();
