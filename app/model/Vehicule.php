@@ -23,15 +23,168 @@ class Vehicule
     //constructeur par default
     public function __construct() {}
     //getters
-    public function __get($attribute)
+    public function getIdVehicule()
     {
-        return $this->$attribute;
+        return $this->idVehicule;
     }
+
+
+    public function getMarqueVehicule()
+    {
+        return $this->marqueVehicule;
+    }
+
+    public function getModeleVehicule()
+    {
+        return $this->modeleVehicule;
+    }
+
+    public function getAnneeVehicule()
+    {
+        return $this->anneeVehicule;
+    }
+
+    public function getImageVehicule()
+    {
+        return $this->imageVehicule;
+    }
+
+    public function getTypeBoiteVehicule()
+    {
+        return $this->typeBoiteVehicule;
+    }
+
+    public function getTypeCarburantVehicule()
+    {
+        return $this->typeCarburantVehicule;
+    }
+
+    public function getCouleurVehicule()
+    {
+        return $this->couleurVehicule;
+    }
+
+    public function getPrixVehicule()
+    {
+        return $this->prixVehicule;
+    }
+
+    public function getStatusVehicule()
+    {
+        return $this->statusVehicule;
+    }
+
+    public function getIdCategorie()
+    {
+        return $this->idCategorie;
+    }
+
+
     //setters
-    public function __set($attribute, $value)
+    public function setIdVehicule($idVehicule)
     {
-        $this->$attribute = $value;
+        if ($idVehicule > 0) {
+            $this->idVehicule = $idVehicule;
+            return true;
+        }
+        return false;
     }
+
+    public function setMarqueVehicule($marqueVehicule)
+    {
+        if (strlen($marqueVehicule) > 0) {
+            $this->marqueVehicule = $marqueVehicule;
+            return true;
+        }
+        return false;
+    }
+
+
+    public function setModeleVehicule($modeleVehicule)
+    {
+        if (strlen($modeleVehicule) > 0) {
+            $this->modeleVehicule = $modeleVehicule;
+            return true;
+        }
+        return false;
+    }
+
+    public function setAnneeVehicule($anneeVehicule)
+    {
+        if (strlen($anneeVehicule) > 0) {
+            $this->anneeVehicule = $anneeVehicule;
+            return true;
+        }
+        return false;
+    }
+
+    public function setImageVehicule($imageVehicule)
+    {
+        if (strlen($imageVehicule) > 0) {
+            $this->imageVehicule = $imageVehicule;
+            return true;
+        }
+        return false;
+    }
+
+    public function setTypeBoiteVehicule($typeBoiteVehicule)
+    {
+        if (strlen($typeBoiteVehicule) > 0) {
+            $this->typeBoiteVehicule = $typeBoiteVehicule;
+            return true;
+        }
+        return false;
+    }
+
+    public function setTypeCarburantVehicule($typeCarburantVehicule)
+    {
+        if (strlen($typeCarburantVehicule) > 0) {
+            $this->typeCarburantVehicule = $typeCarburantVehicule;
+            return true;
+        }
+        return false;
+    }
+
+    public function setCouleurVehicule($couleurVehicule)
+    {
+        if (strlen($couleurVehicule) > 0) {
+            $this->couleurVehicule = $couleurVehicule;
+            return true;
+        }
+        return false;
+    }
+
+    public function setPrixVehicule($prixVehicule)
+    {
+        if (strlen($prixVehicule) > 0) {
+            $this->prixVehicule = $prixVehicule;
+            return true;
+        }
+        return false;
+    }
+
+    public function setStatusVehicule($statusVehicule)
+    {
+        if ($statusVehicule > 0) {
+            $this->statusVehicule = $statusVehicule;
+            return true;
+        }
+        return false;
+    }
+
+    public function setIdCategorie($idCategorie)
+    {
+        if ($idCategorie > 0) {
+            $this->idCategorie = $idCategorie;
+            return true;
+        }
+        return false;
+    }
+
+
+
+
+
 
     //tostring
     public function __toString()

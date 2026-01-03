@@ -49,21 +49,22 @@ class AdminControler
     {
         try {
             $vehicule = new Vehicule();
-            $vehicule->idVehicule = intval($_POST["idVehicule"]) ?? "";
-            $vehicule->marqueVehicule = $_POST["marqueVehicule"] ?? "";
-            $vehicule->modeleVehicule = $_POST["modeleVehicule"] ?? "";
-            $vehicule->anneeVehicule = $_POST["anneeVehicule"] ?? "";
-            $vehicule->couleurVehicule = $_POST["couleurVehicule"] ?? "";
-            $vehicule->prixVehicule = $_POST["prixVehicule"] ?? "";
-            $vehicule->typeBoiteVehicule = $_POST["typeBoiteVehicule"] ?? "";
-            $vehicule->typeCarburantVehicule = $_POST["typeCarburantVehicule"] ?? "";
-            $vehicule->imageVehicule = $_POST["imageVehicule"] ?? "";
-            $vehicule->idCategorie = intval($_POST["idCategorie"]) ?? "";
+            $vehicule->setIdVehicule($_POST["idVehicule"]); //mtnssach return boolean
+            $vehicule->setMarqueVehicule($_POST["marqueVehicule"]);
+            $vehicule->setModeleVehicule($_POST["modeleVehicule"]);
+            $vehicule->setAnneeVehicule($_POST["anneeVehicule"]);
+            $vehicule->setCouleurVehicule($_POST["couleurVehicule"]);
+            $vehicule->setPrixVehicule($_POST["prixVehicule"]);
+            $vehicule->setTypeBoiteVehicule($_POST["typeBoiteVehicule"]);
+            $vehicule->setTypeCarburantVehicule($_POST["typeCarburantVehicule"]);
+            $vehicule->setImageVehicule($_POST["imageVehicule"]??"iamege");  // mtnssach tzid image   edit
+            $vehicule->setIdCategorie($_POST["idCategorie"]);
+
             if (isset($_POST["action"]) && $_POST["action"] == "add" && $vehicule->ajouterVehicule())
                 return "seccess";
             elseif (isset($_POST["action"]) && $_POST["action"] == "update" && $vehicule->modifierVehicule())
                 return "seccess";
-            elseif (isset($_POST["action"]) && $_POST["action"] == "delete" && $vehicule->supprimerVehicule($vehicule->idVehicule ?? 2))
+            elseif (isset($_POST["action"]) && $_POST["action"] == "delete" && $vehicule->supprimerVehicule($vehicule->getIdVehicule()))
                 return "seccess";
             else
                 return "failed";

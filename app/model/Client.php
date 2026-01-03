@@ -10,17 +10,35 @@ class Client extends Utilisateur
     private int $statusClient;
     private string $telephone;
     private string $ville;
-    private \DateTime $createdAt;
+    private string $createdAt;
     // constructeur Client
     public function __construct()
     {
         parent::__construct();
     }
     // getters
-    public function __get($aturibute)
+    public function getStatusClient()
     {
-        return $this->$aturibute;
+        return $this->statusClient;
     }
+
+    public function getTelephone()
+    {
+        return $this->telephone;
+    }
+
+    public function getVille()
+    {
+        return $this->ville;
+    }
+
+
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+
     // setters
     public function setStatusClient($statusClient): bool
     {
@@ -32,7 +50,7 @@ class Client extends Utilisateur
     }
     public function setTelephone($telephone): bool
     {
-        $regex = '/^\+212[5-7][0-9]{8}$/';
+        $regex = '/^0[5-7][0-9]{8}$/';
         if (preg_match($regex, $telephone)) {
             $this->telephone = $telephone;
             return true;
@@ -184,7 +202,7 @@ class Client extends Utilisateur
             return false;
         }
     }
-     public function suspendClient(int $idClient): bool
+    public function suspendClient(int $idClient): bool
     {
         try {
             $db = Connexion::connect()->getConnexion();
@@ -201,4 +219,3 @@ class Client extends Utilisateur
         }
     }
 }
-

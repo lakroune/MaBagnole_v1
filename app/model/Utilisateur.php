@@ -78,7 +78,8 @@ class Utilisateur
     }
     public function setEmail($email): bool
     {
-        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $regex = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
+        if (preg_match($regex, $email)) {
             $this->email = $email;
             return true;
         } else {

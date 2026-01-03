@@ -20,9 +20,11 @@ $vehicle = $v->getVehiculeById($idVehicule);
 $avis = new Avis();
 $reviews =     $avis->getAllAvisByVehicule($idVehicule);
 
-$reservation = new Reservation();
-$isReserver = $reservation->getReservationByClientVehicule($idClient = $_SESSION['Utilisateur']->idUtilisateur, $idVehicule);
-$dejaCommente = $avis->checkAvis($idClient, $isReserver);
+if ($connect) {
+    $reservation = new Reservation();
+    $isReserver = $reservation->getReservationByClientVehicule($idClient = $_SESSION['Utilisateur']->idUtilisateur, $idVehicule);
+    $dejaCommente = $avis->checkAvis($idClient, $isReserver);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
