@@ -16,10 +16,39 @@ class Utilisateur
     public function __construct() {}
     // getters
 
-    public function __get($attribute)
+    public function getIdUtilisateur()
     {
-        return $this->attribute;
+        return $this->idUtilisateur;
     }
+
+    public function getNomUtilisateur()
+    {
+        return $this->nomUtilisateur;
+    }
+
+    public function getPrenomUtilisateur()
+    {
+        return $this->prenomUtilisateur;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+
+
+
     // setters
     public function setIdUtilisateur($idUtilisateur): bool
     {
@@ -83,7 +112,7 @@ class Utilisateur
         return "idUtilisateur=$this->idUtilisateur, nomUtilisateur=$this->nomUtilisateur, prenomUtilisateur=$this->prenomUtilisateur, email=$this->email, role=$this->role";
     }
     //seconnecter
-    public function seConnecter():string
+    public function seConnecter(): string
     {
         try {
             $db = Connexion::connect()->getConnexion();
@@ -114,5 +143,3 @@ class Utilisateur
         return true;
     }
 }
-
- 

@@ -75,9 +75,9 @@ class ClientControler
         try {
             session_start();
             $favori = new Favori();
-            $favori->idClient = $_SESSION['Utilisateur']->idUtilisateur;
-            $favori->idVehicule = $_POST['idVehicule'];
-            if ($favori->getFavori($favori->idClient, $favori->idVehicule)) {
+            $favori->setIdClient((int) $_SESSION['Utilisateur']->idUtilisateur);
+            $favori->setIdVehicule((int) $_POST['idVehicule']);
+            if ($favori->getFavori($favori->getIdClient(), $favori->getIdVehicule())) {
                 $favori->annulerFavori();
             } else {
                 $favori->ajouterFavori();
@@ -95,11 +95,11 @@ class ClientControler
         try {
             $reservation = new Reservation();
             session_start();
-            $reservation->idClient = $_SESSION['Utilisateur']->idUtilisateur;
-            $reservation->dateDebutReservation = ($_POST["dateDebutReservation"]);
-            $reservation->dateFinReservation = ($_POST["dateFinReservation"]);
-            $reservation->lieuChange = $_POST["lieuChange"];
-            $reservation->idVehicule = $_POST["idVehicule"];
+            $reservation->setIdClient((int) $_SESSION['Utilisateur']->idUtilisateur);
+            $reservation->setDateDebutReservation($_POST["dateDebutReservation"]);
+            $reservation->setDateFinReservation($_POST["dateFinReservation"]);
+            $reservation->setLieuChange($_POST["lieuChange"]);
+            $reservation->setIdVehicule((int) $_POST["idVehicule"]);
 
             if ($reservation->ajouterReservation())
                 return true;

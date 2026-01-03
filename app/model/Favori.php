@@ -9,14 +9,35 @@ class Favori
     // constructeur
     public function __construct() {}
     // getters
-    public function __get($attribute)
+    public function getIdClient()
     {
-        return $this->$attribute;
+        return $this->idClient;
     }
-    // setters
-    public function __set($attribute, $value)
+
+    public function getIdVehicule()
     {
-        $this->$attribute = $value;
+        return $this->idVehicule;
+    }
+
+
+    // setters
+    public function setIdClient($idClient)
+    {
+        if ($idClient > 0) {
+            $this->idClient = $idClient;
+            return true;
+        }
+        return false;
+    }
+
+
+    public function setIdVehicule($idVehicule)
+    {
+        if ($idVehicule > 0) {
+            $this->idVehicule = $idVehicule;
+            return true;
+        }
+        return false;
     }
     // tostring
     public function __toString()

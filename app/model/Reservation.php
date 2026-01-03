@@ -19,15 +19,118 @@ class Reservation
     // constructeur
     public function __construct() {}
     // getters
-    public function __get($attribute)
+    public function getIdReservation()
     {
-        return $this->$attribute;
+        return $this->idReservation;
     }
+    public function getDateReservation()
+    {
+        return $this->dateReservation;
+    }
+    public function getDateDebutReservation()
+    {
+        return $this->dateDebutReservation;
+    }
+    public function getDateFinReservation()
+    {
+        return $this->dateFinReservation;
+    }
+    public function getLieuChange()
+    {
+        return $this->lieuChange;
+    }
+    public function getIdVehicule()
+    {
+        return $this->idVehicule;
+    }
+    public function getStatusReservation()
+    {
+        return $this->statusReservation;
+    }
+    public function getIdClient()
+    {
+        return $this->idClient;
+    }
+
+
     // setters
-    public function __set($attribute, $value)
+    public function setIdReservation($idReservation)
     {
-        $this->$attribute = $value;
+        if ($idReservation > 0) {
+            $this->idReservation = $idReservation;
+            return true;
+        }
+        return false;
     }
+    public function setDateReservation($dateReservation)
+    {
+        if (strlen($dateReservation) > 0) {
+            $this->dateReservation = $dateReservation;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function setDateDebutReservation($dateDebutReservation)
+    {
+        if (strlen($dateDebutReservation) > 0) {
+            $this->dateDebutReservation = $dateDebutReservation;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function setDateFinReservation($dateFinReservation)
+    {
+        if (strlen($dateFinReservation) > 0) {
+            $this->dateFinReservation = $dateFinReservation;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function setLieuChange($lieuChange)
+    {
+        if (strlen($lieuChange) > 0) {
+            $this->lieuChange = $lieuChange;
+            return true;
+        }
+        return false;
+    }
+
+    public function setIdVehicule($idVehicule)
+    {
+        if ($idVehicule > 0) {
+            $this->idVehicule = $idVehicule;
+            return true;
+        }
+        return false;
+    }
+    public function setStatusReservation($statusReservation)
+    {
+        if ($statusReservation == 0 or $statusReservation == 1) {
+            $this->statusReservation = $statusReservation;
+            return true;
+        }
+        return false;
+    }
+    public function setIdClient($idClient)
+    {
+        if ($idClient > 0) {
+            $this->idClient = $idClient;
+            return true;
+        }
+        return false;
+    }
+
+
+
+
+
+
+
+
+
     public function __toString()
     {
         return "idReservation:$this->idReservation, dateReservation :$this->dateReservation, dateDebutReservation:$this->dateDebutReservation, dateFinReservation:$this->dateFinReservation, lieuChange:$this->lieuChange, idVehicule:$this->idVehicule, statusReservation:$this->statusReservation, idClient:$this->idClient";

@@ -206,3 +206,40 @@ INSERT INTO Favoris (idClient, idVehicule) VALUES
 -- (5,3,1),
 -- (6,1,1),
 -- (7,5,1);
+
+INSERT INTO Reservations 
+(dateDebutReservation, dateFinReservation, lieuChange, idVehicule, statusReservation, idClient)
+VALUES
+('2026-01-05 09:00:00', '2026-01-07 18:00:00', 'Casablanca', 6, 'confirmer', 2),
+('2026-01-06 10:00:00', '2026-01-08 18:00:00', 'Rabat',       6, 'confirmer', 3),
+('2026-01-07 08:30:00', '2026-01-09 17:00:00', 'Marrakech',   6, 'confirmer', 4),
+('2026-01-08 09:00:00', '2026-01-10 18:00:00', 'Agadir',      6, 'confirmer', 5),
+('2026-01-09 10:00:00', '2026-01-11 18:00:00', 'Tanger',      6, 'confirmer', 6),
+('2026-01-10 09:00:00', '2026-01-12 18:00:00', 'Fès',         6, 'confirmer', 7),
+('2026-01-11 09:30:00', '2026-01-13 18:00:00', 'Oujda',       6, 'confirmer', 8),
+('2026-01-12 10:00:00', '2026-01-14 18:00:00', 'Meknès',      6, 'confirmer', 9),
+('2026-01-13 09:00:00', '2026-01-15 18:00:00', 'Kenitra',     6, 'confirmer', 10);
+INSERT INTO Avis
+(commentaireAvis, noteAvis, idReservation, statusAvis, idClient)
+VALUES
+('Très bon service',        5, 1, 1, 2),
+('Voiture propre',          4, 2, 1, 3),
+('Expérience satisfaisante',4, 3, 1, 4),
+('Service rapide',          5, 4, 1, 5),
+('Bonne communication',     4, 5, 1, 6),
+('Je recommande',           5, 6, 1, 7),
+('Tout est parfait',        5, 7, 1, 8),
+('Bon rapport qualité/prix',4, 8, 1, 9),
+('Très satisfait',          5, 9, 1, 10);
+INSERT INTO Avis
+(commentaireAvis, noteAvis, idReservation, statusAvis, idClient)
+VALUES
+('Très bon service',        5, 1, 1, 2),
+('Voiture propre',          4, 2, 1, 3),
+('Expérience satisfaisante',4, 3, 1, 4),
+('Service rapide',          5, 4, 1, 5),
+('Bonne communication',     4, 5, 1, 6),
+('Je recommande',           5, 6, 1, 7),
+('Tout est parfait',        5, 7, 1, 8),
+('Bon rapport qualité/prix',4, 8, 1, 9),
+('Très satisfait',          5, 9, 1, 10);

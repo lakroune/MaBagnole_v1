@@ -12,22 +12,55 @@ class Categorie
     // constructeur
     public function __construct() {}
     //getters
-    public function __get($aturibut)
+    public function getIdCategorie()
     {
-        return $this->$aturibut;
+        return $this->idCategorie;
     }
+
+    public function getTitreCategorie()
+    {
+        return $this->titreCategorie;
+    }
+
+    public function getDescriptionCategorie()
+    {
+        return $this->descriptionCategorie;
+    }
+
+
     //setters
-    public function __set($aturibut, $value)
+    public function setIdCategorie($idCategorie)
     {
-        $this->$aturibut = $value;
+        if ($idCategorie > 0) {
+            $this->idCategorie = $idCategorie;
+            return true;
+        }
+        return false;
     }
+
+    public function setTitreCategorie($titreCategorie): bool
+    {
+        if (strlen($titreCategorie) > 0) {
+            $this->titreCategorie = $titreCategorie;
+            return true;
+        }
+        return false;
+    }
+
+    public function setDescriptionCategorie($descriptionCategorie): bool
+    {
+        if (strlen($descriptionCategorie) > 0) {
+            $this->descriptionCategorie = $descriptionCategorie;
+            return true;
+        }
+        return false;
+    }
+
+
     public function __toString()
     {
         return "Categorie [idCategorie=$this->idCategorie, titreCategorie=$this->titreCategorie, descriptionCategorie=$this->descriptionCategorie]";
     }
-
-
-
 
     public function ajouterCategorie(): bool
     {

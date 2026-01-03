@@ -101,7 +101,14 @@ $dejaCommente = $avis->checkAvis($idClient, $isReserver);
                                             <div>
                                                 <h4 class="font-bold text-slate-800">John Doe</h4>
                                                 <div class="flex text-yellow-400 text-[10px]">
-                                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star text-slate-200"></i>
+                                                    <?php for ($i = 0; $i < 5; $i++) : ?>
+                                                        <?php if ($i < $review->noteAvis) : ?>
+
+                                                            <i class="fas fa-star"></i>
+                                                        <?php else: ?>
+                                                            <i class="fas fa-star text-slate-200"></i>
+                                                        <?php endif ?>
+                                                    <?php endfor ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -114,10 +121,10 @@ $dejaCommente = $avis->checkAvis($idClient, $isReserver);
                                     </div>
 
                                     <p id="review-text-101" class="mt-4 text-slate-600 italic leading-relaxed">
-                                        "The car was in perfect condition and the pickup process was very smooth!"
+                                        <?php echo $review->commentaireAvis ?>
                                     </p>
 
-                                    <div class="mt-4 flex items-center gap-6">
+                                    <!-- <div class="mt-4 flex items-center gap-6">
                                         <button <?php if ($connect) : ?>onclick="handleReaction(101, 'like')" <?php endif ?> id="like-btn-101" class="flex items-center gap-2 text-slate-400 hover:text-blue-600 transition group">
                                             <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-blue-50">
                                                 <i class="far fa-thumbs-up text-sm"></i>
@@ -131,7 +138,7 @@ $dejaCommente = $avis->checkAvis($idClient, $isReserver);
                                             </div>
                                             <span id="dislike-count-101" class="text-xs font-bold">2</span>
                                         </button>
-                                    </div>
+                                    </div> -->
                                 </div>
                             <?php endforeach ?>
                         <?php endif ?>

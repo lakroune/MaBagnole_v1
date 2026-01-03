@@ -78,10 +78,10 @@ class AdminControler
         try {
             $categorie = new Categorie();
             $categorie = new Categorie();
-            $categorie->titreCategorie = $_POST["nomCategorie"] ?? "";
-            $categorie->descriptionCategorie = ""; // $_POST["descriptionCategorie"];
-            $categorie->idCategorie = intval($_POST["idCategorie"]) ?? "";
-            if (isset($_POST["action"]) && $_POST["action"] == "delete"  && $categorie->supprimerCategorie($categorie->idCategorie))
+            $categorie->setTitreCategorie($_POST["nomCategorie"]);
+            $categorie->setDescriptionCategorie("descption"); // $_POST["descriptionCategorie"];
+            $categorie->setIdCategorie(intval($_POST["idCategorie"]));
+            if (isset($_POST["action"]) && $_POST["action"] == "delete"  && $categorie->supprimerCategorie($categorie->getIdCategorie()))
                 return "seccess";
             elseif (isset($_POST["action"]) && $_POST["action"] == "update" && $categorie->modifierCategorie()) {
                 return "seccess";
@@ -114,10 +114,10 @@ class AdminControler
     public function gestionReservation()
     {
         $reservation = new Reservation();
-        $reservation->idReservation = intval($_POST["idReservation"]) ?? "";
-        if (isset($_POST["action"]) && $_POST["action"] == "confirmer" && $reservation->confirmerReservation($reservation->idReservation))
+        $reservation->setIdReservation(intval($_POST["idReservation"]));
+        if (isset($_POST["action"]) && $_POST["action"] == "confirmer" && $reservation->confirmerReservation($reservation->getIdReservation()))
             return "seccess";
-        elseif (isset($_POST["action"]) && $_POST["action"] == "annuler" && $reservation->annulerReservation($reservation->idReservation))
+        elseif (isset($_POST["action"]) && $_POST["action"] == "annuler" && $reservation->annulerReservation($reservation->getIdReservation()))
             return "seccess";
         else
             return "failed";
