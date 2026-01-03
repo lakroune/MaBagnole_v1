@@ -10,7 +10,7 @@ use app\model\Reservation;
 
 session_start();
 $connect = true;
-if (!isset($_SESSION['Utilisateur']) or  $_SESSION['Utilisateur']->role !== 'client') {
+if (!isset($_SESSION['Utilisateur']) or  $_SESSION['Utilisateur']->getRole() !== 'client') {
     $connect =  false;
 }
 $v = new Vehicule();
@@ -63,7 +63,7 @@ if ($connect) {
 
             <div class="lg:w-2/3">
                 <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-200 mb-8">
-                    <img src="<?= $vehicle->imageVehicule ?>"
+                    <img src="<?= $vehicle->getImageVehicule() ?>"
                         alt="Car Display" class="w-full h-[450px] object-cover">
                 </div>
 
@@ -71,22 +71,22 @@ if ($connect) {
                     <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
                         <i class="fas fa-cog text-blue-600 mb-2"></i>
                         <p class="text-[10px] uppercase font-bold text-slate-400">Transmission</p>
-                        <p class="font-bold text-slate-800"><?php echo $vehicle->typeBoiteVehicule ?></p>
+                        <p class="font-bold text-slate-800"><?php echo $vehicle->getTypeBoiteVehicule() ?></p>
                     </div>
                     <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
                         <i class="fas fa-gas-pump text-blue-600 mb-2"></i>
                         <p class="text-[10px] uppercase font-bold text-slate-400">Fuel</p>
-                        <p class="font-bold text-slate-800"><?php echo $vehicle->typeCarburantVehicule ?></p>
+                        <p class="font-bold text-slate-800"><?php echo $vehicle->getTypeCarburantVehicule() ?></p>
                     </div>
                     <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
                         <i class="fas fa-calendar-check text-blue-600 mb-2"></i>
                         <p class="text-[10px] uppercase font-bold text-slate-400">Year</p>
-                        <p class="font-bold text-slate-800"><?= $vehicle->anneeVehicule  ?></p>
+                        <p class="font-bold text-slate-800"><?= $vehicle->getAnneeVehicule()  ?></p>
                     </div>
                     <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
                         <i class="fas fa-palette text-blue-600 mb-2"></i>
                         <p class="text-[10px] uppercase font-bold text-slate-400">Color</p>
-                        <p class="font-bold text-slate-800"><?php echo $vehicle->couleurVehicule ?></p>
+                        <p class="font-bold text-slate-800"><?php echo $vehicle->getCouleurVehicule() ?></p>
                     </div>
                 </div>
 
@@ -175,18 +175,18 @@ if ($connect) {
                 <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-xl sticky top-24">
                     <div class="mb-6">
                         <span class="text-blue-600 font-bold text-xs uppercase tracking-widest">Premium Selection</span>
-                        <h2 class="text-3xl font-black text-slate-800 mt-1"><?= $vehicle->marqueVehicule . ' ' . $vehicle->modeleVehicule ?></h2>
+                        <h2 class="text-3xl font-black text-slate-800 mt-1"><?= $vehicle->getMarqueVehicule() . ' ' . $vehicle->getModeleVehicule() ?></h2>
                     </div>
 
-                    <input type="hidden" id="base-price" value="<?php echo $vehicle->prixVehicule; ?>">
+                    <input type="hidden" id="base-price" value="<?php echo $vehicle->getPrixVehicule(); ?>">
 
                     <div class="flex items-baseline gap-1 mb-6">
-                        <span id="total-display" class="text-5xl font-black text-slate-900"><?= $vehicle->prixVehicule ?></span>
+                        <span id="total-display" class="text-5xl font-black text-slate-900"><?= $vehicle->getPrixVehicule(); ?></span>
                         <span class="text-slate-400 font-medium">MAD/ total</span>
                     </div>
 
                     <form action="../controler/ClientControler.php" method="POST" class="space-y-4">
-                        <input type="hidden" name="idVehicule" value="<?php echo $vehicle->idVehicule; ?>">
+                        <input type="hidden" name="idVehicule" value="<?php echo $vehicle->getIdVehicule(); ?>">
                         <input type="hidden" id="dureeReservation" name="dureeReservation" value="1">
                         <input type="hidden" name="page" value="details">
                         <input type="hidden" name="action" value="rent">

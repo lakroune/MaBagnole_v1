@@ -11,7 +11,7 @@ use app\model\Vehicule;
 
 session_start();
 
-if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'client') {
+if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 'client') {
     header('Location: login.php');
     exit();
 } else {

@@ -5,18 +5,22 @@ namespace app\view;
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 use app\model\Vehicule;
+use app\model\Categorie;
 
 
 
 session_start();
 
-if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admin') {
+if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 'admin') {
     header('Location: login.php');
     exit();
 } else {
 
     $vehicule = new Vehicule();
     $vehicules = $vehicule->getAllVehicules();
+
+    $categorie = new Categorie();
+    $categories = $categorie->getAllCategories();
 }
 
 ?>
@@ -85,20 +89,20 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admi
                         <tr class="hover:bg-slate-50/50 transition">
                             <td class="px-4 py-4">
                                 <div class="flex items-center gap-4">
-                                    <img src="<?= $vehicule->imageVehicule ?>" class="w-14 h-9 object-cover rounded-lg">
+                                    <img src="<?= $vehicule->getImageVehicule() ?>" class="w-14 h-9 object-cover rounded-lg">
                                     <div>
-                                        <p class="font-bold text-slate-800"><?= $vehicule->marqueVehicule ?></p>
-                                        <p class="text-[10px] text-slate-400 uppercase tracking-tighter"><?= $vehicule->modeleVehicule ?></p>
+                                        <p class="font-bold text-slate-800"><?= $vehicule->getMarqueVehicule() ?></p>
+                                        <p class="text-[10px] text-slate-400 uppercase tracking-tighter"><?= $vehicule->getModeleVehicule() ?></p>
                                     </div>
                                 </div>
                             </td>
-                            <td><span class="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-[10px] font-black uppercase"><?= $vehicule->idCategorie ?></span></td>
-                            <td class="text-xs text-slate-600"><?= $vehicule->typeBoiteVehicule ?> • <?= $vehicule->typeCarburantVehicule ?> </td>
-                            <td class="font-bold text-slate-800">$450</td>
+                            <td><span class="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-[10px] font-black uppercase"><?= $vehicule->getIdCategorie() ?></span></td>
+                            <td class="text-xs text-slate-600"><?= $vehicule->getTypeBoiteVehicule() ?> • <?= $vehicule->getTypeCarburantVehicule() ?> </td>
+                            <td class="font-bold text-slate-800"><?= $vehicule->getPrixVehicule() ?>MAD</td>
                             <td>
                                 <div class="flex gap-2">
-                                    <button onclick="openEditModal({id:<?= $vehicule->idVehicule ?>, marque:'<?= $vehicule->marqueVehicule ?>', modele:'<?= $vehicule->modeleVehicule ?>', annee:'<?= $vehicule->anneeVehicule ?>', couleur:'<?= $vehicule->couleurVehicule ?>', boite:'<?= $vehicule->typeBoiteVehicule ?>', carburant:'<?= $vehicule->typeCarburantVehicule ?>', prix:'<?= $vehicule->prixVehicule ?>', cat:'<?= $vehicule->idCategorie ?>', img:'<?= $vehicule->imageVehicule ?>'})" class="w-8 h-8 rounded-lg bg-slate-100 text-blue-600 hover:bg-blue-600 hover:text-white transition"><i class="fas fa-edit text-xs"></i></button>
-                                    <button onclick="openDeleteModal({id:<?= (int)$vehicule->idVehicule ?>})" class="w-8 h-8 rounded-lg bg-slate-100 text-red-500 hover:bg-red-600 hover:text-white transition"><i class="fas fa-trash text-xs"></i></button>
+                                    <button onclick="openEditModal({id:<?= $vehicule->getIdVehicule() ?>, marque:'<?= $vehicule->getMarqueVehicule() ?>', modele:'<?= $vehicule->getModeleVehicule() ?>', annee:'<?= $vehicule->getAnneeVehicule() ?>', couleur:'<?= $vehicule->getCouleurVehicule() ?>', boite:'<?= $vehicule->getTypeBoiteVehicule() ?>', carburant:'<?= $vehicule->getTypeCarburantVehicule() ?>', prix:'<?= $vehicule->getPrixVehicule() ?>', cat:'<?= $vehicule->getIdCategorie() ?>', img:'<?= $vehicule->getImageVehicule() ?>'})" class="w-8 h-8 rounded-lg bg-slate-100 text-blue-600 hover:bg-blue-600 hover:text-white transition"><i class="fas fa-edit text-xs"></i></button>
+                                    <button onclick="openDeleteModal({id:<?= (int)$vehicule->getIdVehicule() ?>})" class="w-8 h-8 rounded-lg bg-slate-100 text-red-500 hover:bg-red-600 hover:text-white transition"><i class="fas fa-trash text-xs"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -128,10 +132,11 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admi
                         <option value="electrique">Électrique</option>
                         <option value="hybride">Hybride</option>
                     </select></div>
-                <div><label class="text-xs font-bold uppercase text-slate-400">Prix / Jour ($)</label><input type="text" name="prixVehicule" required class="w-full p-3 bg-slate-50 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500"></div>
+                <div><label class="text-xs font-bold uppercase text-slate-400">Prix / Jour (MAD)</label><input type="text" name="prixVehicule" required class="w-full p-3 bg-slate-50 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500"></div>
                 <div><label class="text-xs font-bold uppercase text-slate-400">Catégorie</label><select name="idCategorie" class="w-full p-3 bg-slate-50 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
-                        <option value="1">Luxe</option>
-                        <option value="2">SUV</option>
+                        <?php foreach ($categories as $categorie): ?>
+                            <option value="<?= $categorie->getIdCategorie() ?>"><?= $categorie->getTitreCategorie() ?></option>
+                        <?php endforeach; ?>
                     </select></div>
                 <div class="md:col-span-2"><label class="text-xs font-bold uppercase text-slate-400">Image URL</label><input type="text" name="imageVehicule" class="w-full p-3 bg-slate-50 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500"></div>
                 <div class="md:col-span-2 flex justify-end gap-3 mt-4"><button type="button" onclick="toggleModal('addVehicleModal')" class="px-6 py-2 text-slate-400 font-bold">Cancel</button><button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold shadow-lg shadow-blue-100">Add to Fleet</button></div>
@@ -160,11 +165,24 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admi
                         <option value="electrique">Électrique</option>
                         <option value="hybride">Hybride</option>
                     </select></div>
-                <div><label class="text-xs font-bold uppercase text-slate-400">Prix / Jour</label><input type="text" name="prixVehicule" id="edit_prix" required class="w-full p-3 bg-slate-50 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500"></div>
-                <div><label class="text-xs font-bold uppercase text-slate-400">Catégorie</label><select name="idCategorie" id="edit_cat" class="w-full p-3 bg-slate-50 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
-                        <option value="1">Luxe</option>
-                        <option value="2">SUV</option>
-                    </select></div>
+                <div>
+                    <label class="text-xs font-bold uppercase text-slate-400">Prix / Jour</label><input type="text" name="prixVehicule" id="edit_prix" required class="w-full p-3 bg-slate-50 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="text-xs font-bold uppercase text-slate-400">Catégorie</label>
+                    <select name="idCategorie" id="edit_cat" class="w-full p-3 bg-slate-50 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
+                        <?php foreach ($categories as $categorie): ?>
+                            <option value="<?= $categorie->getIdCategorie() ?>"><?= $categorie->getTitreCategorie() ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-xs font-bold uppercase text-slate-400">Image URL</label>
+                    <input type="text" name="imageVehicule" id="edit_image" class="w-full p-3 bg-slate-50 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500"> 
+                    <p class="text-xs text-slate-400 mt-2">Image URL</p>
+
+                </div>
+
                 <div class="md:col-span-2 flex justify-end gap-3 mt-4"><button type="button" onclick="toggleModal('editVehicleModal')" class="px-6 py-2 text-slate-400 font-bold">Cancel</button><button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold shadow-lg">Save Changes</button></div>
             </form>
         </div>
@@ -209,7 +227,7 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admi
                 pageLength: 8,
                 searching: false,
                 lengthChange: false,
-                
+
             });
         });
 
@@ -237,6 +255,7 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admi
             document.getElementById('edit_carburant').value = data.carburant;
             document.getElementById('edit_prix').value = data.prix;
             document.getElementById('edit_cat').value = data.cat;
+            document.getElementById('edit_image').value = data.img;
             toggleModal('editVehicleModal');
         }
 

@@ -116,7 +116,7 @@ $categories = $categorie->getAllCategories();
                         <select id="categoryFilter" class="w-full outline-none bg-transparent text-slate-700 appearance-none cursor-pointer">
                             <option value="">All Categories</option>
                             <?php foreach ($categories as $categorie): ?>
-                                <option value="<?= $categorie->titreCategorie ?>"><?= $categorie->titreCategorie ?></option>
+                                <option value="<?= $categorie->getTitreCategorie() ?>"><?= $categorie->getTitreCategorie() ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>

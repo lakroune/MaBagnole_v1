@@ -1,0 +1,18 @@
+26-01-03 11:28:49 Connexion :error .InvalidArgumentException: ID vehicule invalide in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:85
+Stack trace:
+#0 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(53): app\model\Vehicule->setIdVehicule(0)
+#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
+#3 {main}
+26-01-03 11:28:55 Connexion :error .InvalidArgumentException: ID vehicule invalide in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:85
+Stack trace:
+#0 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(53): app\model\Vehicule->setIdVehicule(0)
+#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
+#3 {main}
+26-01-03 11:30:29 Connexion :error .InvalidArgumentException: La categorie est obligatoire in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:167
+Stack trace:
+#0 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(62): app\model\Vehicule->setIdCategorie(0)
+#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
+#3 {main}

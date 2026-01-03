@@ -45,11 +45,12 @@ class AdminControler
     }
 
 
+
     public function gererVehicule()
     {
         try {
             $vehicule = new Vehicule();
-            $vehicule->setIdVehicule($_POST["idVehicule"]); //mtnssach return boolean
+            $vehicule->setIdVehicule((int) $_POST["idVehicule"]); //mtnssach return boolean
             $vehicule->setMarqueVehicule($_POST["marqueVehicule"]);
             $vehicule->setModeleVehicule($_POST["modeleVehicule"]);
             $vehicule->setAnneeVehicule($_POST["anneeVehicule"]);
@@ -58,7 +59,7 @@ class AdminControler
             $vehicule->setTypeBoiteVehicule($_POST["typeBoiteVehicule"]);
             $vehicule->setTypeCarburantVehicule($_POST["typeCarburantVehicule"]);
             $vehicule->setImageVehicule($_POST["imageVehicule"] ?? "iamege");  // mtnssach tzid image   edit
-            $vehicule->setIdCategorie($_POST["idCategorie"]);
+            $vehicule->setIdCategorie((int)$_POST["idCategorie"]);
 
             if (isset($_POST["action"]) && $_POST["action"] == "add" && $vehicule->ajouterVehicule())
                 return "seccess";

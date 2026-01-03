@@ -14,88 +14,97 @@ class Avis
     // constructeur
     public function __construct() {}
     // getters
-    public function getIdAvis()
+    public function getIdAvis(): int
     {
         return $this->idAvis;
     }
-    public function getCommentaireAvis()
+    public function getCommentaireAvis(): string
     {
         return $this->commentaireAvis;
     }
-    public function getNoteAvis()
+    public function getNoteAvis(): int
     {
         return $this->noteAvis;
     }
-    public function getDatePublicationAvis()
+    public function getDatePublicationAvis(): string
     {
         return $this->datePublicationAvis;
     }
-    public function getIdReservation()
+    public function getIdReservation(): int
     {
         return $this->idReservation;
     }
-    public function getStatusAvis()
+    public function getStatusAvis(): int
     {
         return $this->statusAvis;
     }
-    public function getIdClient()
+    public function getIdClient(): int
     {
         return $this->idClient;
     }
-    // setters
-    public function setIdAvis($idAvis): bool
+    // setters 
+    public function setIdAvis($idAvis): void
     {
-        if (is_int($idAvis) and $idAvis > 0) {
+        if ($idAvis < 1)
+            throw new \InvalidArgumentException("ID avis invalide");
+        else
             $this->idAvis = $idAvis;
-            return true;
-        }
-        return false;
     }
-    public function setCommentaireAvis($commentaireAvis): bool
+
+
+    public function setCommentaireAvis($commentaireAvis): void
     {
-        if (strlen($commentaireAvis) > 0) {
+        if (empty($commentaireAvis))
+            throw new \InvalidArgumentException("Commentaire avis invalide");
+        else
             $this->commentaireAvis = $commentaireAvis;
-            return true;
-        }
-        return false;
     }
-    public function setNoteAvis($noteAvis): bool
+
+
+    public function setNoteAvis($noteAvis): void
     {
-        if (is_int($noteAvis) and $noteAvis >= 0 and $noteAvis <= 5) {
+        if ($noteAvis < 1)
+            throw new \InvalidArgumentException("Note avis invalide");
+        else
             $this->noteAvis = $noteAvis;
-            return true;
-        }
-        return false;
     }
-    public function setDatePublicationAvis($datePublicationAvis): bool
+
+
+    public function setDatePublicationAvis($datePublicationAvis): void
     {
-        $this->datePublicationAvis = $datePublicationAvis;
-        return true;
+        if (empty($datePublicationAvis))
+            throw new \InvalidArgumentException("Date publication avis invalide");
+        else
+            $this->datePublicationAvis = $datePublicationAvis;
     }
-    public function setIdReservation($idReservation): bool
+
+
+    public function setIdReservation($idReservation): void
     {
-        if (is_int($idReservation) and $idReservation > 0) {
+        if ($idReservation < 1)
+            throw new \InvalidArgumentException("ID reservation invalide");
+        else
             $this->idReservation = $idReservation;
-            return true;
-        }
-        return false;
     }
-    public function setStatusAvis($statusAvis): bool
+
+
+    public function setStatusAvis($statusAvis): void
     {
-        if (is_int($statusAvis) and ($statusAvis == 0 or $statusAvis == 1)) {
+        if ($statusAvis < 1)
+            throw new \InvalidArgumentException("Status avis invalide");
+        else
             $this->statusAvis = $statusAvis;
-            return true;
-        }
-        return false;
     }
-    public function setIdClient($idClient): bool
+
+
+    public function setIdClient($idClient): void
     {
-        if (is_int($idClient) and $idClient > 0) {
+        if ($idClient < 1)
+            throw new \InvalidArgumentException("ID client invalide");
+        else
             $this->idClient = $idClient;
-            return true;
-        }
-        return false;
     }
+
     // tostring
     public function __toString()
     {

@@ -2,7 +2,6 @@
 
 namespace app\model;
 
-require __DIR__ . '/../../vendor/autoload.php';
 
 use app\model\Connexion;
 
@@ -16,183 +15,171 @@ class Vehicule
     private string $typeBoiteVehicule;
     private string $typeCarburantVehicule;
     private string $couleurVehicule;
-    private string $prixVehicule;
+    private float $prixVehicule;
     private int $statusVehicule;
     private int $idCategorie;
 
     //constructeur par default
     public function __construct() {}
     //getters
-    public function getIdVehicule()
+    public function getIdVehicule(): int
     {
         return $this->idVehicule;
     }
 
 
-    public function getMarqueVehicule()
+    public function getMarqueVehicule(): string
     {
         return $this->marqueVehicule;
     }
 
-    public function getModeleVehicule()
+    public function getModeleVehicule(): string
     {
         return $this->modeleVehicule;
     }
 
-    public function getAnneeVehicule()
+    public function getAnneeVehicule(): string
     {
         return $this->anneeVehicule;
     }
 
-    public function getImageVehicule()
+    public function getImageVehicule(): string
     {
         return $this->imageVehicule;
     }
 
-    public function getTypeBoiteVehicule()
+    public function getTypeBoiteVehicule(): string
     {
         return $this->typeBoiteVehicule;
     }
 
-    public function getTypeCarburantVehicule()
+    public function getTypeCarburantVehicule(): string
     {
         return $this->typeCarburantVehicule;
     }
 
-    public function getCouleurVehicule()
+    public function getCouleurVehicule(): string
     {
         return $this->couleurVehicule;
     }
 
-    public function getPrixVehicule()
+    public function getPrixVehicule(): float
     {
         return $this->prixVehicule;
     }
 
-    public function getStatusVehicule()
+    public function getStatusVehicule(): int
     {
         return $this->statusVehicule;
     }
 
-    public function getIdCategorie()
+    public function getIdCategorie(): int
     {
         return $this->idCategorie;
     }
 
-
     //setters
-    public function setIdVehicule($idVehicule)
+    public function setIdVehicule(int $idVehicule): void
     {
-        if ($idVehicule > 0) {
-            $this->idVehicule = $idVehicule;
-            return true;
-        }
-        return false;
+        if (empty($idVehicule))
+            throw new \InvalidArgumentException("ID vehicule invalide");
+        $this->idVehicule = $idVehicule;
     }
 
-    public function setMarqueVehicule($marqueVehicule)
+    public function setMarqueVehicule(string  $marqueVehicule): void
     {
-        if (strlen($marqueVehicule) > 0) {
+        if (empty($marqueVehicule)) {
+            throw new \InvalidArgumentException("La marque est obligatoire");
+        } else
             $this->marqueVehicule = $marqueVehicule;
-            return true;
-        }
-        return false;
     }
 
 
-    public function setModeleVehicule($modeleVehicule)
+    public function setModeleVehicule(string $modeleVehicule): void
     {
-        if (strlen($modeleVehicule) > 0) {
+        if (empty($modeleVehicule)) {
+            throw new \InvalidArgumentException("Le modele est obligatoire");
+        } else
             $this->modeleVehicule = $modeleVehicule;
-            return true;
-        }
-        return false;
     }
 
-    public function setAnneeVehicule($anneeVehicule)
+    public function setAnneeVehicule(string $anneeVehicule): void
     {
-        if (strlen($anneeVehicule) > 0) {
+        if (empty($anneeVehicule)) {
+            throw new \InvalidArgumentException("L'annee est obligatoire");
+        } else
             $this->anneeVehicule = $anneeVehicule;
-            return true;
-        }
-        return false;
     }
 
-    public function setImageVehicule($imageVehicule)
+    public function setImageVehicule(string $imageVehicule): void
     {
-        if (strlen($imageVehicule) > 0) {
+        if ($imageVehicule < 1) {
+            throw new \InvalidArgumentException("La photo est obligatoire");
+        } else
             $this->imageVehicule = $imageVehicule;
-            return true;
-        }
-        return false;
     }
 
-    public function setTypeBoiteVehicule($typeBoiteVehicule)
+
+
+    public function setTypeBoiteVehicule(string $typeBoiteVehicule): void
     {
-        if (strlen($typeBoiteVehicule) > 0) {
+        if (empty($typeBoiteVehicule)) {
+            throw new \InvalidArgumentException("Le type de boite est obligatoire");
+        } else
             $this->typeBoiteVehicule = $typeBoiteVehicule;
-            return true;
-        }
-        return false;
     }
 
-    public function setTypeCarburantVehicule($typeCarburantVehicule)
+    public function setTypeCarburantVehicule(string $typeCarburantVehicule): void
     {
-        if (strlen($typeCarburantVehicule) > 0) {
+        if (empty($typeCarburantVehicule)) {
+            throw new \InvalidArgumentException("Le type de carburant est obligatoire");
+        } else
             $this->typeCarburantVehicule = $typeCarburantVehicule;
-            return true;
-        }
-        return false;
     }
 
-    public function setCouleurVehicule($couleurVehicule)
+    public function setCouleurVehicule(string $couleurVehicule): void
     {
-        if (strlen($couleurVehicule) > 0) {
+        if (empty($couleurVehicule)) {
+            throw new \InvalidArgumentException("La couleur est obligatoire");
+        } else
             $this->couleurVehicule = $couleurVehicule;
-            return true;
-        }
-        return false;
     }
 
-    public function setPrixVehicule($prixVehicule)
+    public function setPrixVehicule(float $prixVehicule): void
     {
-        if (strlen($prixVehicule) > 0) {
+        if ($prixVehicule <= 0) {
+            throw new \InvalidArgumentException("Le prix est obligatoire");
+        } else
             $this->prixVehicule = $prixVehicule;
-            return true;
-        }
-        return false;
     }
 
-    public function setStatusVehicule($statusVehicule)
+    public function setStatusVehicule(int $statusVehicule): void
     {
-        if ($statusVehicule > 0) {
+        if ($statusVehicule != 1 && $statusVehicule != 0) {
+            throw new \InvalidArgumentException("Le status est obligatoire");
+        } else
             $this->statusVehicule = $statusVehicule;
-            return true;
-        }
-        return false;
     }
 
-    public function setIdCategorie($idCategorie)
+    public function setIdCategorie(int $idCategorie): void
     {
-        if ($idCategorie > 0) {
+        if (empty($idCategorie)) {
+            throw new \InvalidArgumentException("La categorie est obligatoire");
+        } else
             $this->idCategorie = $idCategorie;
-            return true;
-        }
-        return false;
     }
-
 
 
 
 
 
     //tostring
-    public function __toString()
+    public function __toString(): string
     {
         return "Vehicule [idVehicule=$this->idVehicule, marqueVehicule=$this->marqueVehicule, modeleVehicule=$this->modeleVehicule, anneeVehicule=$this->anneeVehicule,statusVehicule=$this->statusVehicule, imageVehicule=$this->imageVehicule, typeBoiteVehicule=$this->typeBoiteVehicule, typeCarburantVehicule=$this->typeCarburantVehicule, couleurVehicule=$this->couleurVehicule, prixVehicule=$this->prixVehicule, idCategorie=$this->idCategorie]";
     }
     //ajouter Vehicule
-    public function ajouterVehicule()
+    public function ajouterVehicule(): bool
     {
         try {
             $db = Connexion::connect()->getConnexion();
@@ -262,7 +249,7 @@ class Vehicule
         }
     }
     //get vehicule by id
-    public function getVehiculeById(int $idVehicule)
+    public function getVehiculeById(int $idVehicule): ?Vehicule
     {
         try {
             $db = Connexion::connect()->getConnexion();
@@ -270,7 +257,7 @@ class Vehicule
             $stmt = $db->prepare($sql);
             $stmt->bindParam(":idVehicule", $idVehicule);
             if ($stmt->execute()) {
-                $vehicule = $stmt->fetch(\PDO::FETCH_OBJ);
+                $vehicule = $stmt->fetchObject(Vehicule::class);
                 return $vehicule;
             } else {
                 return null;
@@ -288,7 +275,7 @@ class Vehicule
             $sql = "select * from vehicules";
             $stmt = $db->prepare($sql);
             if ($stmt->execute()) {
-                $vehicules = $stmt->fetchAll(\PDO::FETCH_OBJ);
+                $vehicules = $stmt->fetchAll(\PDO::FETCH_CLASS, Vehicule::class);
                 return $vehicules;
             } else {
                 return [];
@@ -307,7 +294,7 @@ class Vehicule
             $stmt = $db->prepare($sql);
             $stmt->bindParam(":idCategorie", $idCategorie);
             if ($stmt->execute()) {
-                $vehicules = $stmt->fetchAll(\PDO::FETCH_OBJ);
+                $vehicules = $stmt->fetchAll(\PDO::FETCH_CLASS, Vehicule::class);
                 return $vehicules;
             } else {
                 return [];
@@ -357,24 +344,7 @@ class Vehicule
             $stmt = $db->prepare($sql);
             $stmt->bindParam(":idClient", $idClient);
             if ($stmt->execute()) {
-                $vehicules = $stmt->fetchAll(\PDO::FETCH_OBJ);
-                return $vehicules;
-            }
-            return [];
-        } catch (\Exception $e) {
-            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
-            return [];
-        }
-    }
-    // pour pagination get 6 voitures
-    public  function getSixVehicules(int $page)
-    {
-        try {
-            $db = Connexion::connect()->getConnexion();
-            $sql = "select * from vehicules limit 6 offset " . ($page - 1) * 6;
-            $stmt = $db->prepare($sql);
-            if ($stmt->execute()) {
-                $vehicules = $stmt->fetchAll(\PDO::FETCH_OBJ);
+                $vehicules = $stmt->fetchAll(\PDO::FETCH_CLASS, Vehicule::class);
                 return $vehicules;
             }
             return [];

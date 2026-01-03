@@ -9,7 +9,7 @@ use DateTime;
 
 session_start();
 
-if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admin') {
+if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 'admin') {
     header('Location: login.php');
     exit();
 } else {
