@@ -5,6 +5,8 @@ namespace app\view;
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 use app\model\Vehicule;
+use app\model\Avis;
+use app\model\Reservation;
 
 session_start();
 $connect = true;
@@ -15,8 +17,12 @@ $v = new Vehicule();
 $idVehicule = (int) $_GET['id'];
 $vehicle = $v->getVehiculeById($idVehicule);
 
+$avis = new Avis();
+$reviews =     $avis->getAllAvisByVehicule($idVehicule);
 
-
+$reservation = new Reservation();
+$isReserver = $reservation->getReservationByClientVehicule($idClient = $_SESSION['Utilisateur']->idUtilisateur, $idVehicule);
+$dejaCommente = $avis->checkAvis($idClient, $isReserver);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -86,60 +92,71 @@ $vehicle = $v->getVehiculeById($idVehicule);
                     <h3 class="text-2xl font-bold text-slate-800 mb-8">Customer Feedback</h3>
 
                     <div id="reviews-list" class="space-y-8">
-                        <div id="review-101" class="border-b border-slate-100 pb-8 last:border-0 group">
-                            <div class="flex justify-between items-start">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600">JD</div>
-                                    <div>
-                                        <h4 class="font-bold text-slate-800">John Doe</h4>
-                                        <div class="flex text-yellow-400 text-[10px]">
-                                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star text-slate-200"></i>
+                        <?php if ($avis) : ?>
+                            <?php foreach ($reviews as $review) : ?>
+                                <div id="review-101" class="border-b border-slate-100 pb-8 last:border-0 group">
+                                    <div class="flex justify-between items-start">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600">JD</div>
+                                            <div>
+                                                <h4 class="font-bold text-slate-800">John Doe</h4>
+                                                <div class="flex text-yellow-400 text-[10px]">
+                                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star text-slate-200"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex gap-4">
+                                            <?php if ($connect and $_SESSION['Utilisateur']->idUtilisateur === '1') : ?>
+                                                <button onclick="toggleEdit(101)" class="text-xs font-bold text-blue-500 hover:text-blue-700 transition">Edit</button>
+                                                <button onclick="softDelete(101)" class="text-xs font-bold text-red-400 hover:text-red-600 transition">Delete</button>
+                                            <?php endif ?>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="flex gap-4">
-                                    <?php if ($connect and $_SESSION['Utilisateur']->role === 'client') : ?>
-                                        <button onclick="toggleEdit(101)" class="text-xs font-bold text-blue-500 hover:text-blue-700 transition">Edit</button>
-                                        <button onclick="softDelete(101)" class="text-xs font-bold text-red-400 hover:text-red-600 transition">Delete</button>
-                                    <?php endif ?>
-                                </div>
-                            </div>
 
-                            <p id="review-text-101" class="mt-4 text-slate-600 italic leading-relaxed">
-                                "The car was in perfect condition and the pickup process was very smooth!"
-                            </p>
+                                    <p id="review-text-101" class="mt-4 text-slate-600 italic leading-relaxed">
+                                        "The car was in perfect condition and the pickup process was very smooth!"
+                                    </p>
 
-                            <div class="mt-4 flex items-center gap-6">
-                                <button <?php if ($connect) : ?>onclick="handleReaction(101, 'like')" <?php endif ?> id="like-btn-101" class="flex items-center gap-2 text-slate-400 hover:text-blue-600 transition group">
-                                    <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-blue-50">
-                                        <i class="far fa-thumbs-up text-sm"></i>
+                                    <div class="mt-4 flex items-center gap-6">
+                                        <button <?php if ($connect) : ?>onclick="handleReaction(101, 'like')" <?php endif ?> id="like-btn-101" class="flex items-center gap-2 text-slate-400 hover:text-blue-600 transition group">
+                                            <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-blue-50">
+                                                <i class="far fa-thumbs-up text-sm"></i>
+                                            </div>
+                                            <span id="like-count-101" class="text-xs font-bold">12</span>
+                                        </button>
+
+                                        <button <?php if ($connect) : ?>onclick="handleReaction(101, 'dislike')" <?php endif ?> id="dislike-btn-101" class="flex items-center gap-2 text-slate-400 hover:text-red-500 transition group">
+                                            <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-red-50">
+                                                <i class="far fa-thumbs-down text-sm"></i>
+                                            </div>
+                                            <span id="dislike-count-101" class="text-xs font-bold">2</span>
+                                        </button>
                                     </div>
-                                    <span id="like-count-101" class="text-xs font-bold">12</span>
-                                </button>
-
-                                <button <?php if ($connect) : ?>onclick="handleReaction(101, 'dislike')" <?php endif ?> id="dislike-btn-101" class="flex items-center gap-2 text-slate-400 hover:text-red-500 transition group">
-                                    <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-red-50">
-                                        <i class="far fa-thumbs-down text-sm"></i>
-                                    </div>
-                                    <span id="dislike-count-101" class="text-xs font-bold">2</span>
-                                </button>
-                            </div>
-                        </div>
-
+                                </div>
+                            <?php endforeach ?>
+                        <?php endif ?>
 
                     </div>
-                    <?php if ($connect) : ?>
+                    <?php if ($connect and $isReserver and !$dejaCommente) : ?>
                         <div class="mt-12 pt-8 border-t border-slate-100">
                             <h4 class="font-bold text-lg text-slate-800 mb-4">Leave an Evaluation</h4>
-                            <div class="flex gap-2 mb-4" id="star-selector">
-                                <i class="fas fa-star cursor-pointer text-slate-200 text-xl hover:text-yellow-400" data-value="1"></i>
-                                <i class="fas fa-star cursor-pointer text-slate-200 text-xl hover:text-yellow-400" data-value="2"></i>
-                                <i class="fas fa-star cursor-pointer text-slate-200 text-xl hover:text-yellow-400" data-value="3"></i>
-                                <i class="fas fa-star cursor-pointer text-slate-200 text-xl hover:text-yellow-400" data-value="4"></i>
-                                <i class="fas fa-star cursor-pointer text-slate-200 text-xl hover:text-yellow-400" data-value="5"></i>
-                            </div>
-                            <textarea id="new-review-text" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none transition" rows="3" placeholder="Share your experience..."></textarea>
-                            <button onclick="submitReview()" class="mt-4 bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition">Post Review</button>
+                            <form action="../controler/ClientControler.php" method="POST" id="form-ajout-avis">
+                                <div class="flex gap-2 mb-4" id="star-selector">
+                                    <i class="fas fa-star cursor-pointer text-slate-200 text-xl hover:text-yellow-400" data-value="1"></i>
+                                    <i class="fas fa-star cursor-pointer text-slate-200 text-xl hover:text-yellow-400" data-value="2"></i>
+                                    <i class="fas fa-star cursor-pointer text-slate-200 text-xl hover:text-yellow-400" data-value="3"></i>
+                                    <i class="fas fa-star cursor-pointer text-slate-200 text-xl hover:text-yellow-400" data-value="4"></i>
+                                    <i class="fas fa-star cursor-pointer text-slate-200 text-xl hover:text-yellow-400" data-value="5"></i>
+                                </div>
+                                <input type="hidden" name="ratings" id="rating">
+                                <input type="hidden" name="page" value="details">
+                                <input type="hidden" name="action" value="addReview">
+                                <input type="hidden" name="idVehicule" value="<?= $idVehicule ?>">
+                                <input type="hidden" name="idReservation" value="<?= $isReserver ?>">
+                                <textarea name="textReview" id="new-review-text" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none transition" rows="3" placeholder="Share your experience..."></textarea>
+                                <button type="button" id="btn-ajout-avis" onclick="submitReview()" class=" btn-ajout-avis  mt-4 bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition">Post Review</button>
+
+                            </form>
                         </div>
                     <?php endif; ?>
                 </section>
@@ -163,8 +180,7 @@ $vehicle = $v->getVehiculeById($idVehicule);
                         <input type="hidden" name="idVehicule" value="<?php echo $vehicle->idVehicule; ?>">
                         <input type="hidden" id="dureeReservation" name="dureeReservation" value="1">
                         <input type="hidden" name="page" value="details">
-
-
+                        <input type="hidden" name="action" value="rent">
 
                         <div>
                             <label class="block text-[11px] font-black uppercase text-slate-400 mb-2">Lieu de prise en charge (lieuChange)</label>
@@ -263,7 +279,7 @@ $vehicle = $v->getVehiculeById($idVehicule);
                 <button onclick="closeError()" class="w-full bg-slate-50 text-slate-600 py-4 rounded-2xl font-bold hover:bg-slate-100 transition">try again</button>
 
                 <a href="accueil.php" class="text-sm font-bold text-blue-600 hover:underline">
-                     <i class="fas fa-arrow-left mr-2"></i>back to fleet</a>
+                    <i class="fas fa-arrow-left mr-2"></i>back to fleet</a>
             </div>
         </div>
     </div>
@@ -288,28 +304,91 @@ $vehicle = $v->getVehiculeById($idVehicule);
         </div>
     </div>
 
+
+    <div id="reviewModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-[110] p-4">
+        <div class="bg-white w-full max-w-sm rounded-[2.5rem] p-8 shadow-2xl text-center relative">
+
+            <div id="reviewIconBox" class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl">
+                <i id="reviewIcon" class="fas"></i>
+            </div>
+
+            <h3 id="reviewTitle" class="text-2xl font-black text-slate-800 mb-2"></h3>
+            <p id="reviewMessage" class="text-slate-500 text-sm mb-8 leading-relaxed"></p>
+
+            <button onclick="closeReviewModal()" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-black shadow-lg hover:bg-slate-800 transition">
+                Continue
+            </button>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="js/main.js"></script>
     <script>
-        function showModal(id) {
-            const modal = document.getElementById(id);
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+        // $(document).ready(function() {
+
+        //     $('.btn-ajout-avis ').on('click', function(e) {
+        //         e.preventDefault();
+        //         const $btn = $(this);
+        //         const $form = $btn.closest('form');
+        //         const formData = $form.serialize();
+        //         const selectedRating = document.getElementById('rating').value;
+        //         const text = document.getElementById('new-review-text').value;
+        //         if (selectedRating == 0 || text == '') {
+        //             showReviewPopup('error', 'Incomplete', 'Please provide both a rating and a comment before submitting.');
+        //         } else
+        //             $.ajax({
+        //                 url: '../controler/ClientControler.php',
+        //                 type: 'POST',
+        //                 data: formData,
+        //                 dataType: 'json',
+        //                 success: function(response) {
+        //                     if (response.success) {
+        //                         showReviewPopup('success', 'Thank You!', 'Your review has been submitted successfully and is waiting for admin approval.');
+        //                     } else {
+        //                         showReviewPopup('error', 'Error', 'An error occurred while submitting your review.');
+        //                     }
+        //                 },
+        //                 error: function() {
+        //                     showReviewPopup('error', 'Error', 'An error occurred while submitting your review.');
+        //                 }
+        //             });
+        //     });
+        // });
+
+        function submitReview() {
+            const text = document.getElementById('new-review-text').value;
+
+            // Validation Check
+            if (!text || selectedRating == 0 || !text.trim() || selectedRating == 0) {
+                return showReviewPopup('error', 'Incomplete', 'Please provide both a rating and a comment before submitting.');
+            } else {
+                document.getElementById('form-ajout-avis').submit();
+            }
+
+            // // Success Simulation
+            // showReviewPopup('success', 'Thank You!', 'Your review has been submitted successfully and is waiting for admin approval.');
+
+            // // Clear Form
+            // document.getElementById('new-review-text').value = "";
+            // updateStars(0);
         }
 
-        function closeError() {
-            document.getElementById('errorModal').classList.add('hidden');
-        }
+
+
+
 
         // Auto-trigger based on URL Parameters
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
 
             // Handle Success
-            if (urlParams.has('reservation') && urlParams.get('reservation') === "success") {
+            if (urlParams.has('rent') && urlParams.get('rent') === "success") {
                 showModal('successModal');
             }
 
+
             // Handle Errors
-            if (urlParams.has('reservation') && urlParams.get('reservation') === "failed") {
+            if (urlParams.has('rent') && urlParams.get('rent') === "failed") {
                 const errorType = urlParams.get('reservation');
                 const errorText = document.getElementById('errorMessage');
 
@@ -319,59 +398,20 @@ $vehicle = $v->getVehiculeById($idVehicule);
 
                 showModal('errorModal');
             }
-        };
-    </script>
 
-    <script>
-        function handleReaction(reviewId, type) {
-            const likeBtn = document.querySelector(`#like-btn-${reviewId} i`);
-            const dislikeBtn = document.querySelector(`#dislike-btn-${reviewId} i`);
-            const likeCount = document.getElementById(`like-count-${reviewId}`);
-            const dislikeCount = document.getElementById(`dislike-count-${reviewId}`);
 
-            if (type === 'like') {
-                // Toggle Like
-                if (likeBtn.classList.contains('far')) {
-                    likeBtn.classList.replace('far', 'fas');
-                    likeBtn.parentElement.classList.add('bg-blue-100', 'text-blue-600');
-                    likeCount.innerText = parseInt(likeCount.innerText) + 1;
+            if (urlParams.has('addReview') && urlParams.get('addReview') === "success") {
+                showReviewPopup('success', 'Thank You!', 'Your review has been submitted successfully and is waiting for admin approval.');
 
-                    // Remove dislike if active
-                    if (dislikeBtn.classList.contains('fas')) {
-                        dislikeBtn.classList.replace('fas', 'far');
-                        dislikeBtn.parentElement.classList.remove('bg-red-100', 'text-red-500');
-                        dislikeCount.innerText = parseInt(dislikeCount.innerText) - 1;
-                    }
-                } else {
-                    likeBtn.classList.replace('fas', 'far');
-                    likeBtn.parentElement.classList.remove('bg-blue-100', 'text-blue-600');
-                    likeCount.innerText = parseInt(likeCount.innerText) - 1;
-                }
-            } else {
-                // Toggle Dislike
-                if (dislikeBtn.classList.contains('far')) {
-                    dislikeBtn.classList.replace('far', 'fas');
-                    dislikeBtn.parentElement.classList.add('bg-red-100', 'text-red-500');
-                    dislikeCount.innerText = parseInt(dislikeCount.innerText) + 1;
+            }
+            if (urlParams.has('addReview') && urlParams.get('addReview') === "failed") {
+                showReviewPopup('error', 'Error', 'An error occurred while submitting your review.');
 
-                    // Remove like if active
-                    if (likeBtn.classList.contains('fas')) {
-                        likeBtn.classList.replace('fas', 'far');
-                        likeBtn.parentElement.classList.remove('bg-blue-100', 'text-blue-600');
-                        likeCount.innerText = parseInt(likeCount.innerText) - 1;
-                    }
-                } else {
-                    dislikeBtn.classList.replace('fas', 'far');
-                    dislikeBtn.parentElement.classList.remove('bg-red-100', 'text-red-500');
-                    dislikeCount.innerText = parseInt(dislikeCount.innerText) - 1;
-                }
             }
 
-            // Console log for your PHP logic tracking
-            console.log(`Review ${reviewId} reaction: ${type}`);
-        }
-    </script>
-    <script>
+        };
+
+
         const basePrice = parseFloat(document.getElementById('base-price').value);
         const dateDebut = document.getElementById('dateDebut');
         const dateFin = document.getElementById('dateFin');
@@ -379,33 +419,12 @@ $vehicle = $v->getVehiculeById($idVehicule);
         const totalDisplay = document.getElementById('total-display');
         const dureeInput = document.getElementById('dureeReservation');
 
-        function calculateTotal() {
-            let days = 1;
 
-            if (dateDebut.value && dateFin.value) {
-                const start = new Date(dateDebut.value);
-                const end = new Date(dateFin.value);
-                const diffTime = end - start;
-                days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                if (days <= 0) days = 1;
-            }
-
-            dureeInput.value = days;
-
-            const selectedOption = optionSelect.options[optionSelect.selectedIndex];
-            const optionPrice = parseFloat(selectedOption.getAttribute('data-price')) || 0;
-
-            // Total = (Base Price * Number of Days) + Fixed Option Price
-            const finalTotal = (basePrice * days) + optionPrice;
-
-            totalDisplay.innerText = `$${finalTotal}`;
-        }
 
         dateDebut.addEventListener('change', calculateTotal);
         dateFin.addEventListener('change', calculateTotal);
         optionSelect.addEventListener('change', calculateTotal);
-    </script>
-    <script>
+
         // --- Star Selection Logic ---
         const stars = document.querySelectorAll('#star-selector i');
         let selectedRating = 0;
@@ -413,64 +432,10 @@ $vehicle = $v->getVehiculeById($idVehicule);
         stars.forEach(star => {
             star.addEventListener('click', () => {
                 selectedRating = star.getAttribute('data-value');
+                document.getElementById('rating').value = selectedRating;
                 updateStars(selectedRating);
             });
         });
-
-        function updateStars(rating) {
-            stars.forEach(s => {
-                if (s.getAttribute('data-value') <= rating) {
-                    s.classList.add('star-active', 'fas');
-                    s.classList.remove('text-slate-200', 'far');
-                } else {
-                    s.classList.remove('star-active', 'fas');
-                    s.classList.add('text-slate-200', 'far');
-                }
-            });
-        }
-
-        // --- Soft Delete Logic (User Story 9) ---
-        function softDelete(id) {
-            if (confirm("Do you really want to remove this review?")) {
-                const item = document.getElementById(`review-${id}`);
-                item.style.transition = "all 0.5s ease";
-                item.style.opacity = "0";
-                setTimeout(() => {
-                    item.classList.add('hidden'); // Simulated Soft Delete (hidden from user)
-                    alert("Review deleted successfully.");
-                }, 500);
-            }
-        }
-
-        // --- Edit Logic ---
-        function toggleEdit(id) {
-            const currentText = document.getElementById(`review-text-${id}`).innerText.replace(/"/g, '');
-            document.getElementById('edit-id').value = id;
-            document.getElementById('edit-text').value = currentText;
-            document.getElementById('edit-modal').classList.add('modal-active');
-        }
-
-        function closeEdit() {
-            document.getElementById('edit-modal').classList.remove('modal-active');
-        }
-
-        function saveEdit() {
-            const id = document.getElementById('edit-id').value;
-            const text = document.getElementById('edit-text').value;
-
-            // UI Update
-            document.getElementById(`review-text-${id}`).innerText = `"${text}"`;
-            closeEdit();
-            // In real app: Send fetch() request to PHP controller
-        }
-
-        function submitReview() {
-            const text = document.getElementById('new-review-text').value;
-            if (!text || selectedRating == 0) return alert("Please provide a rating and a comment.");
-            alert("Thank you! Your review has been submitted for approval.");
-            document.getElementById('new-review-text').value = "";
-            updateStars(0);
-        }
     </script>
 </body>
 

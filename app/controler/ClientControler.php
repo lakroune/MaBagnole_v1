@@ -2,13 +2,13 @@
 
 namespace app\controler;
 
+
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 use app\model\Client;
-use app\model\Vehicule;
-use app\model\Categorie;
 use app\model\Reservation;
 use app\model\Favori;
+use app\model\Avis;
 
 class ClientControler
 {
@@ -36,10 +36,12 @@ class ClientControler
 
                 break;
             case "details":
-                if ($this->gestionReservation())
-                    header("Location: ../view/details.php?reservation=success&id=" . $_POST['idVehicule']);
-                else
-                    header("Location: ../view/details.php?reservation=failed&id=" . $_POST['idVehicule']);
+                if (isset($_POST['action']) && $_POST['action'] == 'rent' && $this->gestionReservation())
+                    header("Location: ../view/details.php?" . $_POST['action'] . "=success&id=" . $_POST['idVehicule']);
+                elseif (isset($_POST['action']) && $_POST['action'] == 'addReview' && $this->gestionAvis())
+                    header("Location: ../view/details.php?" . $_POST['action'] . "=success&id=" . $_POST['idVehicule']);
+                // else
+                //     header("Location: ../view/details.php?" . $_POST['action'] . "=failed&id=" . $_POST['idVehicule']);
                 break;
 
             default:
@@ -100,6 +102,25 @@ class ClientControler
             $reservation->idVehicule = $_POST["idVehicule"];
 
             if ($reservation->ajouterReservation())
+                return true;
+            else
+                return false;
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return false;
+        }
+    }
+    public function gestionAvis()
+    {
+        try {
+            $avis = new Avis();
+            session_start();
+            $avis->setCommentaireAvis($_POST["textReview"]);
+            $avis->setNoteAvis((int)$_POST["ratings"]);
+            $avis->setIdClient($_SESSION['Utilisateur']->idUtilisateur);
+            $avis->setIdReservation((int)$_POST["idReservation"]);
+
+            if ($avis->ajouterAvis())
                 return true;
             else
                 return false;

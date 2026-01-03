@@ -22,7 +22,7 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'clie
             <button onclick="window.location.href='./index.php'" class="text-[10px] text-red-500 font-black uppercase tracking-widest hover:underline">Logout</button>
         </div>
         <div class="w-10 h-10 rounded-full bg-blue-600 border-2 border-blue-100 flex items-center justify-center text-white font-bold shadow-sm">
-            <?php echo $_SESSION['Utilisateur']->nomUtilisateur[0]; ?>
+            <?= strtoupper( $_SESSION['Utilisateur']->nomUtilisateur[0].".".$_SESSION['Utilisateur']->prenomUtilisateur[0]) ?>
         </div>
     </div>
 

@@ -80,9 +80,10 @@ CREATE Table optionReservation (
     FOREIGN KEY (idOption) REFERENCES Option (idOption)
 );
 
+
 CREATE table Avis (
     idAvis int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    commmentaireAvis varchar(255) NOT NULL,
+    commentaireAvis varchar(255) NOT NULL,
     noteAvis int(1) NOT NULL,
     datePublicationAvis TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     idReservation int(11) NOT NULL,

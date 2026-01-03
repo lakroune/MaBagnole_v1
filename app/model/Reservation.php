@@ -106,6 +106,30 @@ class Reservation
             return null;
         }
     }
+    //vrifeir  si client a une Reservation confirmer et terminer  et non fais deja avis 
+    public function getReservationByClientVehicule(int $idClient, int $idVehicule): int
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $sql = "select * from reservations where idClient=:idClient and statusReservation='confirmer' and idVehicule=:idVehicule and dateFinReservation<now()";
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(":idClient", $idClient);
+            $stmt->bindParam(":idVehicule", $idVehicule);
+            if ($stmt->execute()) {
+                $reservation = $stmt->fetch(\PDO::FETCH_OBJ);
+                if ($reservation)
+                    return $reservation->idReservation;
+                else
+                    return 0;
+            } else {
+                return 0;
+            }
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return 0;
+        }
+    }
+
     //getAll Reservations
     public  function getAllReservations(): array
     {
@@ -251,5 +275,3 @@ class Reservation
         }
     }
 }
-
- 

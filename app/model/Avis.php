@@ -102,7 +102,28 @@ class Avis
         return "";
     }
     // ajouter Avis
-    public function ajouterAvis() {}
+    public function ajouterAvis()
+    {
+        try {
+
+            $db = Connexion::connect()->getConnexion();
+            $sql = "insert into avis(idReservation, commentaireAvis, noteAvis,idClient) values (:idReservation, :commentaireAvis, :noteAvis ,:idClient)";
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(":idReservation", $this->idReservation);
+            $stmt->bindParam(":commentaireAvis", $this->commentaireAvis);
+            $stmt->bindParam(":noteAvis", $this->noteAvis);
+            $stmt->bindParam(":idClient", $this->idClient);
+            if ($stmt->execute())
+                return true;
+            else
+                return false;
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return null;
+        }
+    }
+
+
     // modifier Avis
     public function modifierAvis() {}
     // supprimer Avis
@@ -113,4 +134,46 @@ class Avis
     public function getAllAvis() {}
     // conter Avis by vehicule
     public function conterAvisByVehicule(int $idVehicule) {}
+    // getAll Avis by vehicule
+    public function getAllAvisByVehicule(int $idVehicule)
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $sql = "select * from avis where idReservation in (select idReservation from reservations where idVehicule=:idVehicule)";
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(":idVehicule", $idVehicule);
+            if ($stmt->execute()) {
+                $avis = $stmt->fetchAll(\PDO::FETCH_OBJ);
+                return $avis;
+            } else {
+                return null;
+            }
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return null;
+        }
+    }
+    // check Avis
+    public function checkAvis(int $idClient, int $idReservation)
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $sql = "select * from avis where idClient=:idClient and idReservation=:idReservation";
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(":idClient", $idClient);
+            $stmt->bindParam(":idReservation", $idReservation);
+            if ($stmt->execute()) {
+                $avis = $stmt->fetch(\PDO::FETCH_OBJ);
+                if ($avis)
+                    return true;
+                else
+                    return false;
+            } else {
+                return null;
+            }
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return null;
+        }
+    }
 }
