@@ -9,7 +9,7 @@ use app\model\Vehicule;
 
 session_start();
 $connect = true;
-if (!isset($_SESSION['Utilisateur']) or  $_SESSION['Utilisateur']->role !== 'client') {
+if (!isset($_SESSION['Utilisateur']) or  $_SESSION['Utilisateur']->getRole() !== 'client') {
     $connect =  false;
 }
 $vehicule = new Vehicule();

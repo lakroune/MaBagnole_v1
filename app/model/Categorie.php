@@ -12,24 +12,24 @@ class Categorie
     // constructeur
     public function __construct() {}
     //getters
-    public function getIdCategorie()
+    public function getIdCategorie(): int
     {
         return $this->idCategorie;
     }
 
-    public function getTitreCategorie()
+    public function getTitreCategorie(): string
     {
         return $this->titreCategorie;
     }
 
-    public function getDescriptionCategorie()
+    public function getDescriptionCategorie(): string
     {
         return $this->descriptionCategorie;
     }
 
 
     //setters
-    public function setIdCategorie($idCategorie)
+    public function setIdCategorie($idCategorie): bool
     {
         if ($idCategorie > 0) {
             $this->idCategorie = $idCategorie;
@@ -38,7 +38,7 @@ class Categorie
         return false;
     }
 
-    public function setTitreCategorie($titreCategorie): bool
+    public function setTitreCategorie(string $titreCategorie): bool
     {
         if (strlen($titreCategorie) > 0) {
             $this->titreCategorie = $titreCategorie;
@@ -47,7 +47,7 @@ class Categorie
         return false;
     }
 
-    public function setDescriptionCategorie($descriptionCategorie): bool
+    public function setDescriptionCategorie(string $descriptionCategorie): bool
     {
         if (strlen($descriptionCategorie) > 0) {
             $this->descriptionCategorie = $descriptionCategorie;
@@ -57,7 +57,7 @@ class Categorie
     }
 
 
-    public function __toString()
+    public function __toString(): string
     {
         return "Categorie [idCategorie=$this->idCategorie, titreCategorie=$this->titreCategorie, descriptionCategorie=$this->descriptionCategorie]";
     }
@@ -97,6 +97,7 @@ class Categorie
             return false;
         }
     }
+
     public function supprimerCategorie(int $idCategorie): bool
     {
         try {
@@ -121,7 +122,7 @@ class Categorie
             $stmt = $db->prepare($sql);
             $stmt->bindParam(":idCategorie", $idCategorie);
             if ($stmt->execute()) {
-                $categorie = $stmt->fetch(\PDO::FETCH_OBJ);
+                $categorie = $stmt->fetch(\PDO::FETCH_CLASS, Categorie::class);
                 return $categorie;
             } else {
                 return null;
@@ -139,7 +140,7 @@ class Categorie
             $sql = "select * from categories";
             $stmt = $db->prepare($sql);
             if ($stmt->execute()) {
-                $categories = $stmt->fetchAll(\PDO::FETCH_OBJ);
+                $categories = $stmt->fetchAll(\PDO::FETCH_CLASS, Categorie::class);
                 return $categories;
             } else {
                 return [];

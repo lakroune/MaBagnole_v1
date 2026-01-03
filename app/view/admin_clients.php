@@ -69,52 +69,52 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admi
                 <tbody class="divide-y divide-slate-100">
                     <?php if ($clients) ?>
                     <?php foreach ($clients as $client) : ?>
-                        <?php if ($client->statusClient == 1) : ?>
+                        <?php if ($client->getStatusClient() == 1) : ?>
                             <tr class="hover:bg-slate-50/50 transition">
                                 <td class="px-4 py-4">
                                     <div class="flex items-center gap-3">
                                         <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600">AH</div>
                                         <div>
-                                            <p class="font-bold text-slate-800"><?= $client->nomUtilisateur . " " . $client->prenomUtilisateur ?></p>
-                                            <p class="text-[10px] text-slate-400 uppercase">ID: #<?= $client->idUtilisateur ?></p>
+                                            <p class="font-bold text-slate-800"><?= $client->getNomUtilisateur() . " " . $client->getPrenomUtilisateur() ?></p>
+                                            <p class="text-[10px] text-slate-400 uppercase">ID: #<?= $client->getIdUtilisateur() ?></p>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-4 py-4">
-                                    <p class="text-sm font-medium text-slate-600"><?= $client->email ?></p>
-                                    <p class="text-[10px] text-slate-400"><?= $client->telephone ?></p>
+                                    <p class="text-sm font-medium text-slate-600"><?= $client->getEmail() ?></p>
+                                    <p class="text-[10px] text-slate-400"><?= $client->getTelephone() ?></p>
                                 </td>
                                 <td class="px-4 py-4">
                                     <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-green-50 text-green-600 border border-green-100">Active</span>
                                 </td>
                                 <td class="px-4 py-4">
-                                    <button onclick="confirmStatusChange(<?= $client->idUtilisateur ?>,' <?= $client->nomUtilisateur ?>','<?= $client->statusClient ?>' )"
+                                    <button onclick="confirmStatusChange(<?= $client->getIdUtilisateur() ?>,' <?= $client->getNomUtilisateur() ?>','<?= $client->getStatusClient() ?>' )"
                                         class="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition text-xs font-bold">
                                         <i class="fas fa-user-slash"></i> Suspend
                                     </button>
                                 </td>
                             </tr>
-                        <?php elseif ($client->statusClient == 0) : ?>
+                        <?php elseif ($client->getStatusClient() == 0) : ?>
                             <tr class="hover:bg-slate-50/50 transition">
                                 <td class="px-4 py-4 opacity-60">
                                     <div class="flex items-center gap-3">
                                         <div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-400">KO</div>
                                         <div>
-                                            <p class="font-bold text-slate-800"><?= $client->nomUtilisateur . " " . $client->prenomUtilisateur ?></p>
-                                            <p class="text-[10px] text-slate-400 uppercase">ID: #<?= $client->idUtilisateur ?></p>
+                                            <p class="font-bold text-slate-800"><?= $client->getNomUtilisateur() . " " . $client->getPrenomUtilisateur() ?></p>
+                                            <p class="text-[10px] text-slate-400 uppercase">ID: #<?= $client->getIdUtilisateur() ?></p>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-4 py-4 opacity-60">
-                                    <p class="text-sm font-medium text-slate-600"><?= $client->email ?>
+                                    <p class="text-sm font-medium text-slate-600"><?= $client->getEmail() ?>
                                     </p>
-                                    <p class="text-[10px] text-slate-400"><?= $client->telephone ?> </p>
+                                    <p class="text-[10px] text-slate-400"><?= $client->getTelephone() ?> </p>
                                 </td>
                                 <td class="px-4 py-4">
                                     <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-red-50 text-red-600 border border-red-100">Suspended</span>
                                 </td>
                                 <td class="px-4 py-4">
-                                    <button onclick="confirmStatusChange(<?= $client->idUtilisateur ?>, '<?= $client->nomUtilisateur ?>', '<?= $client->statusClient ?>')"
+                                    <button onclick="confirmStatusChange(<?= $client->getIdUtilisateur() ?>, '<?= $client->getNomUtilisateur() ?>', '<?= $client->getStatusClient() ?>')"
                                         class="flex items-center gap-2 px-4 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-600 hover:text-white transition text-xs font-bold">
                                         <i class="fas fa-user-check"></i> Activate
                                     </button>

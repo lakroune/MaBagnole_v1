@@ -17,38 +17,38 @@ class Client extends Utilisateur
         parent::__construct();
     }
     // getters
-    public function getStatusClient()
+    public function getStatusClient(): int
     {
         return $this->statusClient;
     }
 
-    public function getTelephone()
+    public function getTelephone(): string
     {
         return $this->telephone;
     }
 
-    public function getVille()
+    public function getVille(): string
     {
         return $this->ville;
     }
 
 
-    public function getCreatedAt()
+    public function getCreatedAt(): string
     {
         return $this->createdAt;
     }
 
 
     // setters
-    public function setStatusClient($statusClient): bool
+    public function setStatusClient(int $statusClient): bool
     {
-        if (is_int($statusClient) and ($statusClient == 0 || $statusClient == 1)) {
+        if (  ($statusClient == 0 || $statusClient == 1)) {
             $this->statusClient = $statusClient;
             return true;
         }
         return false;
     }
-    public function setTelephone($telephone): bool
+    public function setTelephone(string $telephone): bool
     {
         $regex = '/^0[5-7][0-9]{8}$/';
         if (preg_match($regex, $telephone)) {
@@ -57,7 +57,7 @@ class Client extends Utilisateur
         }
         return false;
     }
-    public function setVille($ville): bool
+    public function setVille(string $ville): bool
     {
         if (strlen($ville) >= 2 && strlen($ville) <= 50) {
             $this->ville = $ville;
@@ -66,12 +66,20 @@ class Client extends Utilisateur
         return false;
     }
 
+    public function setCreatedAt(string $createdAt): bool
+    {
+        if (strlen($createdAt) > 0) {
+            $this->createdAt = $createdAt;
+            return true;
+        }
+        return false;
+    }
 
 
 
 
     // tostring
-    public function __toString()
+    public function __toString(): string
     {
         return parent::__toString() . ", Client [statusClient=$this->statusClient, telephone=$this->telephone, ville=$this->ville, createdAt=$this->createdAt]";
     }
@@ -109,7 +117,7 @@ class Client extends Utilisateur
             $stmt = $db->prepare($sql);
             $stmt->bindParam(":idClient", $idClient);
             $stmt->execute();
-            $client = $stmt->fetch(\PDO::FETCH_OBJ);
+            $client = $stmt->fetch(\PDO::FETCH_CLASS, Client::class);
             if ($client) {
                 return $client;
             } else {
@@ -128,7 +136,7 @@ class Client extends Utilisateur
             $stmt = $db->prepare($sql);
             $stmt->bindParam(":email", $email);
             $stmt->execute();
-            $client = $stmt->fetch(\PDO::FETCH_OBJ);
+            $client = $stmt->fetch(\PDO::FETCH_CLASS, Client::class);
             if ($client) {
                 return $client;
             } else {
@@ -147,7 +155,7 @@ class Client extends Utilisateur
             $sql = "select * from utilisateurs where role='client'";
             $stmt = $db->prepare($sql);
             $stmt->execute();
-            $results = $stmt->fetchAll(\PDO::FETCH_OBJ);
+            $results = $stmt->fetchAll(\PDO::FETCH_CLASS, Client::class);
             return $results;
         } catch (\Exception $e) {
             error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
@@ -206,7 +214,7 @@ class Client extends Utilisateur
     {
         try {
             $db = Connexion::connect()->getConnexion();
-            $sql = "update utilisateurs set statusClient= '0' where idUtilisateur=:idClient";
+            $sql = "update utilisateurs set statusClient= 0 where idUtilisateur=:idClient";
             $stmt = $db->prepare($sql);
             $stmt->bindParam(":idClient", $idClient);
             if ($stmt->execute())

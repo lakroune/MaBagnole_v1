@@ -57,7 +57,7 @@ class AdminControler
             $vehicule->setPrixVehicule($_POST["prixVehicule"]);
             $vehicule->setTypeBoiteVehicule($_POST["typeBoiteVehicule"]);
             $vehicule->setTypeCarburantVehicule($_POST["typeCarburantVehicule"]);
-            $vehicule->setImageVehicule($_POST["imageVehicule"]??"iamege");  // mtnssach tzid image   edit
+            $vehicule->setImageVehicule($_POST["imageVehicule"] ?? "iamege");  // mtnssach tzid image   edit
             $vehicule->setIdCategorie($_POST["idCategorie"]);
 
             if (isset($_POST["action"]) && $_POST["action"] == "add" && $vehicule->ajouterVehicule())
@@ -78,8 +78,8 @@ class AdminControler
     {
         try {
             $categorie = new Categorie();
-            $categorie = new Categorie();
-            $categorie->setTitreCategorie($_POST["nomCategorie"]);
+            if (isset($_POST["action"]) && $_POST["action"] !== "delete")
+                $categorie->setTitreCategorie($_POST["nomCategorie" ?? ""]);
             $categorie->setDescriptionCategorie("descption"); // $_POST["descriptionCategorie"];
             $categorie->setIdCategorie(intval($_POST["idCategorie"]));
             if (isset($_POST["action"]) && $_POST["action"] == "delete"  && $categorie->supprimerCategorie($categorie->getIdCategorie()))

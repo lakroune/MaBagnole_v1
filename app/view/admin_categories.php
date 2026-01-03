@@ -10,7 +10,7 @@ use app\model\Categorie;
 
 session_start();
 
-if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admin') {
+if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 'admin') {
     header('Location: login.php');
     exit();
 } else {
@@ -66,16 +66,16 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->role !== 'admi
                     <?php if ($categories)  ?>
                     <?php foreach ($categories as $category) : ?>
                         <tr class="hover:bg-slate-50/50 transition">
-                            <td class="px-4 py-4 font-bold text-slate-400 text-sm">#<?php echo $category->idCategorie; ?></td>
+                            <td class="px-4 py-4 font-bold text-slate-400 text-sm">#<?php echo $category->getIdCategorie(); ?></td>
                             <td class="px-4 py-4">
-                                <span class="px-4 py-2 bg-blue-50 text-blue-700 rounded-xl font-bold text-sm"><?php echo $category->titreCategorie; ?></span>
+                                <span class="px-4 py-2 bg-blue-50 text-blue-700 rounded-xl font-bold text-sm"><?php echo $category->getTitreCategorie(); ?></span>
                             </td>
                             <td class="px-4 py-4">
                                 <div class="flex gap-2">
-                                    <button onclick="openEditModal(<?php echo $category->idCategorie; ?>, '<?php echo $category->titreCategorie; ?>')" class="w-9 h-9 rounded-xl bg-slate-100 text-blue-600 hover:bg-blue-600 hover:text-white transition flex items-center justify-center">
+                                    <button onclick="openEditModal(<?php echo $category->getIdCategorie(); ?>, '<?php echo $category->getTitreCategorie(); ?>')" class="w-9 h-9 rounded-xl bg-slate-100 text-blue-600 hover:bg-blue-600 hover:text-white transition flex items-center justify-center">
                                         <i class="fas fa-edit text-xs"></i>
                                     </button>
-                                    <button onclick="openDeleteModal(<?php echo $category->idCategorie; ?>)" class="w-9 h-9 rounded-xl bg-slate-100 text-red-500 hover:bg-red-600 hover:text-white transition flex items-center justify-center">
+                                    <button onclick="openDeleteModal(<?php echo $category->getIdCategorie(); ?>)" class="w-9 h-9 rounded-xl bg-slate-100 text-red-500 hover:bg-red-600 hover:text-white transition flex items-center justify-center">
                                         <i class="fas fa-trash text-xs"></i>
                                     </button>
                                 </div>

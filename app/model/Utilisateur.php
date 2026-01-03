@@ -16,32 +16,32 @@ class Utilisateur
     public function __construct() {}
     // getters
 
-    public function getIdUtilisateur()
+    public function getIdUtilisateur(): int
     {
         return $this->idUtilisateur;
     }
 
-    public function getNomUtilisateur()
+    public function getNomUtilisateur(): string
     {
         return $this->nomUtilisateur;
     }
 
-    public function getPrenomUtilisateur()
+    public function getPrenomUtilisateur(): string
     {
         return $this->prenomUtilisateur;
     }
 
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
 
-    public function getRole()
+    public function getRole(): string
     {
         return $this->role;
     }
@@ -50,15 +50,15 @@ class Utilisateur
 
 
     // setters
-    public function setIdUtilisateur($idUtilisateur): bool
+    public function setIdUtilisateur(int $idUtilisateur): bool
     {
-        if (is_int($idUtilisateur) and $idUtilisateur > 0) {
+        if ($idUtilisateur > 0) {
             $this->idUtilisateur = $idUtilisateur;
             return true;
         }
         return false;
     }
-    public function setNomUtilisateur($nomUtilisateur): bool
+    public function setNomUtilisateur(string $nomUtilisateur): bool
     {
         if (strlen($nomUtilisateur) >= 2 && strlen($nomUtilisateur) <= 50) {
             $this->nomUtilisateur = $nomUtilisateur;
@@ -67,7 +67,7 @@ class Utilisateur
             return false;
         }
     }
-    public function setPrenomUtilisateur($prenomUtilisateur): bool
+    public function setPrenomUtilisateur(string $prenomUtilisateur): bool
     {
         if (strlen($prenomUtilisateur) >= 2 && strlen($prenomUtilisateur) <= 50) {
             $this->prenomUtilisateur = $prenomUtilisateur;
@@ -76,7 +76,7 @@ class Utilisateur
             return false;
         }
     }
-    public function setEmail($email): bool
+    public function setEmail(string $email): bool
     {
         $regex = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
         if (preg_match($regex, $email)) {
@@ -86,7 +86,7 @@ class Utilisateur
             return false;
         }
     }
-    public function setPassword($password): bool
+    public function setPassword(string $password): bool
     {
         if (strlen($password) >= 6) {
             $this->password = $password;
@@ -95,20 +95,20 @@ class Utilisateur
             return false;
         }
     }
-    public function setRole($role): bool
+    public function setRole(string  $role): bool
     {
         // if($role == 'admin' || $role == 'client')
         if (in_array($role, ['admin', 'client'])) {
             $this->role = $role;
             return true;
         }
-        return true;
+        return false;
     }
 
 
 
     //toString
-    public function __toString()
+    public function __toString(): string
     {
         return "idUtilisateur=$this->idUtilisateur, nomUtilisateur=$this->nomUtilisateur, prenomUtilisateur=$this->prenomUtilisateur, email=$this->email, role=$this->role";
     }
@@ -121,11 +121,11 @@ class Utilisateur
             $stmt = $db->prepare($sql);
             $stmt->bindParam(':email', $this->email);
             $stmt->execute();
-            $user = $stmt->fetch(\PDO::FETCH_OBJ);
-            if ($user && password_verify($this->password, $user->password)) {
+            $user = $stmt->fetchObject(Utilisateur::class);
+            if ($user && password_verify($this->password, $user->getPassword())) {
                 session_start();
                 $_SESSION['Utilisateur'] = $user;
-                return $user->role;
+                return $user->getRole();
             } else {
 
                 return "error";
@@ -136,9 +136,11 @@ class Utilisateur
         }
     }
     //sdeconnecter
-    public function seDeconnecter()
+    public function seDeconnecter(): bool
     {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         session_unset();
         session_destroy();
         return true;

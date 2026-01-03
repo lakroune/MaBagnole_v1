@@ -13,7 +13,7 @@ class Admin extends Utilisateur
         parent::__construct();
     }
     //tostring
-    public function __toString()
+    public function __toString(): string
     {
         return parent::__toString();
     }
