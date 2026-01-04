@@ -29,6 +29,7 @@ class Favori
             throw new \InvalidArgumentException("ID client invalide");
         } else {
             $this->idClient = $idClient;
+
         }
     }
 

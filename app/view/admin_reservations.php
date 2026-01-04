@@ -74,11 +74,11 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 
                     <?php foreach ($reservations as $reservation) : ?>
                         <tr class="hover:bg-slate-50/50 transition">
                             <td class="px-4 py-4">
-                                <p class="font-bold text-slate-800">#RES-<?= $reservation->idReservation ?></p>
-                                <p class="text-xs text-slate-400">Client ID: #<?= $reservation->idClient ?></p>
+                                <p class="font-bold text-slate-800">#RES-<?= $reservation->getIdReservation() ?></p>
+                                <p class="text-xs text-slate-400">Client ID: #<?= $reservation->getIdClient() ?></p>
                             </td>
                             <td class="px-4 py-4">
-                                <p class="font-medium text-slate-700"><?= $reservation->marqueVehicule ?> <?= $reservation->modeleVehicule ?></p>
+                                <p class="font-medium text-slate-700"><?= $reservation->getMarqueVehicule() ?> <?= $reservation->modeleVehicule ?></p>
                             </td>
                             <td class="px-4 py-4">
                                 <div class="text-xs">

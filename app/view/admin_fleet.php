@@ -102,7 +102,7 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 
                             <td>
                                 <div class="flex gap-2">
                                     <button onclick="openEditModal({id:<?= $vehicule->getIdVehicule() ?>, marque:'<?= $vehicule->getMarqueVehicule() ?>', modele:'<?= $vehicule->getModeleVehicule() ?>', annee:'<?= $vehicule->getAnneeVehicule() ?>', couleur:'<?= $vehicule->getCouleurVehicule() ?>', boite:'<?= $vehicule->getTypeBoiteVehicule() ?>', carburant:'<?= $vehicule->getTypeCarburantVehicule() ?>', prix:'<?= $vehicule->getPrixVehicule() ?>', cat:'<?= $vehicule->getIdCategorie() ?>', img:'<?= $vehicule->getImageVehicule() ?>'})" class="w-8 h-8 rounded-lg bg-slate-100 text-blue-600 hover:bg-blue-600 hover:text-white transition"><i class="fas fa-edit text-xs"></i></button>
-                                    <button onclick="openDeleteModal({id:<?= (int)$vehicule->getIdVehicule() ?>})" class="w-8 h-8 rounded-lg bg-slate-100 text-red-500 hover:bg-red-600 hover:text-white transition"><i class="fas fa-trash text-xs"></i></button>
+                                    <button onclick="openDeleteModal({id:<?= (int) $vehicule->getIdVehicule() ?>})" class="w-8 h-8 rounded-lg bg-slate-100 text-red-500 hover:bg-red-600 hover:text-white transition"><i class="fas fa-trash text-xs"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -178,7 +178,7 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 
                 </div>
                 <div>
                     <label class="text-xs font-bold uppercase text-slate-400">Image URL</label>
-                    <input type="text" name="imageVehicule" id="edit_image" class="w-full p-3 bg-slate-50 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500"> 
+                    <input type="text" name="imageVehicule" id="edit_image" class="w-full p-3 bg-slate-50 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
                     <p class="text-xs text-slate-400 mt-2">Image URL</p>
 
                 </div>
@@ -218,10 +218,42 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 
             </form>
         </div>
     </div>
+    <div id="statusModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-[200] p-4">
+        <div class="bg-white w-full max-w-sm rounded-[2.5rem] p-8 shadow-2xl text-center relative">
+            <button onclick="closeStatusModal()" class="absolute top-6 right-6 text-slate-300 hover:text-slate-600">
+                <i class="fas fa-times"></i>
+            </button>
 
+            <div id="statusIconContainer" class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl border-4 border-white shadow-sm">
+                <i id="statusIcon" class="fas"></i>
+            </div>
+
+            <h3 id="statusTitle" class="text-2xl font-black text-slate-800 mb-2"></h3>
+            <p id="statusMessage" class="text-slate-500 text-sm mb-8 leading-relaxed"></p>
+
+            <button onclick="closeStatusModal()" id="statusBtn" class="w-full text-white py-4 rounded-2xl font-black shadow-lg transition active:scale-95">
+                Dismiss
+            </button>
+        </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="js/main.js"></script>>
     <script>
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            if (urlParams.has('add') && urlParams.get('add') === "success") {
+                showStatusModal('success', 'Operation Successful', 'The  fleet has been added successfully.');
+            } else if (urlParams.has('delete') && urlParams.get('delete') === "success") {
+                showStatusModal('success', 'Operation Successful', 'The fleet has been deleted successfully.');
+            } else if (urlParams.has('update') && urlParams.get('update') === "success") {
+                showStatusModal('success', 'Operation Successful', 'The fleet has been updated successfully.');
+            } else if (urlParams.has('add') || urlParams.has('delete') || urlParams.has('update')) {
+                showStatusModal('error', 'Operation Failed', 'Something went wrong. Please try again.');
+            }
+        };
+
         $(document).ready(function() {
             $('#fleetTable').DataTable({
                 pageLength: 8,
@@ -230,39 +262,6 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 
 
             });
         });
-
-        function toggleModal(id) {
-            const modal = document.getElementById(id);
-            modal.classList.toggle('hidden');
-            modal.classList.toggle('flex');
-        }
-
-
-
-        function toggleModal(id) {
-            const modal = document.getElementById(id);
-            modal.classList.toggle('hidden');
-            modal.classList.toggle('flex');
-        }
-
-        function openEditModal(data) {
-            document.getElementById('edit_id').value = data.id;
-            document.getElementById('edit_marque').value = data.marque;
-            document.getElementById('edit_modele').value = data.modele;
-            document.getElementById('edit_annee').value = data.annee;
-            document.getElementById('edit_couleur').value = data.couleur;
-            document.getElementById('edit_boite').value = data.boite;
-            document.getElementById('edit_carburant').value = data.carburant;
-            document.getElementById('edit_prix').value = data.prix;
-            document.getElementById('edit_cat').value = data.cat;
-            document.getElementById('edit_image').value = data.img;
-            toggleModal('editVehicleModal');
-        }
-
-        function openDeleteModal(id) {
-            document.getElementById('delete_id').value = id;
-            toggleModal('deleteModal');
-        }
     </script>
 </body>
 

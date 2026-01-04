@@ -155,4 +155,68 @@ function showReviewPopup(type, title, message) {
     modal.classList.remove('hidden');
     modal.classList.add('flex');
 }
-//  --end of app / view / js / main.js--
+
+function showStatusModal(type, title, message) {
+    const modal = document.getElementById('statusModal');
+    const iconContainer = document.getElementById('statusIconContainer');
+    const icon = document.getElementById('statusIcon');
+    const titleEl = document.getElementById('statusTitle');
+    const messageEl = document.getElementById('statusMessage');
+    const btn = document.getElementById('statusBtn');
+
+    if (type === 'success') {
+        iconContainer.className = "w-20 h-20 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl border-4 border-white shadow-sm";
+        icon.className = "fas fa-check-circle";
+        btn.className = "w-full bg-green-500 text-white py-4 rounded-2xl font-black shadow-lg hover:bg-green-600 transition active:scale-95";
+    } else {
+        iconContainer.className = "w-20 h-20 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl border-4 border-white shadow-sm";
+        icon.className = "fas fa-exclamation-circle";
+        btn.className = "w-full bg-red-500 text-white py-4 rounded-2xl font-black shadow-lg hover:bg-red-600 transition active:scale-95";
+    }
+
+    titleEl.innerText = title;
+    messageEl.innerText = message;
+
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+}
+
+function closeStatusModal() {
+    document.getElementById('statusModal').classList.add('hidden');
+    // Optional: Clean URL after closing
+    window.history.replaceState({}, document.title, window.location.pathname);
+}
+
+
+function toggleModal(id) {
+    const modal = document.getElementById(id);
+    modal.classList.toggle('hidden');
+    modal.classList.toggle('flex');
+}
+
+
+
+function toggleModal(id) {
+    const modal = document.getElementById(id);
+    modal.classList.toggle('hidden');
+    modal.classList.toggle('flex');
+}
+
+function openEditModal(data) {
+    document.getElementById('edit_id').value = data.id;
+    document.getElementById('edit_marque').value = data.marque;
+    document.getElementById('edit_modele').value = data.modele;
+    document.getElementById('edit_annee').value = data.annee;
+    document.getElementById('edit_couleur').value = data.couleur;
+    document.getElementById('edit_boite').value = data.boite;
+    document.getElementById('edit_carburant').value = data.carburant;
+    document.getElementById('edit_prix').value = data.prix;
+    document.getElementById('edit_cat').value = data.cat;
+    document.getElementById('edit_image').value = data.img;
+    toggleModal('editVehicleModal');
+}
+
+function openDeleteModal(data) {
+    document.getElementById('delete_id').value = data.id;
+    toggleModal('deleteModal');
+}

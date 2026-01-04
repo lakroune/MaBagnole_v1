@@ -145,14 +145,14 @@ $categories = $categorie->getAllCategories();
                         <td class="block border-none p-0">
                             <div class="car-card bg-white rounded-[2rem] overflow-hidden shadow-sm border border-slate-100 flex flex-col transition-all duration-300 group h-full">
                                 <div class="relative overflow-hidden">
-                                    <img src="<?= $vehicule->imageVehicule ?>" alt="Car" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
+                                    <img src="<?= $vehicule->getImageVehicule() ?>" alt="Car" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
                                     <div class="absolute top-4 left-4 flex gap-2">
-                                        <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-blue-600 shadow-sm"><?= $vehicule->marqueVehicule ?></span>
-                                        <span class="bg-slate-900 text-white px-3 py-1 rounded-full text-[10px] font-bold"><?= $vehicule->anneeVehicule ?></span>
+                                        <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-blue-600 shadow-sm"><?= $vehicule->getMarqueVehicule() ?></span>
+                                        <span class="bg-slate-900 text-white px-3 py-1 rounded-full text-[10px] font-bold"><?= $vehicule->getAnneeVehicule() ?></span>
                                     </div>
-                                    <input type="hidden" name="categorie" value="<?= $vehicule->idVehicule ?>">
+                                    <input type="hidden" name="categorie" value="<?= $vehicule->getIdCategorie() ?>">
                                     <form id="favoriteForm" action="#" method="POST">
-                                        <input type="hidden" name="idVehicule" value="<?= $vehicule->idVehicule ?>">
+                                        <input type="hidden" name="idVehicule" value="<?= $vehicule->getIdVehicule() ?>">
                                         <input type="hidden" name="page" value="accueil">
                                         <input type="hidden" name="action" value="favorite">
                                         <!-- .favorite-btn ??? mtnsahch   -->
@@ -165,11 +165,11 @@ $categories = $categorie->getAllCategories();
                                 <div class="p-8 flex-1 flex flex-col">
                                     <div class="flex justify-between items-start mb-4">
                                         <div>
-                                            <h3 class="text-2xl font-bold text-slate-800"><?= $vehicule->marqueVehicule . ' ' . $vehicule->modeleVehicule ?></h3>
+                                            <h3 class="text-2xl font-bold text-slate-800"><?= $vehicule->getMarqueVehicule() . ' ' . $vehicule->getModeleVehicule() ?></h3>
                                             <p class="text-slate-400 text-sm flex items-center gap-1 mt-1"><i class="fas fa-palette"></i> Midnight Black</p>
                                         </div>
                                         <div class="text-right">
-                                            <p class="text-2xl font-black text-blue-600"><?= $vehicule->prixVehicule ?> </p>
+                                            <p class="text-2xl font-black text-blue-600"><?= $vehicule->getPrixVehicule() ?> </p>
                                             <p class="text-xs text-slate-400 uppercase font-bold">MAD/Day</p>
                                         </div>
                                     </div>
@@ -177,17 +177,17 @@ $categories = $categorie->getAllCategories();
                                     <div class="grid grid-cols-2 gap-4 py-6 border-y border-slate-50 my-2">
                                         <div class="flex items-center gap-3 text-slate-600">
                                             <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 text-xs"><i class="fas fa-cog"></i></div>
-                                            <span class="text-sm font-medium"><?= $vehicule->typeBoiteVehicule ?></span>
+                                            <span class="text-sm font-medium"><?= $vehicule->getTypeBoiteVehicule() ?></span>
                                         </div>
                                         <div class="flex items-center gap-3 text-slate-600">
                                             <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 text-xs"><i class="fas fa-gas-pump"></i></div>
-                                            <span class="text-sm font-medium"><?= $vehicule->typeCarburantVehicule ?></span>
+                                            <span class="text-sm font-medium"><?= $vehicule->getTypeCarburantVehicule() ?></span>
                                         </div>
                                     </div>
 
                                     <div class="mt-auto pt-6 flex gap-3">
-                                        <a href="details.php?id=<?= $vehicule->idVehicule ?>" class="flex-1 text-center py-3.5 px-4 rounded-xl font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition">Details</a>
-                                        <button <?php if (!($connect)) :  ?> onclick="toggleModal('rentPopup')" <?php else: ?> onclick="window.location.href='./details.php?id=<?= $vehicule->idVehicule ?> '" <?php endif; ?> class="flex-[1.5] text-center py-3.5 px-4 rounded-xl font-bold bg-blue-600 text-white hover:bg-blue-700 transition shadow-lg shadow-blue-100">Book Now</button>
+                                        <a href="details.php?id=<?= $vehicule->getIdVehicule() ?>" class="flex-1 text-center py-3.5 px-4 rounded-xl font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition">Details</a>
+                                        <button <?php if (!($connect)) :  ?> onclick="toggleModal('rentPopup')" <?php else: ?> onclick="window.location.href='./details.php?id=<?= $vehicule->getIdVehicule() ?> '" <?php endif; ?> class="flex-[1.5] text-center py-3.5 px-4 rounded-xl font-bold bg-blue-600 text-white hover:bg-blue-700 transition shadow-lg shadow-blue-100">Book Now</button>
                                     </div>
                                 </div>
                             </div>

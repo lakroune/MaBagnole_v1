@@ -37,8 +37,8 @@ class ClientControler
                     header("Location: ../view/details.php?" . $_POST['action'] . "=success&id=" . $_POST['idVehicule']);
                 elseif (isset($_POST['action']) && $_POST['action'] == 'addReview' && $this->gestionAvis())
                     header("Location: ../view/details.php?" . $_POST['action'] . "=success&id=" . $_POST['idVehicule']);
-                // else
-                //     header("Location: ../view/details.php?" . $_POST['action'] . "=failed&id=" . $_POST['idVehicule']);
+                else
+                    header("Location: ../view/details.php?" . $_POST['action'] . "=failed&id=" . $_POST['idVehicule']);
                 break;
 
             default:

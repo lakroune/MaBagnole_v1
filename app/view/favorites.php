@@ -4,7 +4,6 @@ namespace app\view;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-use app\model\Categorie;
 use app\model\Vehicule;
 
 
@@ -71,9 +70,9 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 
                 <?php foreach ($vehicules as $vehicule) : ?>
                     <div class="car-card bg-white rounded-[2rem] overflow-hidden shadow-sm border border-slate-100 flex flex-col transition-all duration-300 relative group">
                         <div class="relative overflow-hidden">
-                            <img src="<?= $vehicule->imageVehicule ?>" class="w-full h-60 object-cover">
+                            <img src="<?= $vehicule->getimageVehicule() ?>" class="w-full h-60 object-cover">
                             <form id="favoriteForm" action="#" method="POST">
-                                <input type="hidden" name="idVehicule" value="<?= $vehicule->idVehicule ?>">
+                                <input type="hidden" name="idVehicule" value="<?= $vehicule->getIdVehicule() ?>">
                                 <input type="hidden" name="page" value="accueil">
                                 <input type="hidden" name="action" value="favorite">
                                 <button onclick="removeFavorite(this, 101)" id="favoriteButton" type="button"
@@ -86,17 +85,17 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 
 
                         <div class="p-8 flex-1 flex flex-col">
                             <div class="flex justify-between items-start mb-4">
-                                <h3 class="text-xl font-bold text-slate-800"><?= $vehicule->marqueVehicule . ' ' . $vehicule->modeleVehicule ?></h3>
+                                <h3 class="text-xl font-bold text-slate-800"><?= $vehicule->getMarqueVehicule() . ' ' . $vehicule->getModeleVehicule() ?></h3>
                                 <p class="text-xl font-black text-blue-600">$299<span class="text-[10px] text-slate-400 font-bold uppercase ml-1">/Day</span></p>
                             </div>
 
                             <div class="flex gap-4 mb-6">
-                                <span class="text-xs font-bold text-slate-500 flex items-center gap-1"><i class="fas fa-cog text-blue-500"></i> <?= $vehicule->typeBoiteVehicule ?></span>
-                                <span class="text-xs font-bold text-slate-500 flex items-center gap-1"><i class="fas fa-gas-pump text-blue-500"></i> <?= $vehicule->typeCarburantVehicule ?></span>
+                                <span class="text-xs font-bold text-slate-500 flex items-center gap-1"><i class="fas fa-cog text-blue-500"></i> <?= $vehicule->getTypeBoiteVehicule() ?></span>
+                                <span class="text-xs font-bold text-slate-500 flex items-center gap-1"><i class="fas fa-gas-pump text-blue-500"></i> <?= $vehicule->getTypeCarburantVehicule() ?></span>
                             </div>
 
                             <div class="mt-auto pt-6 border-t border-slate-50 flex gap-3">
-                                <a href="./details.php?id=<?= $vehicule->idVehicule ?>" class="flex-1 py-3 px-4 rounded-xl text-center font-bold bg-blue-600 text-white hover:bg-blue-700 transition shadow-lg shadow-blue-100">
+                                <a href="./details.php?id=<?= $vehicule->getIdVehicule() ?>" class="flex-1 py-3 px-4 rounded-xl text-center font-bold bg-blue-600 text-white hover:bg-blue-700 transition shadow-lg shadow-blue-100">
                                     Book Now
                                 </a>
                             </div>

@@ -50,23 +50,31 @@ class AdminControler
     {
         try {
             $vehicule = new Vehicule();
-            $vehicule->setIdVehicule((int) $_POST["idVehicule"]); //mtnssach return boolean
-            $vehicule->setMarqueVehicule($_POST["marqueVehicule"]);
-            $vehicule->setModeleVehicule($_POST["modeleVehicule"]);
-            $vehicule->setAnneeVehicule($_POST["anneeVehicule"]);
-            $vehicule->setCouleurVehicule($_POST["couleurVehicule"]);
-            $vehicule->setPrixVehicule($_POST["prixVehicule"]);
-            $vehicule->setTypeBoiteVehicule($_POST["typeBoiteVehicule"]);
-            $vehicule->setTypeCarburantVehicule($_POST["typeCarburantVehicule"]);
-            $vehicule->setImageVehicule($_POST["imageVehicule"] ?? "iamege");  // mtnssach tzid image   edit
-            $vehicule->setIdCategorie((int)$_POST["idCategorie"]);
+            if ((isset($_POST["action"]) && $_POST["action"] == "update") || (isset($_POST["action"]) && $_POST["action"] == "delete")) {
+                $id = (int)$_POST["idVehicule"];
+                if ($id > 0)
+                    $vehicule->setIdVehicule($id);
+                else
+                    throw new \InvalidArgumentException("ID vehicule invalide : $id");
+            }
+            if ((isset($_POST["action"]) && $_POST["action"] == "update") || (isset($_POST["action"]) && $_POST["action"] == "add")) {
+                $vehicule->setMarqueVehicule($_POST["marqueVehicule"]);
+                $vehicule->setModeleVehicule($_POST["modeleVehicule"]);
+                $vehicule->setAnneeVehicule($_POST["anneeVehicule"]);
+                $vehicule->setCouleurVehicule($_POST["couleurVehicule"]);
+                $vehicule->setPrixVehicule($_POST["prixVehicule"]);
+                $vehicule->setTypeBoiteVehicule($_POST["typeBoiteVehicule"]);
+                $vehicule->setTypeCarburantVehicule($_POST["typeCarburantVehicule"]);
+                $vehicule->setImageVehicule($_POST["imageVehicule"] ?? "iamege");  // mtnssach tzid image   edit
+                $vehicule->setIdCategorie((int)$_POST["idCategorie"]);
+            }
 
             if (isset($_POST["action"]) && $_POST["action"] == "add" && $vehicule->ajouterVehicule())
-                return "seccess";
+                return "success";
             elseif (isset($_POST["action"]) && $_POST["action"] == "update" && $vehicule->modifierVehicule())
-                return "seccess";
+                return "success";
             elseif (isset($_POST["action"]) && $_POST["action"] == "delete" && $vehicule->supprimerVehicule($vehicule->getIdVehicule()))
-                return "seccess";
+                return "success";
             else
                 return "failed";
         } catch (\Exception $e) {
@@ -80,15 +88,15 @@ class AdminControler
         try {
             $categorie = new Categorie();
             if (isset($_POST["action"]) && $_POST["action"] !== "delete")
-                $categorie->setTitreCategorie($_POST["nomCategorie" ?? ""]);
+                $categorie->setTitreCategorie($_POST["nomCategorie"] ?? "");
             $categorie->setDescriptionCategorie("descption"); // $_POST["descriptionCategorie"];
-            $categorie->setIdCategorie(intval($_POST["idCategorie"]));
+            $categorie->setIdCategorie((int)$_POST["idCategorie"]);
             if (isset($_POST["action"]) && $_POST["action"] == "delete"  && $categorie->supprimerCategorie($categorie->getIdCategorie()))
-                return "seccess";
+                return "success";
             elseif (isset($_POST["action"]) && $_POST["action"] == "update" && $categorie->modifierCategorie()) {
-                return "seccess";
+                return "success";
             } elseif (isset($_POST["action"]) && $_POST["action"] == "add" && $categorie->ajouterCategorie()) {
-                return "seccess";
+                return "success";
             } else {
                 return "failed";
             }
@@ -103,9 +111,9 @@ class AdminControler
             $idClient = intval($_POST["idClient"]) ?? "";
             $client = new Client();
             if (isset($_POST["statusClient"]) && $_POST["statusClient"] == "suspend" && $client->suspendClient($idClient)) {
-                return "seccess";
+                return "success";
             } elseif (isset($_POST["statusClient"]) && $_POST["statusClient"] == "activate" && $client->activateClient($idClient)) {
-                return "seccess";
+                return "success";
             } else
                 return "failed";
         } catch (\Exception $e) {
@@ -118,9 +126,9 @@ class AdminControler
         $reservation = new Reservation();
         $reservation->setIdReservation(intval($_POST["idReservation"]));
         if (isset($_POST["action"]) && $_POST["action"] == "confirmer" && $reservation->confirmerReservation($reservation->getIdReservation()))
-            return "seccess";
+            return "success";
         elseif (isset($_POST["action"]) && $_POST["action"] == "annuler" && $reservation->annulerReservation($reservation->getIdReservation()))
-            return "seccess";
+            return "success";
         else
             return "failed";
     }
