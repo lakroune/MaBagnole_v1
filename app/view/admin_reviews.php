@@ -129,10 +129,11 @@ $allReviews = $avis->getAllAvis();
                                         <button onclick="handleApprove(<?= $review->getIdAvis() ?>)" class="w-9 h-9 bg-green-50 text-green-600 rounded-xl hover:bg-green-600 hover:text-white transition shadow-sm" title="Approve">
                                             <i class="fas fa-check"></i>
                                         </button>
-                                    <?php endif; ?>
+                                    <?php else: ?>
                                     <button onclick="handleDelete(<?= $review->getIdAvis() ?>)" class="w-9 h-9 bg-red-50 text-red-500 rounded-xl hover:bg-red-600 hover:text-white transition shadow-sm" title="Delete">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
+                                    <?php endif; ?>
                                 </div>
                             </td>
                         </tr>
