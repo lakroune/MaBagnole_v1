@@ -130,9 +130,9 @@ $allReviews = $avis->getAllAvis();
                                             <i class="fas fa-check"></i>
                                         </button>
                                     <?php else: ?>
-                                    <button onclick="handleDelete(<?= $review->getIdAvis() ?>)" class="w-9 h-9 bg-red-50 text-red-500 rounded-xl hover:bg-red-600 hover:text-white transition shadow-sm" title="Delete">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
+                                        <button onclick="handleDelete(<?= $review->getIdAvis() ?>)" class="w-9 h-9 bg-red-50 text-red-500 rounded-xl hover:bg-red-600 hover:text-white transition shadow-sm" title="Delete">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
                                     <?php endif; ?>
                                 </div>
                             </td>
@@ -162,10 +162,54 @@ $allReviews = $avis->getAllAvis();
             </form>
         </div>
     </div>
+    <div id="errorModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-[100] p-4">
+        <div class="bg-white w-full max-w-sm rounded-[2.5rem] p-8 shadow-2xl text-center relative animate-bounce-short">
+            <button onclick="closeError()" class="absolute top-6 right-6 text-slate-300 hover:text-slate-600">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="w-20 h-20 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+
+            <h3 class="text-2xl font-black text-slate-800 mb-2">Error</h3>
+            <p id="errorMessage" class="text-slate-500 text-sm mb-8 leading-relaxed">
+                yor reservation failed please try again .
+            </p>
+
+            <div class="flex flex-col gap-3">
+                <button onclick="closeError()" class="w-full bg-slate-50 text-slate-600 py-4 rounded-2xl font-bold hover:bg-slate-100 transition">try again</button>
+
+                <a href="accueil.php" class="text-sm font-bold text-blue-600 hover:underline">
+                    <i class="fas fa-arrow-left mr-2"></i>back to fleet</a>
+            </div>
+        </div>
+    </div>
+    <div id="successModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-[100] p-4">
+        <div class="bg-white w-full max-w-sm rounded-[2.5rem] p-8 shadow-2xl text-center relative animate-fade-in">
+
+            <div class="w-20 h-20 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl">
+                <i class="fas fa-check-circle"></i>
+            </div>
+
+            <h3 class="text-2xl font-black text-slate-800 mb-2">Success!</h3>
+            <p class="text-slate-500 text-sm mb-8 leading-relaxed">
+                your reservation has been made successfully
+            </p>
+
+            <div class="flex flex-col gap-3">
+
+                <a href="accueil.php" class=" feedback w-full bg-slate-900 text-white py-4 rounded-2xl font-black shadow-lg hover:bg-slate-800 transition">
+                    <i class="fas fa-arrow-left mr-2"></i> Back to Fleet
+                </a>
+            </div>
+        </div>
+    </div>
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
+    <script src="js/main.js"></script>
     <script>
         $(document).ready(function() {
             $('#reviewsTable').DataTable({
@@ -238,6 +282,43 @@ $allReviews = $avis->getAllAvis();
                 confirmText: 'Yes, Delete',
             });
         }
+
+
+
+
+
+
+
+
+        // Auto-trigger based on URL Parameters
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            // Handle Success
+
+
+            if (urlParams.has('approve') && urlParams.get('approve') === "success") {
+                showReviewPopup('success', 'Thank You!', 'Your review has been approved successfully.');
+
+            }
+            if (urlParams.has('approve') && urlParams.get('approve') === "failed") {
+                showReviewPopup('error', 'Error', 'An error occurred while approving your review.');
+
+            }
+
+            if (urlParams.has('reject') && urlParams.get('reject') === "success") {
+                showReviewPopup('success', 'Thank You!', 'Your review has been rejected successfully.');
+
+            }
+            if (urlParams.has('reject') && urlParams.get('reject') === "failed") {
+                showReviewPopup('error', 'Error', 'An error occurred while rejecting your review.');
+            }
+            else {
+                showReviewPopup('error', 'Error', 'Something went wrong. Please try again.');
+            }
+
+
+        };
     </script>
 </body>
 
