@@ -304,6 +304,26 @@ class Vehicule
             return [];
         }
     }
+    // get nombre Favoris par client
+    public function getVehiculesFavorisByClient(int $idClient): array
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $sql = "select * from vehicules where idVehicule in (select idVehicule from favoris where idClient=:idClient)";
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(":idClient", $idClient);
+            if ($stmt->execute()) {
+                $vehicules = $stmt->fetchAll(\PDO::FETCH_CLASS, Vehicule::class);
+                return $vehicules;
+            }
+            return [];
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return [];
+        }
+    }
+ 
+
     // counter vehicules
     public static function counterVehicules(): int
     {
@@ -335,22 +355,4 @@ class Vehicule
     }
     //getVehiculesByMarque
     public function getVehiculesByMarque() {}
-    // get nombre Favoris par client
-    public function getVehiculesFavorisByClient(int $idClient): array
-    {
-        try {
-            $db = Connexion::connect()->getConnexion();
-            $sql = "select * from vehicules where idVehicule in (select idVehicule from favoris where idClient=:idClient)";
-            $stmt = $db->prepare($sql);
-            $stmt->bindParam(":idClient", $idClient);
-            if ($stmt->execute()) {
-                $vehicules = $stmt->fetchAll(\PDO::FETCH_CLASS, Vehicule::class);
-                return $vehicules;
-            }
-            return [];
-        } catch (\Exception $e) {
-            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
-            return [];
-        }
-    }
 }

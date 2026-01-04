@@ -257,8 +257,12 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 
         $(document).ready(function() {
             $('#fleetTable').DataTable({
                 pageLength: 8,
-                searching: false,
+                searching: true,
                 lengthChange: false,
+                language: {
+                    search: "",
+                    searchPlaceholder: "Search fleet..."
+                }
 
             });
         });

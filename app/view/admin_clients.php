@@ -11,7 +11,7 @@ use app\model\Client;
 
 session_start();
 
-if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole !== 'admin') {
+if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 'admin') {
     header('Location: login.php');
     exit();
 } else {
@@ -161,12 +161,12 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole !== 'a
             $('#clientTable').DataTable({
                 paging: true,
                 pageLength: 7,
-                searching: false,
-                lengthChange: false
-                // language: {
-                // search: "",
-                // searchPlaceholder: "Search clients..."
-                // }
+                searching: true,
+                lengthChange: false,
+                language: {
+                search: "",
+                searchPlaceholder: "Search clients..."
+                }
             });
         });
 

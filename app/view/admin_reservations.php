@@ -5,7 +5,8 @@ namespace app\view;
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 use app\model\Reservation;
-use DateTime;
+use app\model\Client;
+use app\model\Vehicule;
 
 session_start();
 
@@ -15,6 +16,8 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 
 } else {
 
     $reservation = new Reservation();
+    $client = new Client();
+    $vehicule = new Vehicule();
     $reservations = $reservation->getAllReservations();
 }
 ?>
@@ -78,24 +81,30 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 
                                 <p class="text-xs text-slate-400">Client ID: #<?= $reservation->getIdClient() ?></p>
                             </td>
                             <td class="px-4 py-4">
-                                <p class="font-medium text-slate-700"><?= $reservation->getMarqueVehicule() ?> <?= $reservation->modeleVehicule ?></p>
+                                <p class="font-medium text-slate-700">
+                                    <?php
+                                    $vehicule =   $vehicule->getVehiculeById($reservation->getIdVehicule());
+                                    echo  $vehicule->getMarqueVehicule() . ' ' ;
+                                    echo  $vehicule->getModeleVehicule();
+                                    ?>
+                                </p>
                             </td>
                             <td class="px-4 py-4">
                                 <div class="text-xs">
-                                    <p class="font-bold"><?= (new \DateTime($reservation->dateDebutReservation))->format('d/m/Y') ?> → <?= (new \DateTime($reservation->dateFinReservation))->format('d/m/Y') ?></p>
-                                    <p class="text-blue-500"><?= floor((strtotime($reservation->dateFinReservation) - strtotime($reservation->dateDebutReservation)) / (60 * 60 * 24)) ?> jours</p>
+                                    <p class="font-bold"><?= (new \DateTime($reservation->getDateDebutReservation()))->format('d/m/Y') ?> → <?= (new \DateTime($reservation->getDateFinReservation()))->format('d/m/Y') ?></p>
+                                    <p class="text-blue-500"><?= floor((strtotime($reservation->getDateDebutReservation()) - strtotime($reservation->getDateFinReservation())) / (60 * 60 * 24)) ?> jours</p>
                                 </div>
                             </td>
                             <td class="px-4 py-4 text-xs font-medium text-slate-600">
-                                <i class="fas fa-map-marker-alt mr-1"></i><?= $reservation->lieuChange ?>
+                                <i class="fas fa-map-marker-alt mr-1"></i><?= $reservation->getLieuChange() ?>
                             </td>
                             <td class="px-4 py-4">
-                                <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-blue-50 text-blue-600"><?= $reservation->statusReservation ?></span>
+                                <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-blue-50 text-blue-600"><?= $reservation->getStatusReservation() ?></span>
                             </td>
                             <td class="px-4 py-4">
                                 <div class="flex gap-2">
                                     <button onclick="openDetailsModal({id:1, options:['GPS', 'Multimedia'], total:'$1350'})" class="p-2 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200"><i class="fas fa-eye text-xs"></i></button>
-                                    <button onclick="openStatusModal(<?= $reservation->idReservation ?>, '<?= $reservation->statusReservation ?>')" class="p-2 bg-slate-100 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition"><i class="fas fa-sync text-xs"></i></button>
+                                    <button onclick="openStatusModal(<?= $reservation->getIdReservation() ?>, '<?= $reservation->getStatusReservation() ?>')" class="p-2 bg-slate-100 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition"><i class="fas fa-sync text-xs"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -147,7 +156,7 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 
     <script>
         $(document).ready(function() {
             $('#resTable').DataTable({
-                pageLength: 10,   
+                pageLength: 10,
             });
         });
 
