@@ -22,7 +22,7 @@ $reviews =     $avis->getAllAvisByVehicule($idVehicule);
 
 if ($connect) {
     $reservation = new Reservation();
-    $isReserver = $reservation->getReservationByClientVehicule($idClient = $_SESSION['Utilisateur']->idUtilisateur, $idVehicule);
+    $isReserver = $reservation->getReservationByClientVehicule($idClient = $_SESSION['Utilisateur']->getIdUtilisateur(), $idVehicule);
     $dejaCommente = $avis->checkAvis($idClient, $isReserver);
 }
 ?>
@@ -104,7 +104,7 @@ if ($connect) {
                                                 <h4 class="font-bold text-slate-800">John Doe</h4>
                                                 <div class="flex text-yellow-400 text-[10px]">
                                                     <?php for ($i = 0; $i < 5; $i++) : ?>
-                                                        <?php if ($i < $review->noteAvis) : ?>
+                                                        <?php if ($i < $review->getNoteAvis()) : ?>
 
                                                             <i class="fas fa-star"></i>
                                                         <?php else: ?>
@@ -115,7 +115,7 @@ if ($connect) {
                                             </div>
                                         </div>
                                         <div class="flex gap-4">
-                                            <?php if ($connect and $_SESSION['Utilisateur']->idUtilisateur === '1') : ?>
+                                            <?php if ($connect and $_SESSION['Utilisateur']->getIdUtilisateur() === '1') : ?>
                                                 <button onclick="toggleEdit(101)" class="text-xs font-bold text-blue-500 hover:text-blue-700 transition">Edit</button>
                                                 <button onclick="softDelete(101)" class="text-xs font-bold text-red-400 hover:text-red-600 transition">Delete</button>
                                             <?php endif ?>
@@ -123,7 +123,7 @@ if ($connect) {
                                     </div>
 
                                     <p id="review-text-101" class="mt-4 text-slate-600 italic leading-relaxed">
-                                        <?php echo $review->commentaireAvis ?>
+                                        <?php echo $review->getCommentaireAvis() ?>
                                     </p>
 
                                     <!-- <div class="mt-4 flex items-center gap-6">

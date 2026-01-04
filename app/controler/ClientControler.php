@@ -92,7 +92,7 @@ class ClientControler
         try {
             $reservation = new Reservation();
             session_start();
-            $reservation->setIdClient((int) $_SESSION['Utilisateur']->idUtilisateur);
+            $reservation->setIdClient((int) $_SESSION['Utilisateur']->getIdUtilisateur());
             $reservation->setDateDebutReservation($_POST["dateDebutReservation"]);
             $reservation->setDateFinReservation($_POST["dateFinReservation"]);
             $reservation->setLieuChange($_POST["lieuChange"]);

@@ -129,7 +129,8 @@ class Reservation
     {
         try {
             $db = Connexion::connect()->getConnexion();
-            $sql = "insert into reservations (dateDebutReservation, dateFinReservation, lieuChange, idVehicule, idClient) values (:dateDebutReservation, :dateFinReservation, :lieuChange, :idVehicule, :idClient)";
+            // $sql = "insert into reservations (dateDebutReservation, dateFinReservation, lieuChange, idVehicule, idClient) values (:dateDebutReservation, :dateFinReservation, :lieuChange, :idVehicule, :idClient)";
+            $sql = "CALL AjouterReservation(:idClient, :idVehicule, :dateDebutReservation, :dateFinReservation, :lieuChange)";
             $stmt = $db->prepare($sql);
             $stmt->bindParam(":dateDebutReservation", $this->dateDebutReservation);
             $stmt->bindParam(":dateFinReservation", $this->dateFinReservation);
@@ -150,7 +151,8 @@ class Reservation
     {
         try {
             $db = Connexion::connect()->getConnexion();
-            $sql = "update reservations set statusReservation='confirmer' where idReservation=:idReservation";
+            // $sql = "update reservations set statusReservation='confirmer' where idReservation=:idReservation";
+            $sql = "CALL confirmerReservation(:idReservation)";
             $stmt = $db->prepare($sql);
             $stmt->bindParam(":idReservation", $idReservation);
             if ($stmt->execute())
@@ -203,7 +205,7 @@ class Reservation
     {
         try {
             $db = Connexion::connect()->getConnexion();
-            $sql = "select r.* from reservations where idClient=:idClient and statusReservation='confirmer' and idVehicule=:idVehicule and dateFinReservation<now()";
+            $sql = "select  * from reservations where idClient=:idClient and statusReservation='confirmer' and idVehicule=:idVehicule and dateFinReservation<now()";
             $stmt = $db->prepare($sql);
             $stmt->bindParam(":idClient", $idClient);
             $stmt->bindParam(":idVehicule", $idVehicule);

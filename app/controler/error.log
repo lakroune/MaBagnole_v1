@@ -1,313 +1,112 @@
-26-01-03 11:28:49 Connexion :error .InvalidArgumentException: ID vehicule invalide in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:85
+26-01-04 11:34:54 Connexion :error .PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lieu' in 'field list' in C:\xampp\htdocs\MaBagnole\app\model\Reservation.php:140
 Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(53): app\model\Vehicule->setIdVehicule(0)
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
-#3 {main}
-26-01-03 11:28:55 Connexion :error .InvalidArgumentException: ID vehicule invalide in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:85
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(53): app\model\Vehicule->setIdVehicule(0)
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
-#3 {main}
-26-01-03 11:30:29 Connexion :error .InvalidArgumentException: La categorie est obligatoire in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:167
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(62): app\model\Vehicule->setIdCategorie(0)
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
-#3 {main}
-26-01-04 12:22:44 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Categorie.php:108
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Categorie.php(108): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(101): app\model\Categorie->supprimerCategorie('5')
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(27): app\controler\AdminControler->gererCategories(Array)
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(164): app\controler\AdminControler->index('admin_categorie...', Array)
+#0 C:\xampp\htdocs\MaBagnole\app\model\Reservation.php(140): PDOStatement->execute()
+#1 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(101): app\model\Reservation->ajouterReservation()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(36): app\controler\ClientControler->gestionReservation()
+#3 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(132): app\controler\ClientControler->index()
 #4 {main}
-26-01-04 12:44:59 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Categorie.php:108
+26-01-04 12:23:22 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:197
 Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Categorie.php(108): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(86): app\model\Categorie->supprimerCategorie('5')
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(24): app\controler\AdminControler->gererCategories()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
+#0 C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php(197): PDOStatement->execute()
+#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(116): app\model\Vehicule->ajouterVehicule()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(33): app\controler\AdminControler->importVehicules()
+#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(185): app\controler\AdminControler->index()
 #4 {main}
-26-01-04 12:45:01 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Categorie.php:108
+26-01-04 12:23:22 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:197
 Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Categorie.php(108): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(86): app\model\Categorie->supprimerCategorie('5')
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(24): app\controler\AdminControler->gererCategories()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
+#0 C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php(197): PDOStatement->execute()
+#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(116): app\model\Vehicule->ajouterVehicule()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(33): app\controler\AdminControler->importVehicules()
+#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(185): app\controler\AdminControler->index()
 #4 {main}
-26-01-04 12:46:56 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Categorie.php:108
+26-01-04 12:23:22 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:197
 Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Categorie.php(108): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(86): app\model\Categorie->supprimerCategorie('5')
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(24): app\controler\AdminControler->gererCategories()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
+#0 C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php(197): PDOStatement->execute()
+#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(116): app\model\Vehicule->ajouterVehicule()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(33): app\controler\AdminControler->importVehicules()
+#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(185): app\controler\AdminControler->index()
 #4 {main}
-26-01-04 12:48:09 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Categorie.php:108
+26-01-04 12:23:22 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:197
 Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Categorie.php(108): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(86): app\model\Categorie->supprimerCategorie('4')
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(24): app\controler\AdminControler->gererCategories()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
+#0 C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php(197): PDOStatement->execute()
+#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(116): app\model\Vehicule->ajouterVehicule()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(33): app\controler\AdminControler->importVehicules()
+#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(185): app\controler\AdminControler->index()
 #4 {main}
-26-01-04 12:49:15 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Categorie.php:108
+26-01-04 12:23:22 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:197
 Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Categorie.php(108): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(86): app\model\Categorie->supprimerCategorie('5')
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(24): app\controler\AdminControler->gererCategories()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
+#0 C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php(197): PDOStatement->execute()
+#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(116): app\model\Vehicule->ajouterVehicule()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(33): app\controler\AdminControler->importVehicules()
+#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(185): app\controler\AdminControler->index()
 #4 {main}
-26-01-04 12:49:38 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Categorie.php:108
+26-01-04 12:23:22 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:197
 Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Categorie.php(108): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(86): app\model\Categorie->supprimerCategorie('4')
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(24): app\controler\AdminControler->gererCategories()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
+#0 C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php(197): PDOStatement->execute()
+#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(116): app\model\Vehicule->ajouterVehicule()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(33): app\controler\AdminControler->importVehicules()
+#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(185): app\controler\AdminControler->index()
 #4 {main}
-26-01-04 12:50:08 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Categorie.php:108
+26-01-04 12:23:28 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:197
 Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Categorie.php(108): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(86): app\model\Categorie->supprimerCategorie('3')
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(24): app\controler\AdminControler->gererCategories()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
+#0 C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php(197): PDOStatement->execute()
+#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(116): app\model\Vehicule->ajouterVehicule()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(33): app\controler\AdminControler->importVehicules()
+#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(185): app\controler\AdminControler->index()
 #4 {main}
-26-01-04 12:56:33 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Categorie.php:108
+26-01-04 12:23:28 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:197
 Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Categorie.php(108): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(86): app\model\Categorie->supprimerCategorie('4')
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(24): app\controler\AdminControler->gererCategories()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
+#0 C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php(197): PDOStatement->execute()
+#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(116): app\model\Vehicule->ajouterVehicule()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(33): app\controler\AdminControler->importVehicules()
+#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(185): app\controler\AdminControler->index()
 #4 {main}
-26-01-04 12:58:57 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Categorie.php:108
+26-01-04 12:23:28 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:197
 Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Categorie.php(108): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(86): app\model\Categorie->supprimerCategorie('3')
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(24): app\controler\AdminControler->gererCategories()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
+#0 C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php(197): PDOStatement->execute()
+#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(116): app\model\Vehicule->ajouterVehicule()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(33): app\controler\AdminControler->importVehicules()
+#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(185): app\controler\AdminControler->index()
 #4 {main}
-26-01-04 12:59:02 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Categorie.php:108
+26-01-04 12:23:28 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:197
 Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Categorie.php(108): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(86): app\model\Categorie->supprimerCategorie('3')
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(24): app\controler\AdminControler->gererCategories()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
+#0 C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php(197): PDOStatement->execute()
+#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(116): app\model\Vehicule->ajouterVehicule()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(33): app\controler\AdminControler->importVehicules()
+#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(185): app\controler\AdminControler->index()
 #4 {main}
-26-01-04 09:10:02 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Categorie.php:108
+26-01-04 12:23:28 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:197
 Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Categorie.php(108): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(86): app\model\Categorie->supprimerCategorie('5')
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(24): app\controler\AdminControler->gererCategories()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
+#0 C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php(197): PDOStatement->execute()
+#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(116): app\model\Vehicule->ajouterVehicule()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(33): app\controler\AdminControler->importVehicules()
+#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(185): app\controler\AdminControler->index()
 #4 {main}
-26-01-04 09:10:38 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Categorie.php:108
+26-01-04 12:23:28 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:197
 Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Categorie.php(108): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(86): app\model\Categorie->supprimerCategorie('4')
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(24): app\controler\AdminControler->gererCategories()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
+#0 C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php(197): PDOStatement->execute()
+#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(116): app\model\Vehicule->ajouterVehicule()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(33): app\controler\AdminControler->importVehicules()
+#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(185): app\controler\AdminControler->index()
 #4 {main}
-26-01-04 09:14:27 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Categorie.php:108
+26-01-04 12:24:02 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:197
 Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Categorie.php(108): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(86): app\model\Categorie->supprimerCategorie('5')
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(24): app\controler\AdminControler->gererCategories()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
+#0 C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php(197): PDOStatement->execute()
+#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(116): app\model\Vehicule->ajouterVehicule()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(33): app\controler\AdminControler->importVehicules()
+#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(185): app\controler\AdminControler->index()
 #4 {main}
-26-01-04 09:14:30 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Categorie.php:108
+26-01-04 12:29:12 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:197
 Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Categorie.php(108): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(86): app\model\Categorie->supprimerCategorie('5')
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(24): app\controler\AdminControler->gererCategories()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
+#0 C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php(197): PDOStatement->execute()
+#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(116): app\model\Vehicule->ajouterVehicule()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(33): app\controler\AdminControler->importVehicules()
+#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(185): app\controler\AdminControler->index()
 #4 {main}
-26-01-04 09:14:32 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Categorie.php:108
+26-01-04 12:29:45 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:197
 Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Categorie.php(108): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(86): app\model\Categorie->supprimerCategorie('5')
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(24): app\controler\AdminControler->gererCategories()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
+#0 C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php(197): PDOStatement->execute()
+#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(116): app\model\Vehicule->ajouterVehicule()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(33): app\controler\AdminControler->importVehicules()
+#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(185): app\controler\AdminControler->index()
 #4 {main}
-26-01-04 09:14:35 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Categorie.php:108
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Categorie.php(108): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(86): app\model\Categorie->supprimerCategorie('5')
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(24): app\controler\AdminControler->gererCategories()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
-#4 {main}
-26-01-04 09:15:48 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Categorie.php:108
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Categorie.php(108): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(86): app\model\Categorie->supprimerCategorie('4')
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(24): app\controler\AdminControler->gererCategories()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
-#4 {main}
-26-01-04 09:15:56 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Categorie.php:108
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Categorie.php(108): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(86): app\model\Categorie->supprimerCategorie('5')
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(24): app\controler\AdminControler->gererCategories()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
-#4 {main}
-26-01-04 09:18:12 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Categorie.php:108
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Categorie.php(108): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(86): app\model\Categorie->supprimerCategorie('4')
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(24): app\controler\AdminControler->gererCategories()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
-#4 {main}
-26-01-04 09:18:17 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`vehicules`, CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`idCategorie`) REFERENCES `categories` (`idCategorie`)) in C:\xampp\htdocs\MaBagnole\app\model\Categorie.php:108
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Categorie.php(108): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(86): app\model\Categorie->supprimerCategorie('10')
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(24): app\controler\AdminControler->gererCategories()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
-#4 {main}
-26-01-04 09:20:48 Connexion :error .InvalidArgumentException: ID vehicule invalide in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:85
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(53): app\model\Vehicule->setIdVehicule(0)
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
-#3 {main}
-26-01-04 09:29:04 Connexion :error .InvalidArgumentException: ID vehicule invalide in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:85
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(53): app\model\Vehicule->setIdVehicule(0)
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
-#3 {main}
-26-01-04 09:29:09 Connexion :error .InvalidArgumentException: ID vehicule invalide in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:85
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(53): app\model\Vehicule->setIdVehicule(0)
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
-#3 {main}
-26-01-04 09:34:20 Connexion :error .InvalidArgumentException: ID vehicule invalide in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:85
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(53): app\model\Vehicule->setIdVehicule(0)
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
-#3 {main}
-26-01-04 09:39:04 Connexion :error .InvalidArgumentException: ID vehicule invalide in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:85
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(53): app\model\Vehicule->setIdVehicule(0)
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
-#3 {main}
-26-01-04 09:39:09 Connexion :error .InvalidArgumentException: ID vehicule invalide in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:85
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(53): app\model\Vehicule->setIdVehicule(0)
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(130): app\controler\AdminControler->index()
-#3 {main}
-26-01-04 09:44:58 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`reservations`, CONSTRAINT `reservations_ibfk_1` FOREIGN KEY (`idVehicule`) REFERENCES `vehicules` (`idVehicule`)) in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:242
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php(242): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(71): app\model\Vehicule->supprimerVehicule(10)
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(133): app\controler\AdminControler->index()
-#4 {main}
-26-01-04 09:45:31 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`reservations`, CONSTRAINT `reservations_ibfk_1` FOREIGN KEY (`idVehicule`) REFERENCES `vehicules` (`idVehicule`)) in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:242
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php(242): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(71): app\model\Vehicule->supprimerVehicule(10)
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(133): app\controler\AdminControler->index()
-#4 {main}
-26-01-04 09:45:41 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`reservations`, CONSTRAINT `reservations_ibfk_1` FOREIGN KEY (`idVehicule`) REFERENCES `vehicules` (`idVehicule`)) in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:242
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php(242): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(71): app\model\Vehicule->supprimerVehicule(10)
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(133): app\controler\AdminControler->index()
-#4 {main}
-26-01-04 09:45:51 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`reservations`, CONSTRAINT `reservations_ibfk_1` FOREIGN KEY (`idVehicule`) REFERENCES `vehicules` (`idVehicule`)) in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:242
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php(242): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(71): app\model\Vehicule->supprimerVehicule(10)
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(133): app\controler\AdminControler->index()
-#4 {main}
-26-01-04 09:46:07 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`reservations`, CONSTRAINT `reservations_ibfk_1` FOREIGN KEY (`idVehicule`) REFERENCES `vehicules` (`idVehicule`)) in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:242
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php(242): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(71): app\model\Vehicule->supprimerVehicule(10)
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(133): app\controler\AdminControler->index()
-#4 {main}
-26-01-04 09:46:47 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`reservations`, CONSTRAINT `reservations_ibfk_1` FOREIGN KEY (`idVehicule`) REFERENCES `vehicules` (`idVehicule`)) in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:242
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php(242): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(71): app\model\Vehicule->supprimerVehicule(10)
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(133): app\controler\AdminControler->index()
-#4 {main}
-26-01-04 09:47:13 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`reservations`, CONSTRAINT `reservations_ibfk_1` FOREIGN KEY (`idVehicule`) REFERENCES `vehicules` (`idVehicule`)) in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:242
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php(242): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(71): app\model\Vehicule->supprimerVehicule(10)
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(133): app\controler\AdminControler->index()
-#4 {main}
-26-01-04 09:47:40 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`mabagnole`.`reservations`, CONSTRAINT `reservations_ibfk_1` FOREIGN KEY (`idVehicule`) REFERENCES `vehicules` (`idVehicule`)) in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:242
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php(242): PDOStatement->execute()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(71): app\model\Vehicule->supprimerVehicule(10)
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(133): app\controler\AdminControler->index()
-#4 {main}
-26-01-04 09:48:41 Connexion :error .InvalidArgumentException: ID vehicule invalide in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:85
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(54): app\model\Vehicule->setIdVehicule(0)
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(133): app\controler\AdminControler->index()
-#3 {main}
-26-01-04 09:49:14 Connexion :error .InvalidArgumentException: ID vehicule invalide in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:85
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(54): app\model\Vehicule->setIdVehicule(0)
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(133): app\controler\AdminControler->index()
-#3 {main}
-26-01-04 09:49:29 Connexion :error .InvalidArgumentException: ID vehicule invalide in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:85
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(54): app\model\Vehicule->setIdVehicule(0)
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(133): app\controler\AdminControler->index()
-#3 {main}
-26-01-04 09:57:17 Connexion :error .InvalidArgumentException: ID vehicule invalide in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:85
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(54): app\model\Vehicule->setIdVehicule(0)
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(133): app\controler\AdminControler->index()
-#3 {main}
-26-01-04 09:58:56 Connexion :error .InvalidArgumentException: ID vehicule invalide in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:85
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(54): app\model\Vehicule->setIdVehicule(0)
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(133): app\controler\AdminControler->index()
-#3 {main}
-26-01-04 09:59:03 Connexion :error .InvalidArgumentException: ID vehicule invalide in C:\xampp\htdocs\MaBagnole\app\model\Vehicule.php:85
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(54): app\model\Vehicule->setIdVehicule(0)
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(133): app\controler\AdminControler->index()
-#3 {main}
-26-01-04 10:05:47 Connexion :error .InvalidArgumentException: ID vehicule invalide : 0 in C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php:58
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(138): app\controler\AdminControler->index()
-#2 {main}
-26-01-04 10:05:52 Connexion :error .InvalidArgumentException: ID vehicule invalide : 0 in C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php:58
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(138): app\controler\AdminControler->index()
-#2 {main}
-26-01-04 10:10:26 Connexion :error .InvalidArgumentException: ID vehicule invalide : 0 in C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php:58
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(138): app\controler\AdminControler->index()
-#2 {main}
-26-01-04 10:10:34 Connexion :error .InvalidArgumentException: ID vehicule invalide : 0 in C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php:58
-Stack trace:
-#0 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(32): app\controler\AdminControler->gererVehicule()
-#1 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(138): app\controler\AdminControler->index()
-#2 {main}

@@ -110,3 +110,58 @@ CREATE Table reagirAvis (
     FOREIGN KEY (idAvis) REFERENCES Avis (idAvis),
     FOREIGN KEY (idClient) REFERENCES Utilisateurs (idUtilisateur)
 );
+
+
+DROP PROCEDURE IF EXISTS AjouterReservation;
+DELIMITER //
+
+CREATE PROCEDURE AjouterReservation(
+    IN idClient INT,
+    IN idVehicule INT,
+    IN dateDebut DATETIME,
+    IN dateFin DATETIME,
+    IN lieuChange VARCHAR(255)
+)
+BEGIN
+    IF dateDebut >= dateFin THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'La date de début iinférieure la date de fin.';
+    
+    -- 2. Check  (statusVehicule = 1)
+    ELSEIF (SELECT statusVehicule FROM Vehicules WHERE idVehicule = idVehicule LIMIT 1) = 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = ' pas disponible.';
+        
+    ELSE
+        -- 3. Insert  reservation
+        INSERT INTO Reservations (
+            dateDebutReservation, 
+            dateFinReservation, 
+            lieuChange, 
+            idVehicule, 
+            idClient
+        ) 
+        VALUES (
+            dateDebut, 
+            dateFin, 
+            lieuChange, 
+            idVehicule, 
+            idClient
+        );
+    END IF;
+END //
+DELIMITER ;
+
+DROP PROCEDURE if EXISTS confirmerReservation;
+
+CREATE Procedure confirmerReservation(
+    IN reservationId INT
+)
+BEGIN
+    UPDATE Reservations
+    SET statusReservation = 'confirmer'
+    WHERE idReservation = reservationId;
+    UPDATE vehicules
+    SET statusVehicule = 0
+    WHERE idVehicule = (SELECT idVehicule FROM Reservations WHERE idReservation = reservationId);
+END;    

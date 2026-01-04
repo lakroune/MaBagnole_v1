@@ -29,7 +29,10 @@ class AdminControler
                 header("Location: ../view/admin_clients.php?$_POST[statusClient]=$result");
                 break;
             case "admin_fleet":
-                $result = $this->gererVehicule();
+                if (isset($_POST["action"]) && $_POST["action"] == "import")
+                    $result =  $this->importVehicules();
+                else
+                    $result = $this->gererVehicule();
                 header("Location: ../view/admin_fleet.php?$_POST[action]=$result");
                 break;
             case "admin_reservations":
@@ -82,7 +85,51 @@ class AdminControler
             return "failed";
         }
     }
+    public function importVehicules()
+    {
+        try {
+            if (isset($_POST["action"]) && $_POST["action"] == "import") {
+                $bulkData = $_POST['bulkData'] ?? '';
 
+                if (!empty($bulkData)) {
+                    // Séparer par ligne
+                    $lines = explode("\n", str_replace("\r", "", $bulkData));
+                    $successCount = 0;
+
+                    foreach ($lines as $line) {
+                        if (empty(trim($line))) continue;
+
+                        // Séparer par virgule
+                        $data = explode(",", $line);
+
+                        if (count($data) >= 7) {
+                            $v = new Vehicule();
+                            $v->setMarqueVehicule(trim($data[0]));
+                            $v->setModeleVehicule(trim($data[1]));
+                            $v->setAnneeVehicule(trim($data[2]));
+                            $v->setCouleurVehicule(trim($data[3]));
+                            $v->setTypeBoiteVehicule(trim($data[4]));
+                            $v->setTypeCarburantVehicule(trim($data[5]));
+                            $v->setPrixVehicule(trim($data[6]));
+                            $v->setIdCategorie(trim($data[7] ?? 1));
+                            $v->setImageVehicule(trim($data[8] ?? 'image'));
+                            if ($v->ajouterVehicule()) {
+                                $successCount++;
+                            }
+                        }
+                    }
+
+                    if ($successCount > 0) {
+                        return "success";
+                    } else {
+                        return "failed";
+                    }
+                }
+            }
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+        }
+    }
     public function gererCategories(): string
     {
         try {
