@@ -131,3 +131,33 @@ Stack trace:
 #2 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(36): app\controler\ClientControler->gestionReservation()
 #3 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(150): app\controler\ClientControler->index()
 #4 {main}
+26-01-04 04:01:10 Connexion :error .InvalidArgumentException: ID client invalide in C:\xampp\htdocs\MaBagnole\app\model\Favori.php:29
+Stack trace:
+#0 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(78): app\model\Favori->setIdClient(0)
+#1 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(32): app\controler\ClientControler->gestionFavoris()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(166): app\controler\ClientControler->index()
+#3 {main}
+26-01-04 04:01:46 Connexion :error .InvalidArgumentException: ID client invalide in C:\xampp\htdocs\MaBagnole\app\model\Favori.php:29
+Stack trace:
+#0 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(78): app\model\Favori->setIdClient(0)
+#1 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(32): app\controler\ClientControler->gestionFavoris()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(166): app\controler\ClientControler->index()
+#3 {main}
+26-01-04 04:02:15 Connexion :error .InvalidArgumentException: ID client invalide in C:\xampp\htdocs\MaBagnole\app\model\Favori.php:29
+Stack trace:
+#0 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(78): app\model\Favori->setIdClient(0)
+#1 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(32): app\controler\ClientControler->gestionFavoris()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(166): app\controler\ClientControler->index()
+#3 {main}
+26-01-04 04:15:56 Connexion :error .InvalidArgumentException: ID client invalide in C:\xampp\htdocs\MaBagnole\app\model\Favori.php:29
+Stack trace:
+#0 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(78): app\model\Favori->setIdClient(0)
+#1 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(32): app\controler\ClientControler->gestionFavoris()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(166): app\controler\ClientControler->index()
+#3 {main}
+26-01-04 04:16:03 Connexion :error .InvalidArgumentException: ID client invalide in C:\xampp\htdocs\MaBagnole\app\model\Favori.php:29
+Stack trace:
+#0 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(78): app\model\Favori->setIdClient(0)
+#1 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(32): app\controler\ClientControler->gestionFavoris()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(166): app\controler\ClientControler->index()
+#3 {main}

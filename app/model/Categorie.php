@@ -122,7 +122,7 @@ class Categorie
             $stmt = $db->prepare($sql);
             $stmt->bindParam(":idCategorie", $idCategorie);
             if ($stmt->execute()) {
-                $categorie = $stmt->fetch(\PDO::FETCH_CLASS, Categorie::class);
+                $categorie = $stmt->fetchObject(Categorie::class);
                 return $categorie;
             } else {
                 return null;

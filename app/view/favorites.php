@@ -18,7 +18,6 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 
     $vehicule = new Vehicule();
 
     $vehicules = $vehicule->getVehiculesFavorisByClient($_SESSION['Utilisateur']->getIdUtilisateur());
-    
 }
 ?>
 
@@ -107,15 +106,20 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 
             endif; ?>
         </div>
 
-        <div id="emptyState" class=" <?php if (count($vehicules) > 0) echo 'hidden'; ?> flex flex-col items-center justify-center w-full gap-4 hidden text-center py-20">
-            <div class="w-24 h-24 bg-slate-100 text-slate-300 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl">
+
+        <div id="emptyState" class="<?php echo (empty($vehicules)) ? 'flex' : 'hidden'; ?> flex-col items-center justify-center w-full gap-2 text-center py-20">
+            <div class="w-24 h-24 bg-slate-100 text-slate-300 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl">
                 <i class="far fa-heart"></i>
             </div>
             <h2 class="text-2xl font-bold text-slate-800">No favorites yet</h2>
-            <p class="text-slate-400 mt-2 mb-8">Start exploring and save cars you love!</p>
-            <a href="accueil.php" class="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-100">Explore Fleet</a>
+            <p class="text-slate-400 mt-1 mb-8 max-w-[250px] mx-auto">
+                Start exploring and save cars you love!
+            </p>
+            <a href="accueil.php"
+                class="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 hover:scale-105 transition-all duration-200 shadow-lg shadow-blue-200">
+                Explore Fleet
+            </a>
         </div>
-
     </main>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -140,7 +144,43 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 
             }, 300);
 
             console.log("Vehicle " + carId + " removed from favorites");
+
+
         }
+
+
+
+
+
+
+
+
+        $(document).ready(function() {
+
+            $('.favorite-btn').on('click', function(e) {
+                e.preventDefault();
+
+                const $btn = $(this);
+                const $form = $btn.closest('form');
+                const formData = $form.serialize();
+                $.ajax({
+                    url: '../controler/ClientControler.php',
+                    type: 'POST',
+                    data: formData,
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                            console.log('success');
+                        } else {
+                            console.log('failed');
+                        }
+                    },
+                    error: function() {
+                        console.log('error');
+                    }
+                });
+            });
+        });
     </script>
 </body>
 

@@ -1,0 +1,79 @@
+     .dataTables_wrapper .dataTables_filter input {
+         border-radius: 12px;
+         padding: 6px 12px;
+         border: 1px solid #e2e8f0;
+         outline: none;
+     }
+
+     .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+         background: #2563eb !important;
+         color: white !important;
+         border: none;
+         border-radius: 8px;
+     }
+
+     .animate-in {
+         animation: fadeIn 0.3s ease-out;
+     }
+
+     @keyframes fadeIn {
+         from {
+             opacity: 0;
+             transform: scale(0.95);
+         }
+
+         to {
+             opacity: 1;
+             transform: scale(1);
+         }
+     }
+
+     .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+         background: #2563eb !important;
+         color: white !important;
+         border-radius: 8px;
+         border: none;
+     }
+
+     .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+         background: #2563eb !important;
+         color: white !important;
+         border-radius: 8px;
+         border: none;
+     }
+
+     table.dataTable.no-footer {
+         border-bottom: 1px solid #e2e8f0;
+     }
+
+     .modal-active {
+         display: flex !important;
+     }
+
+     table.dataTable.no-footer {
+         border-bottom: 1px solid #e2e8f0;
+     }
+
+     .dataTables_filter input {
+         border: 1px solid #e2e8f0;
+         padding: 8px;
+         border-radius: 10px;
+         outline: none;
+         margin-bottom: 15px;
+     }
+
+     .status-en-cours {
+         @apply bg-blue-50 text-blue-600;
+     }
+
+     .status-terminee {
+         @apply bg-green-50 text-green-600;
+     }
+
+     .status-annulee {
+         @apply bg-red-50 text-red-600;
+     }
+
+     table.dataTable.no-footer {
+         border-bottom: 1px solid #e2e8f0;
+     }

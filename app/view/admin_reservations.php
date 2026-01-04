@@ -31,23 +31,8 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-    <style>
-        .status-en-cours {
-            @apply bg-blue-50 text-blue-600;
-        }
-
-        .status-terminee {
-            @apply bg-green-50 text-green-600;
-        }
-
-        .status-annulee {
-            @apply bg-red-50 text-red-600;
-        }
-
-        table.dataTable.no-footer {
-            border-bottom: 1px solid #e2e8f0;
-        }
-    </style>
+    <link rel="stylesheet" href="./css/style.css">
+   
 </head>
 
 <body class="bg-slate-50 min-h-screen flex">
@@ -84,7 +69,7 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 
                                 <p class="font-medium text-slate-700">
                                     <?php
                                     $vehicule =   $vehicule->getVehiculeById($reservation->getIdVehicule());
-                                    echo  $vehicule->getMarqueVehicule() . ' ' ;
+                                    echo  $vehicule->getMarqueVehicule() . ' ';
                                     echo  $vehicule->getModeleVehicule();
                                     ?>
                                 </p>
@@ -156,7 +141,14 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 
     <script>
         $(document).ready(function() {
             $('#resTable').DataTable({
-                pageLength: 8,
+                pageLength: 7,
+
+                ordering: true,
+                dom: '<"flex justify-between items-center mb-6"f>rtip',
+                language: {
+                    search: "",
+                    searchPlaceholder: "Search reservations..."
+                }
             });
         });
 

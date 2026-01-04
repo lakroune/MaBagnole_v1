@@ -29,14 +29,8 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-    <style>
-        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-            background: #2563eb !important;
-            color: white !important;
-            border-radius: 8px;
-            border: none;
-        }
-    </style>
+    <link rel="stylesheet" href="./css/style.css">
+    
 </head>
 
 <body class="bg-slate-50 min-h-screen flex">
@@ -179,8 +173,12 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 
         $(document).ready(function() {
             $('#catTable').DataTable({
                 pageLength: 7,
-                searching: false,
-                lengthChange: false
+               ordering: true,
+                dom: '<"flex justify-between items-center mb-6"f>rtip',
+                language: {
+                    search: "",
+                    searchPlaceholder: "Search categories..."
+                }
             });
         });
 

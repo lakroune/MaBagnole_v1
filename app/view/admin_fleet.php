@@ -34,23 +34,8 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-    <style>
-        .modal-active {
-            display: flex !important;
-        }
-
-        table.dataTable.no-footer {
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .dataTables_filter input {
-            border: 1px solid #e2e8f0;
-            padding: 8px;
-            border-radius: 10px;
-            outline: none;
-            margin-bottom: 15px;
-        }
-    </style>
+    <link rel="stylesheet" href="./css/style.css">
+    
 </head>
 
 <body class="bg-slate-50 min-h-screen flex">
@@ -261,13 +246,12 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 
         $(document).ready(function() {
             $('#fleetTable').DataTable({
                 pageLength: 8,
-                searching: true,
-                lengthChange: false,
+                 ordering: true,
+                dom: '<"flex justify-between items-center mb-6"f>rtip',
                 language: {
                     search: "",
                     searchPlaceholder: "Search fleet..."
                 }
-
             });
         });
     </script>

@@ -20,6 +20,7 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 
     $reservation = new Reservation();
     $vehicule = new Vehicule();
     $categorie = new Categorie();
+    
 
     $statistiques = [
         'totalClients' => $client->counterClients(),

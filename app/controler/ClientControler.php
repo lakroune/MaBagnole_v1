@@ -75,7 +75,7 @@ class ClientControler
         try {
             session_start();
             $favori = new Favori();
-            $favori->setIdClient((int) $_SESSION['Utilisateur']->idUtilisateur);
+            $favori->setIdClient((int) $_SESSION['Utilisateur']->getIdUtilisateur());
             $favori->setIdVehicule((int) $_POST['idVehicule']);
             if ($favori->isFavori($favori->getIdClient(), $favori->getIdVehicule())) {
                 $favori->annulerFavori();

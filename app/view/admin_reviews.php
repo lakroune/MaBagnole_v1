@@ -32,37 +32,7 @@ $allReviews = $avis->getAllAvis();
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-    <style>
-        .dataTables_wrapper .dataTables_filter input {
-            border-radius: 12px;
-            padding: 6px 12px;
-            border: 1px solid #e2e8f0;
-            outline: none;
-        }
-
-        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-            background: #2563eb !important;
-            color: white !important;
-            border: none;
-            border-radius: 8px;
-        }
-
-        .animate-in {
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body class="bg-slate-50 min-h-screen flex">
@@ -215,9 +185,6 @@ $allReviews = $avis->getAllAvis();
             $('#reviewsTable').DataTable({
                 pageLength: 6,
                 ordering: true,
-                order: [
-                    [3, 'desc']
-                ],
                 dom: '<"flex justify-between items-center mb-6"f>rtip',
                 language: {
                     search: "",
@@ -312,8 +279,7 @@ $allReviews = $avis->getAllAvis();
             }
             if (urlParams.has('reject') && urlParams.get('reject') === "failed") {
                 showReviewPopup('error', 'Error', 'An error occurred while rejecting your review.');
-            }
-            else {
+            } else {
                 showReviewPopup('error', 'Error', 'Something went wrong. Please try again.');
             }
 

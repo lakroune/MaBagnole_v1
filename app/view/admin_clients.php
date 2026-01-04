@@ -30,18 +30,9 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-    <style>
-        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-            background: #2563eb !important;
-            color: white !important;
-            border-radius: 8px;
-            border: none;
-        }
-
-        table.dataTable.no-footer {
-            border-bottom: 1px solid #e2e8f0;
-        }
-    </style>
+    <link rel="stylesheet" href="./css/style.css">
+    
+  
 </head>
 
 <body class="bg-slate-50 min-h-screen flex">
@@ -161,11 +152,11 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 
             $('#clientTable').DataTable({
                 paging: true,
                 pageLength: 7,
-                searching: true,
-                lengthChange: false,
+                 ordering: true,
+                dom: '<"flex justify-between items-center mb-6"f>rtip',
                 language: {
-                search: "",
-                searchPlaceholder: "Search clients..."
+                    search: "",
+                    searchPlaceholder: "Search reviews..."
                 }
             });
         });

@@ -149,13 +149,21 @@ $categories = $categorie->getAllCategories();
                                     <div class="absolute top-4 left-4 flex gap-2">
                                         <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-blue-600 shadow-sm"><?= $vehicule->getMarqueVehicule() ?></span>
                                         <span class="bg-slate-900 text-white px-3 py-1 rounded-full text-[10px] font-bold"><?= $vehicule->getAnneeVehicule() ?></span>
+                                        <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-slate-900">
+                                            <?php
+                                            $categorieFeilter = new Categorie();
+                                            $categorieFeilter = $categorieFeilter->getCategoriebyId($vehicule->getIdCategorie());
+                                            echo $categorieFeilter->getTitreCategorie();
+                                            ?>
+                                        </span>
                                     </div>
-                                    <input type="hidden" name="categorie" value="<?= $vehicule->getIdCategorie() ?>">
+
+
                                     <form id="favoriteForm" action="#" method="POST">
                                         <input type="hidden" name="idVehicule" value="<?= $vehicule->getIdVehicule() ?>">
                                         <input type="hidden" name="page" value="accueil">
                                         <input type="hidden" name="action" value="favorite">
-                                        <!-- .favorite-btn ??? mtnsahch   -->
+                                        <!-- .favorite-btn ??? mtnsahch  wahynari  -->
                                         <button type="button" <?php if (!($connect)) :  ?> onclick="toggleModal('rentPopup')" <?php else:; ?> onclick="toggleFavorite(this)" <?php endif; ?> class="  favorite-btn absolute top-4 right-4 w-10 h-10 bg-white/80 backdrop-blur rounded-full flex items-center justify-center text-slate-400 hover:text-red-500 transition shadow-lg">
                                             <i class="fas fa-heart"></i>
                                         </button>
