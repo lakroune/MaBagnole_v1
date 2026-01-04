@@ -18,6 +18,9 @@
              <a href="admin_categories.php" class="flex items-center gap-3 text-slate-400 hover:text-white transition p-3">
                  <i class="fas fa-tags"></i> Categories
              </a>
+             <a href="admin_reviews.php" class="flex items-center gap-3 text-slate-400 hover:text-white transition p-3">
+                 <i class="fas fa-star"></i> Manage Reviews
+             </a>
              <a href="admin_clients.php" class="flex items-center gap-3 text-slate-400 hover:text-white transition p-3">
                  <i class="fas fa-users"></i> Clients
              </a>

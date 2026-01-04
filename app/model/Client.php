@@ -117,7 +117,7 @@ class Client extends Utilisateur
             $stmt = $db->prepare($sql);
             $stmt->bindParam(":idClient", $idClient);
             $stmt->execute();
-            $client = $stmt->fetch(\PDO::FETCH_CLASS, Client::class);
+            $client = $stmt->fetchObject(Client::class);
             if ($client) {
                 return $client;
             } else {

@@ -8,6 +8,7 @@ use app\model\Client;
 use app\model\Vehicule;
 use app\model\Categorie;
 use app\model\Reservation;
+use app\model\Avis;
 
 class AdminControler
 {
@@ -39,6 +40,10 @@ class AdminControler
                 $result = $this->gestionReservation();
                 echo $_POST["action"];
                 header("Location: ../view/admin_reservations.php?$_POST[statusReservation]=$result");
+                break;
+            case "admin_reviews":
+                $result = $this->approverReview();
+                header("Location: ../view/admin_reviews.php?$_POST[action]=$result");
                 break;
 
             default:
@@ -175,6 +180,18 @@ class AdminControler
         if (isset($_POST["action"]) && $_POST["action"] == "confirmer" && $reservation->confirmerReservation($reservation->getIdReservation()))
             return "success";
         elseif (isset($_POST["action"]) && $_POST["action"] == "annuler" && $reservation->annulerReservation($reservation->getIdReservation()))
+            return "success";
+        else
+            return "failed";
+    }
+
+    public function approverReview()
+    {
+        $avis = new Avis();
+        $avis->setIdAvis(intval($_POST["idAvis"]));
+        if (isset($_POST["action"]) && $_POST["action"] == "approve" && $avis->approveReview($avis->getIdAvis()))
+            return "success";
+        elseif (isset($_POST["action"]) && $_POST["action"] == "reject" && $avis->rejectReview($avis->getIdAvis()))
             return "success";
         else
             return "failed";

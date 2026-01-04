@@ -155,7 +155,7 @@ class Avis
         }
     }
     // supprimer Avis
-    public function supprimerAvis(int $idAvis)
+    public function rejectReview(int $idAvis)
     {
         try {
             $db = Connexion::connect()->getConnexion();
@@ -171,12 +171,43 @@ class Avis
             return false;
         }
     }
-    // confirmer Avis
-    public function getAvis(int $idAvis) {}
+
+    public function approveReview(int $idAvis)
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $sql = "update avis set statusAvis=1 where idAvis=:idAvis";
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(":idAvis", $idAvis);
+            if ($stmt->execute())
+                return true;
+            else
+                return false;
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return false;
+        }
+    }
+
     // getAll Avis
-    public function getAllAvis() {}
-    // conter Avis by vehicule
-    public function conterAvisByVehicule(int $idVehicule) {}
+    public function getAllAvis()
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $sql = "select * from avis ";
+            $stmt = $db->prepare($sql);
+            if ($stmt->execute()) {
+                $avis = $stmt->fetchAll(\PDO::FETCH_CLASS, Avis::class);
+                return $avis;
+            } else {
+                return [];
+            }
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return [];
+        }
+    }
+
     // getAll Avis by vehicule
     public function getAllAvisByVehicule(int $idVehicule): array
     {

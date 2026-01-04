@@ -194,7 +194,8 @@ class Reservation
             error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
         }
         if ($stmt->execute()) {
-            $reservation = $stmt->fetch(\PDO::FETCH_CLASS, Reservation::class);
+            $stmt->setFetchMode(\PDO::FETCH_CLASS, Reservation::class);
+            $reservation = $stmt->fetch();
             return $reservation;
         } else {
             return null;
@@ -229,7 +230,7 @@ class Reservation
     {
         try {
             $db = Connexion::connect()->getConnexion();
-            $sql = "select * from reservations r inner join vehicules v on r.idVehicule=v.idVehicule inner join utilisateurs u on r.idClient=u.idUtilisateur";
+            $sql = "select r.* from reservations r inner join vehicules v on r.idVehicule=v.idVehicule inner join utilisateurs u on r.idClient=u.idUtilisateur";
             $stmt = $db->prepare($sql);
             if ($stmt->execute()) {
                 $reservations = $stmt->fetchAll(\PDO::FETCH_CLASS, Reservation::class);

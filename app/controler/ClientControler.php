@@ -133,7 +133,7 @@ class ClientControler
         try {
             $avis = new Avis();
             $avis->setIdAvis((int)$_POST["idAvis"]);
-            if ($avis->supprimerAvis($avis->getIdAvis()))
+            if ($avis->rejectReview($avis->getIdAvis()))
                 return true;
             else
                 return false;

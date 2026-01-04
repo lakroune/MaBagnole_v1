@@ -156,7 +156,7 @@ if (!isset($_SESSION['Utilisateur']) || $_SESSION['Utilisateur']->getRole() !== 
     <script>
         $(document).ready(function() {
             $('#resTable').DataTable({
-                pageLength: 10,
+                pageLength: 8,
             });
         });
 

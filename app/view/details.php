@@ -201,16 +201,32 @@ if ($connect) {
                         <input type="hidden" name="action" value="rent">
 
                         <div>
-                            <label class="block text-[11px] font-black uppercase text-slate-400 mb-2">Lieu de prise en charge (lieuChange)</label>
+                            <label class="block text-[11px] font-black uppercase text-slate-400 mb-2">Pick-up location</label>
                             <div class="relative">
                                 <select name="lieuChange" required
                                     class="w-full pl-4 pr-10 py-3 bg-slate-50 border <?php if (!$connect)  echo "cursor-not-allowed "; ?>  border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer">
-                                    <option value="">Sélectionnez un lieu</option>
-                                    <option value="Casablanca Airport">Aéroport Mohammed V (CMN)</option>
-                                    <option value="Marrakech Airport">Aéroport Marrakech-Ménara (RAK)</option>
-                                    <option value="Agadir Airport">Aéroport Agadir-Al Massira (AGA)</option>
-                                    <option value="Tangier Airport">Aéroport Ibn Battouta (TNG)</option>
-                                    <option value="Rabat City Center">Rabat Centre-Ville</option>
+                                    <option value="">select location</option>
+                                    <option value="casablanca_airport">Casablanca Mohammed V International Airport (CMN)</option>
+                                    <option value="marrakech_airport">Marrakech Menara Airport (RAK)</option>
+                                    <option value="agadir_airport">Agadir Al Massira Airport (AGA)</option>
+                                    <option value="tangier_airport">Tangier Ibn Battouta Airport (TNG)</option>
+                                    <option value="fes_airport">Fes Sais Airport (FEZ)</option>
+                                    <option value="rabat_airport">Rabat-Salé Airport (RBA)</option>
+                                    <option value="nador_airport">Nador International Airport (NDR)</option>
+                                    <option value="oujda_airport">Oujda Angads Airport (OUD)</option>
+
+                                    <option value="casablanca_downtown">Casablanca City Center</option>
+                                    <option value="casablanca_voyageurs_station">Casablanca Voyageurs Train Station</option>
+                                    <option value="marrakech_downtown">Marrakech City Center (Gueliz)</option>
+                                    <option value="marrakech_train_station">Marrakech Train Station</option>
+                                    <option value="rabat_city_center">Rabat City Center</option>
+                                    <option value="rabat_agdal_station">Rabat Agdal Train Station</option>
+                                    <option value="tangier_city_center">Tangier City Center</option>
+                                    <option value="tangier_port">Tangier Med Port</option>
+                                    <option value="agadir_beach_center">Agadir City Center & Beach</option>
+                                    <option value="essaouira_downtown">Essaouira City Center</option>
+                                    <option value="chefchaouen_center">Chefchaouen City Center</option>
+                                    <option value="ouarzazate_center">Ouarzazate City Center</option>
                                 </select>
                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
                                     <i class="fas fa-map-marker-alt text-xs"></i>
@@ -236,10 +252,22 @@ if ($connect) {
                             <div class="relative">
                                 <select id="optionSelect" name="idOption" <?php if (!$connect)  echo "desabled "; ?>
                                     class="w-full pl-4 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer">
-                                    <option value="0" data-price="0">Aucune Option</option>
-                                    <option value="1" data-price="15">GPS Navigation (+$15)</option>
-                                    <option value="2" data-price="25">Pack Multimédia (+$25)</option>
-                                    <option value="3" data-price="10">Siège Enfant (+$10)</option>
+                                    <option value="0" data-price="0">No Extra Options</option>
+                                    <option value="1" data-price="150">GPS Navigation (+150 MAD)</option>
+                                    <option value="2" data-price="250">Multimedia Pack (+250 MAD)</option>
+                                    <option value="3" data-price="100">Child Safety Seat (+100 MAD)</option>
+
+                                    <option value="4" data-price="200">Additional Driver (+200 MAD)</option>
+                                    <option value="5" data-price="300">Full Insurance (Zero Deductible) (+300 MAD)</option>
+                                    <option value="6" data-price="50">USB Charger & Phone Holder (+50 MAD)</option>
+                                    <option value="7" data-price="400">Roof Rack / Luggage Carrier (+400 MAD)</option>
+                                    <option value="8" data-price="150">Wi-Fi Hotspot (4G/5G) (+150 MAD)</option>
+                                    <option value="9" data-price="80">Booster Seat (for older children) (+80 MAD)</option>
+                                    <option value="10" data-price="500">Snow Chains (for mountain trips) (+500 MAD)</option>
+                                    <option value="11" data-price="120">Baby Stroller (+120 MAD)</option>
+                                    <option value="12" data-price="0">Full Tank of Fuel (Pay at return)</option>
+                                    <option value="13" data-price="250">Roadside Assistance 24/7 (+250 MAD)</option>
+                                    <option value="14" data-price="150">Airport Meet & Greet Service (+150 MAD)</option>
                                 </select>
                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
                                     <i class="fas fa-plus-circle text-xs"></i>
@@ -453,7 +481,6 @@ if ($connect) {
                 showModal('errorModal');
             }
 
-
             if (urlParams.has('addReview') && urlParams.get('addReview') === "success") {
                 showReviewPopup('success', 'Thank You!', 'Your review has been submitted successfully and is waiting for admin approval.');
 
@@ -461,6 +488,18 @@ if ($connect) {
             if (urlParams.has('addReview') && urlParams.get('addReview') === "failed") {
                 showReviewPopup('error', 'Error', 'An error occurred while submitting your review.');
 
+            }
+            if (urlParams.has('deleteReview') && urlParams.get('deleteReview') === "success") {
+                showReviewPopup('success', 'Success', 'Your review has been deleted successfully.');
+            }
+            if (urlParams.has('deleteReview') && urlParams.get('deleteReview') === "failed") {
+                showReviewPopup('error', 'Error', 'An error occurred while deleting your review.');
+            }
+            if (urlParams.has('updateReview') && urlParams.get('updateReview') === "success") {
+                showReviewPopup('success', 'Success', 'Your review has been updated successfully.');
+            }
+            if (urlParams.has('updateReview') && urlParams.get('updateReview') === "failed") {
+                showReviewPopup('error', 'Error', 'An error occurred while updating your review.');
             }
 
         };
