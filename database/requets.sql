@@ -87,9 +87,10 @@ CREATE table Avis (
     noteAvis int(1) NOT NULL,
     datePublicationAvis TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     idReservation int(11) NOT NULL,
-    statusAvis ENUM("0", "1") DEFAULT 1,
+    statusAvis INT NOT NULL DEFAULT 1,
     idClient int(11) NOT NULL,
     constraint check_noteAvis check (noteAvis between 1 and 5),
+    constraint check_statusAvis check (statusAvis between 0 and 1),
     FOREIGN KEY (idReservation) REFERENCES Reservations (idReservation),
     FOREIGN KEY (idClient) REFERENCES Utilisateurs (idUtilisateur)
 );

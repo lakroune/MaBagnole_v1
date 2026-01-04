@@ -1,0 +1,10 @@
+26-01-04 01:35:28 Connexion :error .PDOException: SQLSTATE[42S02]: Base table or view not found: 1051 Unknown table 'mabagnole.r' in C:\xampp\htdocs\MaBagnole\app\model\Avis.php:171
+Stack trace:
+#0 C:\xampp\htdocs\MaBagnole\app\model\Avis.php(171): PDOStatement->execute()
+#1 C:\xampp\htdocs\MaBagnole\app\view\details.php(25): app\model\Avis->getAllAvisByVehicule('2')
+#2 {main}
+26-01-04 01:35:41 Connexion :error .PDOException: SQLSTATE[42S02]: Base table or view not found: 1051 Unknown table 'mabagnole.r' in C:\xampp\htdocs\MaBagnole\app\model\Avis.php:171
+Stack trace:
+#0 C:\xampp\htdocs\MaBagnole\app\model\Avis.php(171): PDOStatement->execute()
+#1 C:\xampp\htdocs\MaBagnole\app\view\details.php(25): app\model\Avis->getAllAvisByVehicule('2')
+#2 {main}

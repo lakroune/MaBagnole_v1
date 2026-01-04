@@ -162,15 +162,7 @@ INSERT INTO Option (titreOption, descriptionOption, prixOption) VALUES
 ('Volant chauffant','Volant avec chauffage intégré pour les saisons froides',80),
 ('Connectivité smartphone','Apple CarPlay et Android Auto',100);
 
--- INSERT INTO Avis (commmentaireAvis, noteAvis, idReservation, statusAvis, idClient) VALUES
--- ('Très bon véhicule, agréable à conduire.',5,1,1,2),
--- ('Voiture correcte, mais un peu bruyante.',3,2,1,2),
--- ('Excellent service et véhicule propre.',5,3,1,3),
--- ('La voiture était en bon état, mais GPS non fonctionnel.',4,4,1,4),
--- ('Très satisfait, tout s’est bien passé.',5,5,1,5),
--- ('Véhicule confortable mais un peu cher.',4,6,1,6),
--- ('Bonne expérience, je recommande.',5,7,1,7);
-
+ 
 
 -- INSERT INTO optionReservation (idReservation, idOption) VALUES
 -- (1,1),
@@ -185,27 +177,8 @@ INSERT INTO Option (titreOption, descriptionOption, prixOption) VALUES
 -- (5,7);
 
 
-INSERT INTO Favoris (idClient, idVehicule) VALUES
-(1,1),
-(1,3),
-(2,2),
-(2,5),
-(3,4),
-(3,1),
-(4,7),
-(5,6),
-(6,2),
-(7,3);
-
--- INSERT INTO reagirAvis (idAvis, idClient, statusReagirAvis) VALUES
--- (1,2,1),
--- (1,3,1),
--- (2,1,1),
--- (3,4,1),
--- (4,2,1),
--- (5,3,1),
--- (6,1,1),
--- (7,5,1);
+ 
+ 
 
 INSERT INTO Reservations 
 (dateDebutReservation, dateFinReservation, lieuChange, idVehicule, statusReservation, idClient)
@@ -231,15 +204,4 @@ VALUES
 ('Tout est parfait',        5, 7, 1, 8),
 ('Bon rapport qualité/prix',4, 8, 1, 9),
 ('Très satisfait',          5, 9, 1, 10);
-INSERT INTO Avis
-(commentaireAvis, noteAvis, idReservation, statusAvis, idClient)
-VALUES
-('Très bon service',        5, 1, 1, 2),
-('Voiture propre',          4, 2, 1, 3),
-('Expérience satisfaisante',4, 3, 1, 4),
-('Service rapide',          5, 4, 1, 5),
-('Bonne communication',     4, 5, 1, 6),
-('Je recommande',           5, 6, 1, 7),
-('Tout est parfait',        5, 7, 1, 8),
-('Bon rapport qualité/prix',4, 8, 1, 9),
-('Très satisfait',          5, 9, 1, 10);
+ 

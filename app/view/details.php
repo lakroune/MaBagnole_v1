@@ -14,6 +14,10 @@ if (!isset($_SESSION['Utilisateur']) or  $_SESSION['Utilisateur']->getRole() !==
     $connect =  false;
 }
 $v = new Vehicule();
+if (!isset($_GET['id'])) {
+    header('Location: accueil.php');
+    exit();
+}
 $idVehicule = (int) $_GET['id'];
 $vehicle = $v->getVehiculeById($idVehicule);
 
@@ -115,14 +119,19 @@ if ($connect) {
                                             </div>
                                         </div>
                                         <div class="flex gap-4">
-                                            <?php if ($connect and $_SESSION['Utilisateur']->getIdUtilisateur() === '1') : ?>
-                                                <button onclick="toggleEdit(101)" class="text-xs font-bold text-blue-500 hover:text-blue-700 transition">Edit</button>
-                                                <button onclick="softDelete(101)" class="text-xs font-bold text-red-400 hover:text-red-600 transition">Delete</button>
+                                            <?php if ($connect and $_SESSION['Utilisateur']->getIdUtilisateur() == $review->getIdClient()) : ?>
+                                                <button
+                                                    onclick="openEditReviewModal(<?= $review->getIdAvis() ?>, '<?= addslashes($review->getCommentaireAvis()) ?>')"
+                                                    class="text-xs font-bold text-blue-400 hover:text-blue-600 transition">
+                                                    Edit
+                                                </button> <button onclick="openDeleteReviewModal(<?= $review->getIdAvis() ?>)" class="text-xs font-bold text-red-400 hover:text-red-600 transition">
+                                                    Delete
+                                                </button>
                                             <?php endif ?>
                                         </div>
                                     </div>
 
-                                    <p id="review-text-101" class="mt-4 text-slate-600 italic leading-relaxed">
+                                    <p id="review-text-<?php echo $review->getIdAvis() ?>" class="mt-4 text-slate-600 italic leading-relaxed">
                                         <?php echo $review->getCommentaireAvis() ?>
                                     </p>
 
@@ -256,16 +265,81 @@ if ($connect) {
             </div>
         </div>
     </main>
+    <div id="deleteReviewModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-[120] p-4">
+        <div class="bg-white w-full max-w-md rounded-[2.5rem] p-8 shadow-2xl text-center relative animate-fade-in">
 
-    <div id="edit-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-[100] p-4">
-        <div class="bg-white w-full max-w-lg rounded-3xl p-8 shadow-2xl">
-            <h3 class="text-xl font-bold text-slate-800 mb-4">Update your Feedback</h3>
-            <input type="hidden" id="edit-id">
-            <textarea id="edit-text" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500" rows="5"></textarea>
-            <div class="flex justify-end gap-3 mt-6">
-                <button onclick="closeEdit()" class="px-6 py-2 font-bold text-slate-400">Cancel</button>
-                <button onclick="saveEdit()" class="px-8 py-2 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition">Save</button>
+            <button onclick="toggleModal('deleteReviewModal')" class="absolute top-6 right-6 text-slate-300 hover:text-slate-600 transition">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="w-20 h-20 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl">
+                <i class="fas fa-exclamation-triangle"></i>
             </div>
+
+            <h3 class="text-2xl font-black text-slate-800 mb-2">Delete Review?</h3>
+            <p class="text-slate-500 text-sm mb-8 leading-relaxed">
+                Are you sure you want to delete this feedback? This action cannot be undone and the review will be permanently removed.
+            </p>
+
+            <form action="../controler/ClientControler.php" method="POST">
+                <input type="hidden" name="page" value="details">
+                <input type="hidden" name="action" value="deleteReview">
+                <input type="hidden" name="idAvis" id="delete_avis_id">
+                <input type="hidden" name="idVehicule" value="<?= $idVehicule ?>">
+
+                <div class="flex flex-col gap-3">
+                    <button type="submit" class="w-full bg-red-600 text-white py-4 rounded-2xl font-black shadow-lg hover:bg-red-700 transition active:scale-95">
+                        Yes, Delete Permanently
+                    </button>
+                    <button type="button" onclick="toggleModal('deleteReviewModal')" class="w-full bg-slate-100 text-slate-600 py-4 rounded-2xl font-bold hover:bg-slate-200 transition">
+                        No, Keep it
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="editReviewModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-[120] p-4">
+        <div class="bg-white w-full max-w-lg rounded-[2.5rem] p-8 shadow-2xl relative animate-fade-in">
+
+            <button onclick="toggleModal('editReviewModal')" class="absolute top-6 right-6 text-slate-300 hover:text-slate-600 transition">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                    <i class="fas fa-edit"></i>
+                </div>
+                <h3 class="text-2xl font-black text-slate-800">Edit Your Review</h3>
+                <p class="text-slate-500 text-sm">Update your feedback about this vehicle.</p>
+            </div>
+
+            <form action="../controler/ClientControler.php" method="POST">
+                <input type="hidden" name="page" value="details">
+                <input type="hidden" name="action" value="updateReview">
+                <input type="hidden" name="idAvis" id="edit_avis_id">
+                <input type="hidden" name="idVehicule" value="<?= $idVehicule ?>">
+
+                <div class="mb-6">
+                    <label class="block text-sm font-bold text-slate-700 mb-2 ml-1">Your Message</label>
+                    <textarea
+                        name="textReview"
+                        id="edit_comment_text"
+                        rows="4"
+                        class="w-full px-5 py-4 rounded-2xl border-2 border-slate-100 focus:border-blue-500 focus:ring-0 transition resize-none text-slate-600"
+                        placeholder="Write your thoughts here..."
+                        required></textarea>
+                </div>
+
+                <div class="flex gap-3">
+                    <button type="button" onclick="toggleModal('editReviewModal')" class="flex-1 bg-slate-100 text-slate-600 py-4 rounded-2xl font-bold hover:bg-slate-200 transition">
+                        Cancel
+                    </button>
+                    <button type="submit" class="flex-1 bg-blue-600 text-white py-4 rounded-2xl font-black shadow-lg hover:bg-blue-700 transition active:scale-95">
+                        Save Changes
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -333,37 +407,6 @@ if ($connect) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="js/main.js"></script>
     <script>
-        // $(document).ready(function() {
-
-        //     $('.btn-ajout-avis ').on('click', function(e) {
-        //         e.preventDefault();
-        //         const $btn = $(this);
-        //         const $form = $btn.closest('form');
-        //         const formData = $form.serialize();
-        //         const selectedRating = document.getElementById('rating').value;
-        //         const text = document.getElementById('new-review-text').value;
-        //         if (selectedRating == 0 || text == '') {
-        //             showReviewPopup('error', 'Incomplete', 'Please provide both a rating and a comment before submitting.');
-        //         } else
-        //             $.ajax({
-        //                 url: '../controler/ClientControler.php',
-        //                 type: 'POST',
-        //                 data: formData,
-        //                 dataType: 'json',
-        //                 success: function(response) {
-        //                     if (response.success) {
-        //                         showReviewPopup('success', 'Thank You!', 'Your review has been submitted successfully and is waiting for admin approval.');
-        //                     } else {
-        //                         showReviewPopup('error', 'Error', 'An error occurred while submitting your review.');
-        //                     }
-        //                 },
-        //                 error: function() {
-        //                     showReviewPopup('error', 'Error', 'An error occurred while submitting your review.');
-        //                 }
-        //             });
-        //     });
-        // });
-
         function submitReview() {
             const text = document.getElementById('new-review-text').value;
 
@@ -374,15 +417,17 @@ if ($connect) {
                 document.getElementById('form-ajout-avis').submit();
             }
 
-            // // Success Simulation
-            // showReviewPopup('success', 'Thank You!', 'Your review has been submitted successfully and is waiting for admin approval.');
 
-            // // Clear Form
-            // document.getElementById('new-review-text').value = "";
-            // updateStars(0);
         }
 
-
+        function openEditReviewModal(idAvis, currentComment) {
+            // Remplir l'ID caché
+            document.getElementById('edit_avis_id').value = idAvis;
+            // Remplir le textarea avec le texte actuel
+            document.getElementById('edit_comment_text').value = currentComment;
+            // Afficher le modal
+            toggleModal('editReviewModal');
+        }
 
 
 

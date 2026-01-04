@@ -18,6 +18,13 @@ function updateStars(rating) {
     });
 }
 
+function openDeleteReviewModal(idAvis) {
+    const input = document.getElementById('delete_avis_id');
+    if (input) {
+        input.value = idAvis;
+        toggleModal('deleteReviewModal');
+    }
+}
 // --- Soft Delete ---
 function softDelete(id) {
     if (confirm("Do you really want to remove this review?")) {
@@ -220,3 +227,4 @@ function openDeleteModal(data) {
     document.getElementById('delete_id').value = data.id;
     toggleModal('deleteModal');
 }
+

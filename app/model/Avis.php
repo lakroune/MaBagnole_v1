@@ -1,6 +1,9 @@
 <?php
+
 namespace app\model;
+
 use app\model\Connexion;
+
 class Avis
 {
     private int $idAvis;
@@ -133,9 +136,41 @@ class Avis
 
 
     // modifier Avis
-    public function modifierAvis() {}
+    public function modifierAvis()
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $sql = "update avis set commentaireAvis=:commentaireAvis  where idAvis=:idAvis";
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(":commentaireAvis", $this->commentaireAvis);
+            // $stmt->bindParam(":noteAvis", $this->noteAvis);
+            $stmt->bindParam(":idAvis", $this->idAvis);
+            if ($stmt->execute())
+                return true;
+            else
+                return false;
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return false;
+        }
+    }
     // supprimer Avis
-    public function supprimerAvis() {}
+    public function supprimerAvis(int $idAvis)
+    {
+        try {
+            $db = Connexion::connect()->getConnexion();
+            $sql = "update avis set statusAvis=0 where idAvis=:idAvis";
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(":idAvis", $idAvis);
+            if ($stmt->execute())
+                return true;
+            else
+                return false;
+        } catch (\Exception $e) {
+            error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");
+            return false;
+        }
+    }
     // confirmer Avis
     public function getAvis(int $idAvis) {}
     // getAll Avis
@@ -147,7 +182,7 @@ class Avis
     {
         try {
             $db = Connexion::connect()->getConnexion();
-            $sql = "select * from avis where idReservation in (select idReservation from reservations where idVehicule=:idVehicule)";
+            $sql = "select * from avis where statusAvis=1 and idReservation in (select idReservation from reservations where idVehicule=:idVehicule)";
             $stmt = $db->prepare($sql);
             $stmt->bindParam(":idVehicule", $idVehicule);
             if ($stmt->execute()) {
@@ -175,8 +210,7 @@ class Avis
                     return true;
                 else
                     return false;
-            }
-            else
+            } else
                 return false;
         } catch (\Exception $e) {
             error_log(date('y-m-d h:i:s') . " Connexion :error ." . $e . PHP_EOL, 3, "error.log");

@@ -360,7 +360,7 @@ class Reservation
             $stmt = $db->prepare($sql);
             if ($stmt->execute()) {
                 $reservation = $stmt->fetch(\PDO::FETCH_OBJ);
-                return $reservation->total;
+                return $reservation->total ?? 0;
             } else {
                 return 0;
             }

@@ -110,3 +110,24 @@ Stack trace:
 #2 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(33): app\controler\AdminControler->importVehicules()
 #3 C:\xampp\htdocs\MaBagnole\app\controler\AdminControler.php(185): app\controler\AdminControler->index()
 #4 {main}
+26-01-04 12:46:09 Connexion :error .PDOException: SQLSTATE[45000]: <<Unknown error>>: 1644 La date de début iinférieure la date de fin. in C:\xampp\htdocs\MaBagnole\app\model\Reservation.php:140
+Stack trace:
+#0 C:\xampp\htdocs\MaBagnole\app\model\Reservation.php(140): PDOStatement->execute()
+#1 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(101): app\model\Reservation->ajouterReservation()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(36): app\controler\ClientControler->gestionReservation()
+#3 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(132): app\controler\ClientControler->index()
+#4 {main}
+26-01-04 01:40:12 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`mabagnole`.`reservations`, CONSTRAINT `reservations_ibfk_2` FOREIGN KEY (`idClient`) REFERENCES `utilisateurs` (`idUtilisateur`)) in C:\xampp\htdocs\MaBagnole\app\model\Reservation.php:140
+Stack trace:
+#0 C:\xampp\htdocs\MaBagnole\app\model\Reservation.php(140): PDOStatement->execute()
+#1 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(103): app\model\Reservation->ajouterReservation()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(36): app\controler\ClientControler->gestionReservation()
+#3 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(150): app\controler\ClientControler->index()
+#4 {main}
+26-01-04 01:40:26 Connexion :error .PDOException: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`mabagnole`.`reservations`, CONSTRAINT `reservations_ibfk_2` FOREIGN KEY (`idClient`) REFERENCES `utilisateurs` (`idUtilisateur`)) in C:\xampp\htdocs\MaBagnole\app\model\Reservation.php:140
+Stack trace:
+#0 C:\xampp\htdocs\MaBagnole\app\model\Reservation.php(140): PDOStatement->execute()
+#1 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(103): app\model\Reservation->ajouterReservation()
+#2 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(36): app\controler\ClientControler->gestionReservation()
+#3 C:\xampp\htdocs\MaBagnole\app\controler\ClientControler.php(150): app\controler\ClientControler->index()
+#4 {main}
